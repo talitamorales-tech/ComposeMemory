@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-45:/values-b+sr+Latn/values-b+sr+Latn.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-44:/values-b+sr+Latn/values-b+sr+Latn.xml",
             "map": [
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e754f461ad8f7a511fa7fc6c4385c693/transformed/material3-release/res/values-b+sr+Latn/values-b+sr+Latn.xml",
@@ -38,23 +38,6 @@
                     }
                 },
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d0e5df3da8374bed71d9993cb807cb2d/transformed/core-1.16.0/res/values-b+sr+Latn/values-b+sr+Latn.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,352,456,560,665,781",
-                        "endColumns": "97,101,96,103,103,104,115,100",
-                        "endOffsets": "148,250,347,451,555,660,776,877"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,81",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,203,305,402,506,610,715,8396",
-                        "endColumns": "97,101,96,103,103,104,115,100",
-                        "endOffsets": "198,300,397,501,605,710,826,8492"
-                    }
-                },
-                {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/74b732bc14271422d5c17044383b41bc/transformed/foundation-release/res/values-b+sr+Latn/values-b+sr+Latn.xml",
                     "from": {
                         "startLines": "2,3",
@@ -69,6 +52,23 @@
                         "startOffsets": "8764,8854",
                         "endColumns": "89,91",
                         "endOffsets": "8849,8941"
+                    }
+                },
+                {
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-b+sr+Latn/values-b+sr+Latn.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,255,352,456,560,665,781",
+                        "endColumns": "97,101,96,103,103,104,115,100",
+                        "endOffsets": "148,250,347,451,555,660,776,877"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,81",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,203,305,402,506,610,715,8396",
+                        "endColumns": "97,101,96,103,103,104,115,100",
+                        "endOffsets": "198,300,397,501,605,710,826,8492"
                     }
                 }
             ]

@@ -1,25 +1,8 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-45:/values-ky/values-ky.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-44:/values-ky/values-ky.xml",
             "map": [
-                {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d0e5df3da8374bed71d9993cb807cb2d/transformed/core-1.16.0/res/values-ky/values-ky.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,155,257,360,467,569,673,784",
-                        "endColumns": "99,101,102,106,101,103,110,100",
-                        "endOffsets": "150,252,355,462,564,668,779,880"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,81",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,205,307,410,517,619,723,8500",
-                        "endColumns": "99,101,102,106,101,103,110,100",
-                        "endOffsets": "200,302,405,512,614,718,829,8596"
-                    }
-                },
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e754f461ad8f7a511fa7fc6c4385c693/transformed/material3-release/res/values-ky/values-ky.xml",
                     "from": {
@@ -69,6 +52,23 @@
                         "startOffsets": "834,927,1011,1121,1221,1306,1388,7861,7950,8035,8120,8207,8280,8354,8427,8601,8680,8748",
                         "endColumns": "92,83,109,99,84,81,97,88,84,84,86,72,73,72,72,78,67,117",
                         "endOffsets": "922,1006,1116,1216,1301,1383,1481,7945,8030,8115,8202,8275,8349,8422,8495,8675,8743,8861"
+                    }
+                },
+                {
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-ky/values-ky.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,155,257,360,467,569,673,784",
+                        "endColumns": "99,101,102,106,101,103,110,100",
+                        "endOffsets": "150,252,355,462,564,668,779,880"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,81",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,205,307,410,517,619,723,8500",
+                        "endColumns": "99,101,102,106,101,103,110,100",
+                        "endOffsets": "200,302,405,512,614,718,829,8596"
                     }
                 }
             ]

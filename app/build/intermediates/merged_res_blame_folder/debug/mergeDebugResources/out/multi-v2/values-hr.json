@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-45:/values-hr/values-hr.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-44:/values-hr/values-hr.xml",
             "map": [
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/74b732bc14271422d5c17044383b41bc/transformed/foundation-release/res/values-hr/values-hr.xml",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d0e5df3da8374bed71d9993cb807cb2d/transformed/core-1.16.0/res/values-hr/values-hr.xml",
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-hr/values-hr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

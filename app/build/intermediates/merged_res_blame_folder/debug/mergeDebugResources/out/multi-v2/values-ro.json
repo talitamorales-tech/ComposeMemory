@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-45:/values-ro/values-ro.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-44:/values-ro/values-ro.xml",
             "map": [
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/282188e067ace35e7ceeb03ac6735130/transformed/ui-release/res/values-ro/values-ro.xml",
@@ -38,23 +38,6 @@
                     }
                 },
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d0e5df3da8374bed71d9993cb807cb2d/transformed/core-1.16.0/res/values-ro/values-ro.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,355,454,556,665,782",
-                        "endColumns": "97,101,99,98,101,108,116,100",
-                        "endOffsets": "148,250,350,449,551,660,777,878"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,81",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,203,305,405,504,606,715,8479",
-                        "endColumns": "97,101,99,98,101,108,116,100",
-                        "endOffsets": "198,300,400,499,601,710,827,8575"
-                    }
-                },
-                {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/74b732bc14271422d5c17044383b41bc/transformed/foundation-release/res/values-ro/values-ro.xml",
                     "from": {
                         "startLines": "2,3",
@@ -69,6 +52,23 @@
                         "startOffsets": "8839,8934",
                         "endColumns": "94,99",
                         "endOffsets": "8929,9029"
+                    }
+                },
+                {
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-ro/values-ro.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,255,355,454,556,665,782",
+                        "endColumns": "97,101,99,98,101,108,116,100",
+                        "endOffsets": "148,250,350,449,551,660,777,878"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,81",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,203,305,405,504,606,715,8479",
+                        "endColumns": "97,101,99,98,101,108,116,100",
+                        "endOffsets": "198,300,400,499,601,710,827,8575"
                     }
                 }
             ]

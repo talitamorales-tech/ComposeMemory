@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-45:/values-v30/values-v30.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-44:/values-v30/values-v30.xml",
             "map": [
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e754f461ad8f7a511fa7fc6c4385c693/transformed/material3-release/res/values-v30/values-v30.xml",

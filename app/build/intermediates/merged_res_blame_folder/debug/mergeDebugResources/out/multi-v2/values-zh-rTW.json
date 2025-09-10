@@ -1,25 +1,8 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-45:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-44:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
-                {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d0e5df3da8374bed71d9993cb807cb2d/transformed/core-1.16.0/res/values-zh-rTW/values-zh-rTW.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,147,246,340,434,527,620,716",
-                        "endColumns": "91,98,93,93,92,92,95,100",
-                        "endOffsets": "142,241,335,429,522,615,711,812"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,81",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,197,296,390,484,577,670,7443",
-                        "endColumns": "91,98,93,93,92,92,95,100",
-                        "endOffsets": "192,291,385,479,572,665,761,7539"
-                    }
-                },
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e754f461ad8f7a511fa7fc6c4385c693/transformed/material3-release/res/values-zh-rTW/values-zh-rTW.xml",
                     "from": {
@@ -52,6 +35,23 @@
                         "startOffsets": "766,843,919,1006,1097,1175,1249,6858,6936,7011,7084,7159,7227,7300,7372,7544,7618,7686",
                         "endColumns": "76,75,86,90,77,73,76,77,74,72,74,67,72,71,70,73,67,115",
                         "endOffsets": "838,914,1001,1092,1170,1244,1321,6931,7006,7079,7154,7222,7295,7367,7438,7613,7681,7797"
+                    }
+                },
+                {
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-zh-rTW/values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,147,246,340,434,527,620,716",
+                        "endColumns": "91,98,93,93,92,92,95,100",
+                        "endOffsets": "142,241,335,429,522,615,711,812"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,81",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,197,296,390,484,577,670,7443",
+                        "endColumns": "91,98,93,93,92,92,95,100",
+                        "endOffsets": "192,291,385,479,572,665,761,7539"
                     }
                 },
                 {

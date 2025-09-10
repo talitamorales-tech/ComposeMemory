@@ -26,13 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.talitamorales.composememory.gamelogic.Card
+import com.talitamorales.composememory.gamelogic.CardItem
 import com.talitamorales.composememory.gamelogic.createCards
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun MemoryGameScreen() {
-
     val scope = rememberCoroutineScope()
     var cards by remember { mutableStateOf(createCards()) }
     var selectedCards by remember { mutableStateOf<List<Card>>(emptyList()) }
@@ -41,7 +41,7 @@ fun MemoryGameScreen() {
     LaunchedEffect(Unit) {
         cards = cards.map { it.copy(isFaceUp = true) }
         delay(5000)
-        cards = cards.map { it.copy(isFaceUp = true) }
+        cards = cards.map { it.copy(isFaceUp = false) }
     }
 
     Column(
@@ -68,7 +68,7 @@ fun MemoryGameScreen() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(cards) { card ->
-                cardItem(
+                CardItem(
                     card = card,
                     onClick = {
                         if (selectedCards.size < 2 && !card.isFaceUp && !card.isMatched) {

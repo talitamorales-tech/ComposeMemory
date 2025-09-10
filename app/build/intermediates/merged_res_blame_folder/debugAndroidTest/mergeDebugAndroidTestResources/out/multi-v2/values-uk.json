@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.test.app-mergeDebugAndroidTestResources-35:/values-uk/values-uk.xml",
+            "outputFile": "com.talitamorales.composememory2.test.app-mergeDebugAndroidTestResources-34:/values-uk/values-uk.xml",
             "map": [
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d0e5df3da8374bed71d9993cb807cb2d/transformed/core-1.16.0/res/values-uk/values-uk.xml",
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-uk/values-uk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

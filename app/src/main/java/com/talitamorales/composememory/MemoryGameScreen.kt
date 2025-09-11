@@ -1,5 +1,6 @@
 package com.talitamorales.composememory
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -15,34 +16,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.talitamorales.composememory.gamelogic.Card
-import com.talitamorales.composememory.gamelogic.CardItem
-import com.talitamorales.composememory.gamelogic.createCards
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.talitamorales.composememory.gamelogic.MemoryCard
+import com.talitamorales.composememory.viewmodel.GameViewModel
+
 
 @Composable
-fun MemoryGameScreen() {
-    val scope = rememberCoroutineScope()
-    var cards by remember { mutableStateOf(createCards()) }
-    var selectedCards by remember { mutableStateOf<List<Card>>(emptyList()) }
-    var gameWon by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        cards = cards.map { it.copy(isFaceUp = true) }
-        delay(5000)
-        cards = cards.map { it.copy(isFaceUp = false) }
-    }
+fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,13 +36,11 @@ fun MemoryGameScreen() {
             .padding(16.dp)
     ) {
         Text(
-            if (gameWon) "🎉 You won!" else "Memory Game",
+            text = if (viewModel.gameWon) "🎉 You won!" else "Memory Game",
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center
-        )
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(bottom = 16.dp)
+            )
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
@@ -67,57 +48,13 @@ fun MemoryGameScreen() {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(cards) { card ->
-                CardItem(
-                    card = card,
-                    onClick = {
-                        if (selectedCards.size < 2 && !card.isFaceUp && !card.isMatched) {
-                            val updated = cards.map {
-                                if (it.id == card.id) it.copy(isFaceUp = true) else it
-                            }
-                            cards = updated
-                            selectedCards = selectedCards + card
-
-                            if (selectedCards.size == 2) {
-                                scope.launch {
-                                    delay(1000)
-                                    val first = updated.first { it.id == selectedCards[0].id }
-                                    val second = updated.first{it.id == selectedCards[1].id}
-                                    if (first.value == second.value) {
-                                        cards = cards.map {
-                                            if (it.id == first.id || it.id == second.id)
-                                                it.copy(isMatched = true)
-                                            else it
-                                        }
-                                    } else {
-                                        cards = cards.map {
-                                            if (it.id == first.id || it.id == second.id)
-                                                it.copy(isFaceUp = false)
-                                            else it
-                                        }
-                                    }
-                                    selectedCards = emptyList()
-                                    if (cards.all { it.isMatched }) {
-                                        gameWon = true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                )
+            items(viewModel.cards, key = {it.id}) { card ->
+                MemoryCard(card) {viewModel.onCardClicked(card) }
             }
         }
 
         Button(
-            onClick =  {
-                cards = createCards()
-                gameWon = false
-                scope.launch {
-                    cards = cards.map { it.copy(isFaceUp = true) }
-                    delay(2000)
-                    cards = cards.map { it.copy(isFaceUp = false) }
-                }
-            },
+            onClick = { viewModel.resetGame()},
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Restart")

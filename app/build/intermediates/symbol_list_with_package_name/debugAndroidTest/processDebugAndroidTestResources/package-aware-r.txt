@@ -1,4 +1,4 @@
-com.talitamorales.composememory2.test
+com.talitamorales.composememory.test
 attr alpha
 attr font
 attr fontProviderAuthority
@@ -168,6 +168,7 @@ layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
 string androidx_startup
+string autofill
 string call_notification_answer_action
 string call_notification_answer_video_action
 string call_notification_decline_action
@@ -187,6 +188,7 @@ string not_selected
 string range_end
 string range_start
 string selected
+string snackbar_pane_title
 string state_empty
 string state_off
 string state_on
@@ -195,7 +197,6 @@ string switch_role
 string tab
 string template_percent
 style DialogWindowTheme
-style FloatingDialogTheme
 style FloatingDialogWindowTheme
 style TextAppearance_Compat_Notification
 style TextAppearance_Compat_Notification_Info

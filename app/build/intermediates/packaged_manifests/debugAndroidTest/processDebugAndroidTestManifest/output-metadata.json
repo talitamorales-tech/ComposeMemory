@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.talitamorales.composememory2.test",
+  "applicationId": "com.talitamorales.composememory.test",
   "variantName": "debugAndroidTest",
   "elements": [
     {

@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.talitamorales.composememory.gamelogic.Card
 import com.talitamorales.composememory.gamelogic.MemoryCard
 import com.talitamorales.composememory.viewmodel.GameViewModel
 
@@ -49,7 +50,11 @@ fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(viewModel.cards, key = {it.id}) { card ->
-                MemoryCard(card) {viewModel.onCardClicked(card) }
+                MemoryCard(
+                    card = card,
+                    isMemorizing = viewModel.isMemorizing,
+                    onClick =  {viewModel.onCardClicked(card) }
+                )
             }
         }
 

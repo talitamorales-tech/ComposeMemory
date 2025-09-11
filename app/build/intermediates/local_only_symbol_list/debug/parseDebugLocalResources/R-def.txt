@@ -7,8 +7,13 @@ color purple_700
 color teal_200
 color teal_700
 color white
+drawable card_back
+drawable cat
+drawable dog
+drawable elephant
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable lion
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

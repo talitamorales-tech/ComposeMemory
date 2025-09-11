@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.util.fastCbrt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.talitamorales.composememory.gamelogic.Card
@@ -14,7 +13,11 @@ import kotlinx.coroutines.launch
 
 class GameViewModel: ViewModel() {
 
+
     var cards = mutableStateListOf<Card>()
+        private set
+
+    var isMemorizing by mutableStateOf(true)
         private set
 
     private var selectedCards = mutableListOf<Card>()
@@ -32,9 +35,11 @@ class GameViewModel: ViewModel() {
         gameWon = false
 
         cards.forEach{it.isFaceUp = true}
+        isMemorizing = true
         viewModelScope.launch {
             delay(5000)
             cards.forEach{it.isFaceUp = false}
+            isMemorizing = false
         }
     }
 
@@ -50,7 +55,7 @@ class GameViewModel: ViewModel() {
 
             viewModelScope.launch {
                 delay(800)
-                if (first.value == second.value) {
+                if (first.imageRes == second.imageRes) {
                     first.isMatched = true
                     second.isMatched = true
                 } else {

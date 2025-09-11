@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.talitamorales.composememory.R
 
 @Composable
-fun MemoryCard(card: Card, onClick: () -> Unit) {
+fun MemoryCard(card: Card, isMemorizing: Boolean, onClick: () -> Unit) {
 
     Card(
         modifier = Modifier
             .size(80.dp)
-            .clickable (onClick = onClick ),
+            .clickable { if (!isMemorizing) onClick() },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {

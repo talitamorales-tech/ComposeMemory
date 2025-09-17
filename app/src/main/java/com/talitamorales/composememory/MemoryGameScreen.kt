@@ -27,7 +27,6 @@ import com.talitamorales.composememory.viewmodel.GameViewModel
 
 @Composable
 fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

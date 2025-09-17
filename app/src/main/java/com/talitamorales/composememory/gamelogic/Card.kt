@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import com.talitamorales.composememory.R
 
 data class Card(
-    val id: Int,
+    var id: Int,
     val imageRes: Int
 ) {
     var isFaceUp by mutableStateOf(false)
@@ -24,5 +24,6 @@ fun createCards(): List<Card> {
         R.drawable.elephant,
         R.drawable.elephant
     )
-    return images.shuffled().mapIndexed {index, resId -> Card(id = index, imageRes = resId)}
+    val ids = (1..5000).shuffled().take(15)
+    return images.shuffled().mapIndexed {index, resId -> Card(id = ids[index], imageRes = resId)}
 }

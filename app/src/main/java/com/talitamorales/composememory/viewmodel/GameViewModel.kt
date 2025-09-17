@@ -12,8 +12,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GameViewModel: ViewModel() {
-
-
     var cards = mutableStateListOf<Card>()
         private set
 
@@ -31,6 +29,7 @@ class GameViewModel: ViewModel() {
     fun resetGame() {
         cards.clear()
         cards.addAll(createCards())
+
         selectedCards.clear()
         gameWon = false
 

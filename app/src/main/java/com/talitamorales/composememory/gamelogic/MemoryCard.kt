@@ -1,5 +1,6 @@
 package com.talitamorales.composememory.gamelogic
 
+import android.content.res.Resources.Theme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,13 +19,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.talitamorales.composememory.R
+import com.talitamorales.composememory.ui.theme.PinkCardFaceUp
+import com.talitamorales.composememory.ui.theme.PurpleCardFaceDown
 
 @Composable
 fun MemoryCard(card: Card, isMemorizing: Boolean, onClick: () -> Unit) {
 
     Card(
         modifier = Modifier
-            .size(80.dp)
+            .size(100.dp)
             .clickable { if (!isMemorizing) onClick() },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(6.dp)
@@ -32,20 +35,20 @@ fun MemoryCard(card: Card, isMemorizing: Boolean, onClick: () -> Unit) {
         Box(
            modifier = Modifier
                .fillMaxSize()
-               .background(if (card.isFaceUp || card.isMatched) Color(0xFFE1BEE7) else Color(0xFF7B1FA2)),
+               .background(if (card.isFaceUp || card.isMatched) PinkCardFaceUp else PurpleCardFaceDown),
             contentAlignment = Alignment.Center
         ) {
             if (card.isFaceUp || card.isMatched) {
                 Image(
                     painter = painterResource(id = card.imageRes),
                     contentDescription = "Animal",
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(85.dp)
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.card_back),
                     contentDescription = "Card Back",
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(85.dp)
                 )
             }
         }

@@ -16,6 +16,11 @@ drawable ic_launcher_foreground
 drawable lion
 mipmap ic_launcher
 mipmap ic_launcher_round
+raw cat
+raw dog
+raw elefant
+raw lion
+raw victory
 string app_name
 style Theme.ComposeMemory
 xml backup_rules

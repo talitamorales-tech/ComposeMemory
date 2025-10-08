@@ -24,7 +24,7 @@
 17-->[androidx.core:core:1.17.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
 18
 19    <application
-19-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-25:19
+19-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-26:19
 20        android:allowBackup="true"
 20-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:7:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -47,22 +47,22 @@
 31        android:theme="@style/Theme.ComposeMemory" >
 31-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:14:9-51
 32        <activity
-32-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:15:9-24:20
+32-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:16:9-25:20
 33            android:name="com.talitamorales.composememory.MainActivity"
-33-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:16:13-41
+33-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:17:13-41
 34            android:exported="true"
-34-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:17:13-36
+34-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:18:13-36
 35            android:theme="@style/Theme.ComposeMemory" >
-35-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:18:13-55
+35-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:19:13-55
 36            <intent-filter>
-36-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:19:13-23:29
+36-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:13-24:29
 37                <action android:name="android.intent.action.MAIN" />
-37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:17-69
-37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:25-66
+37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:17-69
+37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:25-66
 38
 39                <category android:name="android.intent.category.LAUNCHER" />
-39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:22:17-77
-39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:22:27-74
+39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:17-77
+39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:27-74
 40            </intent-filter>
 41        </activity>
 42        <activity

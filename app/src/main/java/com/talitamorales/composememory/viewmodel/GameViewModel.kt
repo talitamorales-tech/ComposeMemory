@@ -19,6 +19,7 @@ class GameViewModel: ViewModel() {
         private set
 
     private var selectedCards = mutableListOf<Card>()
+
     var gameWon  by mutableStateOf(false)
         private set
 
@@ -52,6 +53,7 @@ class GameViewModel: ViewModel() {
             val first = selectedCards[0]
             val second = selectedCards[1]
 
+            // Codigo Assincrono
             viewModelScope.launch {
                 delay(800)
                 if (first.imageRes == second.imageRes) {
@@ -64,7 +66,6 @@ class GameViewModel: ViewModel() {
                 selectedCards.clear()
                 if (cards.all { it.isMatched }) gameWon = true
             }
-
         }
     }
 }

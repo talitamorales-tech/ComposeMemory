@@ -185,6 +185,11 @@ layout notification_template_part_chronometer
 layout notification_template_part_time
 mipmap ic_launcher
 mipmap ic_launcher_round
+raw cat
+raw dog
+raw elefant
+raw lion
+raw victory
 string androidx_startup
 string app_name
 string autofill

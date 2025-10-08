@@ -1,5 +1,6 @@
 package com.talitamorales.composememory
 
+import android.media.MediaPlayer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,17 +17,26 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.talitamorales.composememory.gamelogic.Card
 import com.talitamorales.composememory.gamelogic.MemoryCard
 import com.talitamorales.composememory.viewmodel.GameViewModel
-
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
+    val context = LocalContext.current
+    var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
+    val scope = rememberCoroutineScope()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -52,14 +62,38 @@ fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
                 MemoryCard(
                     card = card,
                     isMemorizing = viewModel.isMemorizing,
-                    onClick =  {viewModel.onCardClicked(card) }
+                    onClick =  {
+                        if (mediaPlayer?.isPlaying == true) {
+
+                        }
+                        mediaPlayer?.release()
+                        mediaPlayer = null
+                        if (card.soundRes != null) {
+                            mediaPlayer = MediaPlayer.create(context, card.soundRes)
+                            mediaPlayer?.start()
+                        }
+                        viewModel.onCardClicked(card)
+                        // Esperamos 900 milisegunods porque o evento que verifica
+                        // se o jogador ganhou o jogo é assincrono e demora 800 milisegundos na GameViewModel (onCardClicked)
+                        // scope é uma CoRoutine
+                        scope.launch {
+                            delay(900)
+                            if (viewModel.gameWon) {
+                                mediaPlayer?.stop()
+                                mediaPlayer?.release()
+                                mediaPlayer = null
+                                mediaPlayer = MediaPlayer.create(context, R.raw.victory)
+                                mediaPlayer?.start()
+                            }
+                        }
+                    }
                 )
             }
         }
 
         Button(
             onClick = { viewModel.resetGame()},
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Restart")
         }

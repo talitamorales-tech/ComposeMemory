@@ -1,5 +1,6 @@
 package com.talitamorales.composememory.viewmodel
 
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -59,9 +60,11 @@ class GameViewModel: ViewModel() {
                 if (first.imageRes == second.imageRes) {
                     first.isMatched = true
                     second.isMatched = true
+
                 } else {
                     first.isFaceUp = false
                     second.isFaceUp = false
+
                 }
                 selectedCards.clear()
                 if (cards.all { it.isMatched }) gameWon = true

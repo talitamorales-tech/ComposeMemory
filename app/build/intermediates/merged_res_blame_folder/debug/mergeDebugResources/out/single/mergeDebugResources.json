@@ -1,106 +1,114 @@
 [
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_card_back.png.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/card_back.png"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/xml_data_extraction_rules.xml.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/xml/data_extraction_rules.xml"
+        "merged": "com.talitamorales.composememory.app-debug-37:/raw_dog.mp3.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/raw/dog.mp3"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.talitamorales.composememory.app-debug-37:/raw_cat.mp3.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/raw/cat.mp3"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/xml_backup_rules.xml.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/xml/backup_rules.xml"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/raw_elefant.mp3.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/raw/elefant.mp3"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/raw_elefant.mp3.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/raw/elefant.mp3"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_sound_off.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/sound_off.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_card_back.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/card_back.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_sound_on.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/sound_on.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_dog.png.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/dog.png"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_ic_launcher_background.xml.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/ic_launcher_background.xml"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_cat.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/cat.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/raw_dog.mp3.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/raw/dog.mp3"
+        "merged": "com.talitamorales.composememory.app-debug-37:/xml_data_extraction_rules.xml.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_elephant.png.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/elephant.png"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_lion.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/lion.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_dog.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/dog.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/raw_cat.mp3.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/raw/cat.mp3"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_lion.png.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/lion.png"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_elephant.png.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/elephant.png"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/raw_lion.mp3.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/raw/lion.mp3"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/drawable_cat.png.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/drawable/cat.png"
-    },
-    {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-mdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-37:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-39:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.talitamorales.composememory.app-debug-37:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
         "merged": "com.talitamorales.composememory.app-debug-37:/raw_victory.mp3.flat",
         "source": "com.talitamorales.composememory.app-main-39:/raw/victory.mp3"
+    },
+    {
+        "merged": "com.talitamorales.composememory.app-debug-37:/xml_backup_rules.xml.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.talitamorales.composememory.app-debug-37:/raw_lion.mp3.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/raw/lion.mp3"
+    },
+    {
+        "merged": "com.talitamorales.composememory.app-debug-37:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.talitamorales.composememory.app-main-39:/drawable/ic_launcher_foreground.xml"
     }
 ]

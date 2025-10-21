@@ -14,6 +14,8 @@ drawable elephant
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable lion
+drawable sound_off
+drawable sound_on
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw cat

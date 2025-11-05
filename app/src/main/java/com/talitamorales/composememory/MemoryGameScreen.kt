@@ -55,18 +55,23 @@ fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(16.dp)
     ) {
-        Row(Modifier.weight(20.0f), horizontalArrangement = Arrangement.Center) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(
                 text = if (viewModel.gameWon) "🎉 You won!" else "Memory Game",
                 style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp, end = 200.dp)
             )
-            Button(
+            Button(modifier = Modifier.size(width = 150.dp, height = 40.dp),
                 onClick = {
                     if (isSoundEnabled) {
                         imageSound = R.drawable.sound_off
                         isSoundEnabled = false
+                        if (mediaPlayer?.isPlaying == true) {
+                            mediaPlayer?.stop()
+                            mediaPlayer?.release()
+                            mediaPlayer = null
+                        }
                     } else {
                         if (mediaPlayer?.isPlaying == true) {
                             mediaPlayer?.stop()
@@ -84,6 +89,7 @@ fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
                     painterResource(id = imageSound),
                     contentDescription = "Sound button",
                     modifier = Modifier.size(ButtonDefaults.IconSize)
+
                 )
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text(if (isSoundEnabled) "Sound_on" else "Sound_off")

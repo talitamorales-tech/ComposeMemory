@@ -4,7 +4,7 @@
             "outputFile": "com.talitamorales.composememory.test.app-mergeDebugAndroidTestResources-29:/values-gl/values-gl.xml",
             "map": [
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-gl/values-gl.xml",
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/05bcf9f2c8e26b8c9a4c5baf15550c44/transformed/core-1.17.0/res/values-gl/values-gl.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8ee51b2708d212fab735cce6e1308a4f/transformed/ui-release/res/values-gl/values-gl.xml",
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/ba18b3cea0a596ac4a9852f3190d1604/transformed/ui-release/res/values-gl/values-gl.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

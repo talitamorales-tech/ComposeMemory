@@ -4,24 +4,7 @@
             "outputFile": "com.talitamorales.composememory.test.app-mergeDebugAndroidTestResources-29:/values-km/values-km.xml",
             "map": [
                 {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6c8549cfe4dd194337cd539841bce73/transformed/core-1.17.0/res/values-km/values-km.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,150,253,351,451,552,664,776",
-                        "endColumns": "94,102,97,99,100,111,111,100",
-                        "endOffsets": "145,248,346,446,547,659,771,872"
-                    },
-                    "to": {
-                        "startLines": "3,4,5,6,7,8,9,26",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "193,288,391,489,589,690,802,2254",
-                        "endColumns": "94,102,97,99,100,111,111,100",
-                        "endOffsets": "283,386,484,584,685,797,909,2350"
-                    }
-                },
-                {
-                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8ee51b2708d212fab735cce6e1308a4f/transformed/ui-release/res/values-km/values-km.xml",
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/ba18b3cea0a596ac4a9852f3190d1604/transformed/ui-release/res/values-km/values-km.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -35,6 +18,23 @@
                         "startOffsets": "105,914,999,1079,1183,1281,1369,1453,1536,1621,1708,1788,1873,1949,2037,2111,2183,2355,2439,2505",
                         "endColumns": "87,84,79,103,97,87,83,82,84,86,79,84,75,87,73,71,70,83,65,117",
                         "endOffsets": "188,994,1074,1178,1276,1364,1448,1531,1616,1703,1783,1868,1944,2032,2106,2178,2249,2434,2500,2618"
+                    }
+                },
+                {
+                    "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/05bcf9f2c8e26b8c9a4c5baf15550c44/transformed/core-1.17.0/res/values-km/values-km.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,150,253,351,451,552,664,776",
+                        "endColumns": "94,102,97,99,100,111,111,100",
+                        "endOffsets": "145,248,346,446,547,659,771,872"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6,7,8,9,26",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "193,288,391,489,589,690,802,2254",
+                        "endColumns": "94,102,97,99,100,111,111,100",
+                        "endOffsets": "283,386,484,584,685,797,909,2350"
                     }
                 }
             ]

@@ -1,21 +1,29 @@
 R_DEF: Internal format may change without notice
 local
 color black
+color gray_400
+color gray_600
+color light_blue_400
+color light_blue_600
 color purple_200
 color purple_500
 color purple_700
 color teal_200
 color teal_700
 color white
+drawable ball
 drawable card_back
 drawable cat
 drawable dog
+drawable doll
 drawable elephant
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable lion
+drawable plane
 drawable sound_off
 drawable sound_on
+drawable toy_car
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw cat
@@ -25,5 +33,6 @@ raw lion
 raw victory
 string app_name
 style Theme.ComposeMemory
+style Widget.Theme.ComposeMemory.MyView
 xml backup_rules
 xml data_extraction_rules

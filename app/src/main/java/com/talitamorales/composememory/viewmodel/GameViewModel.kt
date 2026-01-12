@@ -1,36 +1,47 @@
 package com.talitamorales.composememory.viewmodel
 
 
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.talitamorales.composememory.GameViewModelContract
 import com.talitamorales.composememory.gamelogic.Card
+import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.createCards
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class GameViewModel: ViewModel() {
-    var cards = mutableStateListOf<Card>()
+
+open class GameViewModel(id: Int) : ViewModel(), GameViewModelContract {
+    final override var cards = mutableStateListOf<Card>()
         private set
 
-    var isMemorizing by mutableStateOf(true)
-        private set
+    override var isMemorizing by mutableStateOf(true)
 
     private var selectedCards = mutableListOf<Card>()
 
-    var gameWon  by mutableStateOf(false)
-        private set
+    override var gameWon  by mutableStateOf(false)
+
+    override var currentTheme by mutableStateOf(
+        if(id == 1) GameTheme.Animals else GameTheme.Toys
+    )
 
     init {
         resetGame()
     }
 
-    fun resetGame() {
+    override fun resetGame() {
         cards.clear()
-        cards.addAll(createCards())
+        cards.addAll(
+            when (currentTheme) {
+                GameTheme.Animals -> createCards(Card.animalsAssets)
+                GameTheme.Toys -> createCards(Card.toysAssets)
+            }
+        )
 
         selectedCards.clear()
         gameWon = false
@@ -44,7 +55,7 @@ class GameViewModel: ViewModel() {
         }
     }
 
-    fun onCardClicked(card: Card) {
+    override fun onCardClicked(card: Card) {
         if (card.isFaceUp || card.isMatched || selectedCards.size >= 2) return
 
         card.isFaceUp = true

@@ -34,13 +34,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.MemoryCard
+import com.talitamorales.composememory.viewmodel.FakeGameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
+fun MemoryGameScreen(viewModel: GameViewModelContract) {
     val context = LocalContext.current
     var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     val scope = rememberCoroutineScope()
@@ -94,6 +96,26 @@ fun MemoryGameScreen(viewModel: GameViewModel = viewModel()) {
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text(if (isSoundEnabled) "Sound_on" else "Sound_off")
             }
+        }
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 16.dp),
+            onClick = {
+                viewModel.currentTheme =
+                    if (viewModel.currentTheme == GameTheme.Animals)
+                        GameTheme.Toys
+                    else GameTheme.Animals
+
+                viewModel.resetGame()
+            }
+        ) {
+            Text(
+                text = when (viewModel.currentTheme) {
+                    GameTheme.Animals -> "Theme: Animals"
+                    GameTheme.Toys -> "Theme: Toys"
+                }
+            )
         }
 
         LazyVerticalGrid(

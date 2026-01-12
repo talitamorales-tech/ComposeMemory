@@ -18,7 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.talitamorales.composememory.R
@@ -52,14 +52,16 @@ fun MemoryCard(card: Card, isMemorizing: Boolean, onClick: () -> Unit) {
             if (card.isFaceUp || card.isMatched) {
                 Image(
                     painter = painterResource(id = card.imageRes),
-                    contentDescription = "Animal",
-                    modifier = Modifier.size(85.dp)
+                    contentDescription = "null",
+                    modifier = Modifier.size(85.dp),
+                    contentScale = ContentScale.Fit
                 )
             } else {
                 Image(
                     painter = painterResource(id = R.drawable.card_back),
-                    contentDescription = "Card Back",
-                    modifier = Modifier.size(85.dp)
+                    contentDescription = "null",
+                    modifier = Modifier.size(85.dp),
+                    contentScale = ContentScale.Fit
                 )
             }
 

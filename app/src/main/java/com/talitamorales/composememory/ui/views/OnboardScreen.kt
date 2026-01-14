@@ -1,13 +1,5 @@
-package com.talitamorales.composememory
+package com.talitamorales.composememory.ui.views
 
-import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
-import android.util.AttributeSet
-import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -24,9 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.talitamorales.composememory.viewmodel.GameViewModel
 
 /**
  * TODO: document your custom view class.

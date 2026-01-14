@@ -24,6 +24,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.talitamorales.composememory.ui.theme.ComposeMemoryTheme
+import com.talitamorales.composememory.ui.views.MemoryGameScreen
+import com.talitamorales.composememory.ui.views.OnboardScreen
 import com.talitamorales.composememory.viewmodel.FakeGameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModelFactory

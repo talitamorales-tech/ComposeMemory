@@ -1,8 +1,7 @@
-package com.talitamorales.composememory
+package com.talitamorales.composememory.ui.views
 
 import android.media.MediaPlayer
 import android.widget.Toast
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,9 +33,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.talitamorales.composememory.GameViewModelContract
+import com.talitamorales.composememory.R
 import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.MemoryCard
-import com.talitamorales.composememory.viewmodel.FakeGameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -57,6 +57,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(16.dp)
     ) {
+        // Toolbar
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(
                 text = if (viewModel.gameWon) "🎉 You won!" else "Memory Game",
@@ -64,58 +65,31 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 16.dp, end = 200.dp)
             )
-            Button(modifier = Modifier.size(width = 150.dp, height = 40.dp),
-                onClick = {
-                    if (isSoundEnabled) {
-                        imageSound = R.drawable.sound_off
-                        isSoundEnabled = false
-                        if (mediaPlayer?.isPlaying == true) {
-                            mediaPlayer?.stop()
-                            mediaPlayer?.release()
-                            mediaPlayer = null
-                        }
-                    } else {
-                        if (mediaPlayer?.isPlaying == true) {
-                            mediaPlayer?.stop()
-                            mediaPlayer?.release()
-                            mediaPlayer = null
-                        }
-                        imageSound = R.drawable.sound_on
-                        isSoundEnabled = true
+
+            ThemeButton(viewModel)
+
+            ToolbarButton(if (isSoundEnabled) "Sound on" else "Sound off", imageSound) {
+                if (isSoundEnabled) {
+                    imageSound = R.drawable.sound_off
+                    isSoundEnabled = false
+                    if (mediaPlayer?.isPlaying == true) {
+                        mediaPlayer?.stop()
+                        mediaPlayer?.release()
+                        mediaPlayer = null
                     }
-                    Toast.makeText(context,if(isSoundEnabled) "Sound_on 🔊" else "Sound_off 🔇",Toast.LENGTH_SHORT).show()
-                },
-                contentPadding = ButtonDefaults.ButtonWithIconContentPadding
-            ) {
-                Icon(
-                    painterResource(id = imageSound),
-                    contentDescription = "Sound button",
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
-
-                )
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(if (isSoundEnabled) "Sound_on" else "Sound_off")
-            }
-        }
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 16.dp),
-            onClick = {
-                viewModel.currentTheme =
-                    if (viewModel.currentTheme == GameTheme.Animals)
-                        GameTheme.Toys
-                    else GameTheme.Animals
-
-                viewModel.resetGame()
-            }
-        ) {
-            Text(
-                text = when (viewModel.currentTheme) {
-                    GameTheme.Animals -> "Theme: Animals"
-                    GameTheme.Toys -> "Theme: Toys"
+                } else {
+                    if (mediaPlayer?.isPlaying == true) {
+                        mediaPlayer?.stop()
+                        mediaPlayer?.release()
+                        mediaPlayer = null
+                    }
+                    imageSound = R.drawable.sound_on
+                    isSoundEnabled = true
                 }
-            )
+                Toast.makeText(context,if(isSoundEnabled) "Sound_on 🔊" else "Sound_off 🔇",Toast.LENGTH_SHORT).show()
+            }
+
+            RestartButton(viewModel)
         }
 
         LazyVerticalGrid(
@@ -156,12 +130,59 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 )
             }
         }
+    }
+}
 
-        Button(
-            onClick = { viewModel.resetGame()},
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text("Restart")
-        }
+// - Composable Objects
+
+@Composable
+fun ThemeButton(viewModel: GameViewModelContract) {
+    val btnThemeTitle =  when (viewModel.currentTheme) {
+        GameTheme.Animals -> "Theme: Animals"
+        GameTheme.Toys -> "Theme: Toys"
+    }
+    val btnThemeImage = when (viewModel.currentTheme) {
+        GameTheme.Animals -> R.drawable.cat
+        GameTheme.Toys -> R.drawable.plane
+    }
+    ToolbarButton(btnThemeTitle, btnThemeImage) {
+        viewModel.currentTheme =
+            if (viewModel.currentTheme == GameTheme.Animals)
+                GameTheme.Toys
+            else GameTheme.Animals
+
+        viewModel.resetGame()
+    }
+}
+
+// TODO: - Fazer o botao restart com a imagem apenas. Diferente do ToolbarButton
+@Composable
+fun RestartButton(viewModel: GameViewModelContract) {
+    Button(
+        onClick = { viewModel.resetGame()},
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        // TODO: - Atualizar aqui ao inves to Text usar uma Image com o novo icone do restart
+        Text("Restart")
+    }
+}
+
+// - Helper Functions
+
+@Composable
+fun ToolbarButton(btnTitle: String, btnImage: Int, btnClick: () -> Unit) {
+    Button(modifier = Modifier.size(width = 180.dp, height = 40.dp),
+        onClick = {
+            btnClick()
+        },
+        contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+    ) {
+        Icon(
+            painterResource(id = btnImage),
+            contentDescription = btnTitle,
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+        )
+        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Text(btnTitle)
     }
 }

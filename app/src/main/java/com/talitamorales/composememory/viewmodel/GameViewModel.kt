@@ -1,7 +1,5 @@
 package com.talitamorales.composememory.viewmodel
 
-
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-open class GameViewModel(id: Int) : ViewModel(), GameViewModelContract {
+class GameViewModel( private val themeId: Int) : ViewModel(), GameViewModelContract {
     final override var cards = mutableStateListOf<Card>()
         private set
 
@@ -27,7 +25,11 @@ open class GameViewModel(id: Int) : ViewModel(), GameViewModelContract {
     override var gameWon  by mutableStateOf(false)
 
     override var currentTheme by mutableStateOf(
-        if(id == 1) GameTheme.Animals else GameTheme.Toys
+        when (themeId) {
+            1 -> GameTheme.Animals
+            2 -> GameTheme.Toys
+            else -> GameTheme.Animals
+        }
     )
 
     init {

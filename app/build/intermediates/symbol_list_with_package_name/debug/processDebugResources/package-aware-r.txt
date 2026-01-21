@@ -86,6 +86,7 @@ drawable cat
 drawable dog
 drawable doll
 drawable elephant
+drawable ic_animals
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
@@ -94,7 +95,10 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable ic_toys
 drawable lion
+drawable memory_friends_logo
+drawable memory_friends_logo_banner
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -108,7 +112,10 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable onboarding_cat
+drawable onboarding_plane
 drawable plane
+drawable restart
 drawable sound_off
 drawable sound_on
 drawable toy_car

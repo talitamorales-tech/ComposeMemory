@@ -17,10 +17,17 @@ drawable cat
 drawable dog
 drawable doll
 drawable elephant
+drawable ic_animals
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable ic_toys
 drawable lion
+drawable memory_friends_logo
+drawable memory_friends_logo_banner
+drawable onboarding_cat
+drawable onboarding_plane
 drawable plane
+drawable restart
 drawable sound_off
 drawable sound_on
 drawable toy_car

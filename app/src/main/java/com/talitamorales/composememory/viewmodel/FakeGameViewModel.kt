@@ -11,7 +11,6 @@ class FakeGameViewModel : GameViewModelContract {
     override val cards = mutableStateListOf<Card>().apply {
         addAll(createCards(Card.animalsAssets))
     }
-
     override val isMemorizing = false
     override  val gameWon = false
     override var currentTheme = GameTheme.Animals

@@ -2,6 +2,8 @@ package com.talitamorales.composememory.ui.views
 
 import android.media.MediaPlayer
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,17 +31,26 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.talitamorales.composememory.GameViewModelContract
 import com.talitamorales.composememory.R
 import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.MemoryCard
-import com.talitamorales.composememory.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.runtime.*
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun MemoryGameScreen(viewModel: GameViewModelContract) {
@@ -55,16 +66,42 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
         modifier = Modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(16.dp)
+            .padding(horizontal = 10.dp)
     ) {
         // Toolbar
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(
-                text = if (viewModel.gameWon) "🎉 You won!" else "Memory Game",
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp, end = 200.dp)
-            )
+        Row(Modifier.fillMaxWidth().height(60.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            if (viewModel.gameWon) {
+                Text(
+                    text =  "\uD83C\uDF1F You’re a star!",
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = if (viewModel.gameWon)
+                            Color(0xFFFF9800)
+                        else
+                            MaterialTheme.colorScheme.primary
+                    ),
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 16.dp)
+                )
+            } else {
+                Image(
+                    painter = painterResource(R.drawable.memory_friends_logo_banner),
+                    contentDescription = "Memory Friends Game",
+                    modifier = Modifier
+                        .size(180.dp)
+                        .clickable {
+                            viewModel.resetGame()
+                        },
+                    alignment = Alignment.TopEnd
+                )
+            }
+
+            Spacer(Modifier.width(100.dp))
 
             ThemeButton(viewModel)
 
@@ -94,7 +131,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
-            modifier = Modifier.weight(80.0f),
+            modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -155,16 +192,19 @@ fun ThemeButton(viewModel: GameViewModelContract) {
     }
 }
 
-// TODO: - Fazer o botao restart com a imagem apenas. Diferente do ToolbarButton
 @Composable
 fun RestartButton(viewModel: GameViewModelContract) {
-    Button(
-        onClick = { viewModel.resetGame()},
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        // TODO: - Atualizar aqui ao inves to Text usar uma Image com o novo icone do restart
-        Text("Restart")
-    }
+   Image(
+       painter = painterResource(id = R.drawable.restart),
+       contentDescription = "Restart",
+       modifier = Modifier
+           .size(100.dp)
+           .clickable {
+               viewModel.resetGame()
+           },
+       alignment = Alignment.TopCenter,
+       contentScale = ContentScale.FillBounds
+   )
 }
 
 // - Helper Functions

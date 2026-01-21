@@ -34,7 +34,7 @@ fun MemoryCard(card: Card, isMemorizing: Boolean, onClick: () -> Unit) {
 
     Card(
         modifier = Modifier
-            .size(100.dp)
+            .size(130.dp)
             .clickable (enabled = !isMemorizing && !card.isMatched) { onClick() },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(6.dp),

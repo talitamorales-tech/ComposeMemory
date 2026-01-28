@@ -44,6 +44,14 @@
         "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-42:/drawable/dog.png"
     },
     {
+        "merged": "com.talitamorales.composememory.app-debug-40:/drawable_onboarding_cat.png.flat",
+        "source": "com.talitamorales.composememory.app-main-42:/drawable/onboarding_cat.png"
+    },
+    {
+        "merged": "com.talitamorales.composememory.app-debug-40:/drawable_onboarding_plane.png.flat",
+        "source": "com.talitamorales.composememory.app-main-42:/drawable/onboarding_plane.png"
+    },
+    {
         "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-40:/drawable_sound_off.png.flat",
         "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-42:/drawable/sound_off.png"
     },
@@ -150,10 +158,6 @@
     {
         "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-40:/drawable_onboarding_cat.png.flat",
         "source": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-main-42:/drawable/onboarding_cat.png"
-    },
-    {
-        "merged": "com.talitamorales.composememory.app-debug-40:/drawable_restart.png.flat",
-        "source": "com.talitamorales.composememory.app-main-42:/drawable/restart.png"
     },
     {
         "merged": "/Users/talitamoralessprovieri/.gradle/daemon/8.13/com.talitamorales.composememory.app-debug-40:/xml_backup_rules.xml.flat",

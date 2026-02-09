@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -131,9 +132,15 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
-            modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(
+                top = 12.dp,
+                bottom = 16.dp
+            )
         ) {
             items(viewModel.cards, key = {it.id}) { card ->
                 MemoryCard(

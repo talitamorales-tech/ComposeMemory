@@ -16,3 +16,11 @@ val Blue = Color(0xFF1565C0)
 // Card Colors
 val PinkCardFaceUp = Color(0xFFE1BEE7)
 val PurpleCardFaceDown = Color(0xFF7B1FA2)
+
+
+// Color of the animation
+val Golden = Color(0xFFFFD700)
+val Lilac = Color(0xFFB388FF)
+val LightBlue = Color(0xFF80D8FF)
+val SoftOrange = Color(0xFFFFA726) // laranja suave
+val Pink = Color(0xFFFF80AB) // rosa

@@ -50,6 +50,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.*
 import androidx.compose.ui.layout.ContentScale
 
@@ -60,6 +61,8 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
     val scope = rememberCoroutineScope()
     var isSoundEnabled by remember { mutableStateOf(true) }
     var imageSound by remember { mutableStateOf(R.drawable.sound_on) }
+    val soundColor = if (isSoundEnabled) Color(0xFF2196F3) else Color (0xFFF44336)
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -71,10 +74,11 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
     ) {
         // Toolbar
         Row(Modifier.fillMaxWidth().height(60.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.Top
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+
         ) {
-            if (viewModel.gameWon) {
+            /*if (viewModel.gameWon) {
                 Text(
                     text =  "\uD83C\uDF1F You’re a star!",
                     style = MaterialTheme.typography.headlineSmall.copy(
@@ -103,26 +107,27 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
             }
 
             Spacer(Modifier.width(100.dp))
-
+*/
             ThemeButton(viewModel)
 
-            ToolbarButton(if (isSoundEnabled) "Sound on" else "Sound off", imageSound) {
+            ToolbarButton(btnTitle = if (isSoundEnabled) "Sound on" else "Sound off",
+                btnImage = imageSound,
+                containerColor = soundColor
+            ) {
                 if (isSoundEnabled) {
                     imageSound = R.drawable.sound_off
                     isSoundEnabled = false
-                    if (mediaPlayer?.isPlaying == true) {
-                        mediaPlayer?.stop()
-                        mediaPlayer?.release()
-                        mediaPlayer = null
-                    }
+                    mediaPlayer?.stop()
+                    mediaPlayer?.release()
+                    mediaPlayer = null
                 } else {
-                    if (mediaPlayer?.isPlaying == true) {
-                        mediaPlayer?.stop()
-                        mediaPlayer?.release()
-                        mediaPlayer = null
-                    }
                     imageSound = R.drawable.sound_on
                     isSoundEnabled = true
+                    /*if (mediaPlayer?.isPlaying == true) {
+                        mediaPlayer?.stop()
+                        mediaPlayer?.release()
+                        mediaPlayer = null
+                    }*/
                 }
                 Toast.makeText(context,if(isSoundEnabled) "Sound_on 🔊" else "Sound_off 🔇",Toast.LENGTH_SHORT).show()
             }
@@ -181,15 +186,16 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
 
 @Composable
 fun ThemeButton(viewModel: GameViewModelContract) {
-    val btnThemeTitle =  when (viewModel.currentTheme) {
-        GameTheme.Animals -> "Theme: Animals"
-        GameTheme.Toys -> "Theme: Toys"
+
+    val (btnThemeTitle, btnThemeImage, btnColor) =  when (viewModel.currentTheme) {
+        GameTheme.Animals -> Triple("Theme: Animals", R.drawable.cat, Color(0xFF4CAF50))
+        GameTheme.Toys -> Triple( "Theme: Toys", R.drawable.plane, Color(0xFF9C27B0))
     }
-    val btnThemeImage = when (viewModel.currentTheme) {
+    /*val btnThemeImage = when (viewModel.currentTheme) {
         GameTheme.Animals -> R.drawable.cat
         GameTheme.Toys -> R.drawable.plane
-    }
-    ToolbarButton(btnThemeTitle, btnThemeImage) {
+    }*/
+    ToolbarButton(btnThemeTitle, btnThemeImage, btnColor) {
         viewModel.currentTheme =
             if (viewModel.currentTheme == GameTheme.Animals)
                 GameTheme.Toys
@@ -217,8 +223,18 @@ fun RestartButton(viewModel: GameViewModelContract) {
 // - Helper Functions
 
 @Composable
-fun ToolbarButton(btnTitle: String, btnImage: Int, btnClick: () -> Unit) {
+fun ToolbarButton(
+    btnTitle: String,
+    btnImage: Int,
+    containerColor: Color,
+    contentColor: Color = Color.White,
+    btnClick: () -> Unit
+) {
     Button(modifier = Modifier.size(width = 180.dp, height = 40.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        ),
         onClick = {
             btnClick()
         },
@@ -233,3 +249,6 @@ fun ToolbarButton(btnTitle: String, btnImage: Int, btnClick: () -> Unit) {
         Text(btnTitle)
     }
 }
+
+
+//Arrangement.spacedBy(12.dp)

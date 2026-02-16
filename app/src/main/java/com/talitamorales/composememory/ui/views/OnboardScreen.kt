@@ -155,7 +155,9 @@ fun ThemeCard(
                 Text(
                     modifier = Modifier.padding(top = 20.dp),
                     text = title,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.Blue
+
                 )
             }
         }

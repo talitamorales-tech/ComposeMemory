@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeMemoryTheme {
 
+
                 val navController = rememberNavController()
 
                 Scaffold(modifier = Modifier

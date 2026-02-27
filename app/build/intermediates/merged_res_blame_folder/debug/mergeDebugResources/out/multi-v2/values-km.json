@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-38:/values-km/values-km.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-40:/values-km/values-km.xml",
             "map": [
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/ba18b3cea0a596ac4a9852f3190d1604/transformed/ui-release/res/values-km/values-km.xml",

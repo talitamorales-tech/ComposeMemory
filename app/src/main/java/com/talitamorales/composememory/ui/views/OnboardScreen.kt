@@ -14,25 +14,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.talitamorales.composememory.R
@@ -40,23 +35,14 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun OnboardScreen(navController: NavController) {
-    SplashOrContent(navController)
-}
-
-@Composable
-fun SplashOrContent(navController: NavController) {
-    var showSplash by remember { mutableStateOf(true) }
-
     LaunchedEffect(Unit) {
-        delay(5000) // 5 segundos
-        showSplash = false
+        delay(5000)
+        navController.navigate("initialMenu") {
+            popUpTo("splash") { inclusive = true }
+        }
     }
 
-    if (showSplash) {
-        SplashScreen()
-    } else {
-        MainContent(navController = navController)
-    }
+    SplashScreen()
 }
 
 @Composable
@@ -67,14 +53,14 @@ fun SplashScreen() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.memory_friends_logo),
-            contentDescription = "Memory Friends Logo",
+            contentDescription = stringResource(id = R.string.logo_content_description),
             modifier = Modifier.fillMaxSize()
         )
     }
 }
 
 @Composable
-fun MainContent(navController: NavController) {
+fun ThemeSelectionScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,7 +71,7 @@ fun MainContent(navController: NavController) {
     ) {
 
         Text(
-            text = "Choose a theme to play",
+            text = stringResource(id = R.string.choose_theme_to_play),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -99,7 +85,7 @@ fun MainContent(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             ThemeCard(
-                title = "Animals",
+                title = stringResource(id = R.string.theme_animals),
                 imageRes = R.drawable.onboarding_cat,
                 modifier = Modifier.weight(1f),
                 onClick = {
@@ -107,7 +93,7 @@ fun MainContent(navController: NavController) {
                 }
             )
             ThemeCard(
-                title = "Toys",
+                title = stringResource(id = R.string.theme_toys),
                 imageRes = R.drawable.onboarding_plane,
                 modifier = Modifier.weight(1f),
                 onClick = {
@@ -117,7 +103,6 @@ fun MainContent(navController: NavController) {
         }
     }
 }
-
 @Composable
 fun ThemeCard(
     title: String,
@@ -163,6 +148,3 @@ fun ThemeCard(
         }
     }
 }
-
-
-

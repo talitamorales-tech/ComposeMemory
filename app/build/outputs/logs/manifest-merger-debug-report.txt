@@ -1,13 +1,21 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-28:12
+ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-31:12
+INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:2:1-31:12
 MERGED from [androidx.navigation:navigation-compose-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8bd4f9170c558299f9e32444e1b3a945/transformed/navigation-compose-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material3:material3-android:1.3.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8d14d69f4b655e109eb6bc159df53266/transformed/material3-release/AndroidManifest.xml:17:1-22:12
+MERGED from [io.coil-kt:coil-compose:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/5c0f69c9446bc7791bacb261ab6542a0/transformed/coil-compose-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose-base:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/4c5f2a39270ca25a6b42d776aff4ad13/transformed/coil-compose-base-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/6abd711383528a62cb0df196a1af56b1/transformed/accompanist-drawablepainter-0.32.0/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.navigation:navigation-common-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/209fdd180eca6c974d51d7a84e4cb85c/transformed/navigation-common-release/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-runtime-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/93aa986ef0742bc02f7e48c6ecf2e64e/transformed/navigation-runtime-release/AndroidManifest.xml:17:1-22:12
+MERGED from [io.coil-kt:coil:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/b3daaf7ce4b25de2f129122bce172a10/transformed/coil-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-base:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/0686ed24a79fa3e3289abf25151f86b1/transformed/coil-base-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d6e2c9d3ebe642160952ea693751e17b/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/2e7e5813f71e9db6e5b8e553911aaff3/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d91f3ec11d6b326c159dbbf28c969516/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.autofill:autofill:1.0.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6d18e67893d6d07d2d2f20741be40a5/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/533fc4df4f6b5452eef949b59ddc648d/transformed/ui-tooling-data/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/a50945acbd4ac1a79e5344341aa3172a/transformed/ui-tooling-preview/AndroidManifest.xml:17:1-22:12
@@ -56,6 +64,7 @@ MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamora
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/ed343bd26092684adc0c4682f7a7f43d/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.2.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/63b19effd9a4a38877e622d0b54ac673/transformed/tracing-1.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3be1274103194b87e7b6593c9facb53e/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/1d50c3a891da789058dcc3889965ddd0/transformed/exifinterface-1.3.7/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/be0673cc86d2e5f37677b4e01c04854d/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
 	package
 		INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml
@@ -70,8 +79,8 @@ ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app
 	android:name
 		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:4:22-64
 application
-ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-26:19
-INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-26:19
+ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-29:19
+INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-29:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:23:5-33:19
@@ -90,42 +99,48 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/tali
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3be1274103194b87e7b6593c9facb53e/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
 	android:extractNativeLibs
 		INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml
+	android:localeConfig
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:13:9-51
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.17.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/05bcf9f2c8e26b8c9a4c5baf15550c44/transformed/core-1.17.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:13:9-35
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:16:9-35
 	android:label
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:11:9-41
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:12:9-41
 	android:fullBackupContent
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:9:9-54
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:10:9-54
+	android:resizeableActivity
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:14:9-43
 	android:roundIcon
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:12:9-54
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:15:9-54
 	android:icon
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:10:9-43
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:11:9-43
 	android:allowBackup
 		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:7:9-35
 	android:theme
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:14:9-51
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:17:9-51
+	android:enableOnBackInvokedCallback
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:9:9-51
 	android:dataExtractionRules
 		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:8:9-65
 activity#com.talitamorales.composememory.MainActivity
-ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:16:9-25:20
+ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:19:9-28:20
 	android:exported
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:18:13-36
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:13-36
 	android:theme
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:19:13-55
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:22:13-55
 	android:name
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:17:13-41
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:13-24:29
+ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:13-27:29
 action#android.intent.action.MAIN
-ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:17-69
+ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:24:17-69
 	android:name
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:25-66
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:24:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:17-77
+ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:26:17-77
 	android:name
-		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:27-74
+		ADDED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:26:27-74
 uses-sdk
 INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml
@@ -134,10 +149,26 @@ MERGED from [androidx.navigation:navigation-compose-android:2.9.6] /Users/talita
 MERGED from [androidx.navigation:navigation-compose-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8bd4f9170c558299f9e32444e1b3a945/transformed/navigation-compose-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.material3:material3-android:1.3.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8d14d69f4b655e109eb6bc159df53266/transformed/material3-release/AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.material3:material3-android:1.3.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/8d14d69f4b655e109eb6bc159df53266/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [io.coil-kt:coil-compose:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/5c0f69c9446bc7791bacb261ab6542a0/transformed/coil-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/5c0f69c9446bc7791bacb261ab6542a0/transformed/coil-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/4c5f2a39270ca25a6b42d776aff4ad13/transformed/coil-compose-base-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/4c5f2a39270ca25a6b42d776aff4ad13/transformed/coil-compose-base-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/6abd711383528a62cb0df196a1af56b1/transformed/accompanist-drawablepainter-0.32.0/AndroidManifest.xml:21:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/6abd711383528a62cb0df196a1af56b1/transformed/accompanist-drawablepainter-0.32.0/AndroidManifest.xml:21:5-44
 MERGED from [androidx.navigation:navigation-common-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/209fdd180eca6c974d51d7a84e4cb85c/transformed/navigation-common-release/AndroidManifest.xml:20:5-44
 MERGED from [androidx.navigation:navigation-common-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/209fdd180eca6c974d51d7a84e4cb85c/transformed/navigation-common-release/AndroidManifest.xml:20:5-44
 MERGED from [androidx.navigation:navigation-runtime-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/93aa986ef0742bc02f7e48c6ecf2e64e/transformed/navigation-runtime-release/AndroidManifest.xml:20:5-44
 MERGED from [androidx.navigation:navigation-runtime-android:2.9.6] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/93aa986ef0742bc02f7e48c6ecf2e64e/transformed/navigation-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [io.coil-kt:coil:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/b3daaf7ce4b25de2f129122bce172a10/transformed/coil-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/b3daaf7ce4b25de2f129122bce172a10/transformed/coil-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/0686ed24a79fa3e3289abf25151f86b1/transformed/coil-base-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.7.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/0686ed24a79fa3e3289abf25151f86b1/transformed/coil-base-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d6e2c9d3ebe642160952ea693751e17b/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d6e2c9d3ebe642160952ea693751e17b/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/2e7e5813f71e9db6e5b8e553911aaff3/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/2e7e5813f71e9db6e5b8e553911aaff3/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d91f3ec11d6b326c159dbbf28c969516/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/d91f3ec11d6b326c159dbbf28c969516/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.0.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6d18e67893d6d07d2d2f20741be40a5/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.0.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/e6d18e67893d6d07d2d2f20741be40a5/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.compose.ui:ui-tooling-data-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/533fc4df4f6b5452eef949b59ddc648d/transformed/ui-tooling-data/AndroidManifest.xml:5:5-44
@@ -234,6 +265,8 @@ MERGED from [androidx.tracing:tracing:1.2.0] /Users/talitamoralessprovieri/.grad
 MERGED from [androidx.tracing:tracing:1.2.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/63b19effd9a4a38877e622d0b54ac673/transformed/tracing-1.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3be1274103194b87e7b6593c9facb53e/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3be1274103194b87e7b6593c9facb53e/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/1d50c3a891da789058dcc3889965ddd0/transformed/exifinterface-1.3.7/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/1d50c3a891da789058dcc3889965ddd0/transformed/exifinterface-1.3.7/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/be0673cc86d2e5f37677b4e01c04854d/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/be0673cc86d2e5f37677b4e01c04854d/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 	android:targetSdkVersion

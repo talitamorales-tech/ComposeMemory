@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">ComposeMemory</string>
+    <string name="logo_content_description">Logo Memory Friends</string>
+    <string name="choose_theme_to_play">Escolha um tema para jogar</string>
+    <string name="theme_animals">Animais</string>
+    <string name="theme_toys">Brinquedos</string>
+
+    <string name="initial_choose_how_to_play">Escolha como brincar</string>
+    <string name="menu_cards_carousel_title">Carrossel de Cartas</string>
+    <string name="menu_cards_carousel_subtitle">Veja todas as cartas do jogo</string>
+    <string name="menu_memory_game_title">Memory Game</string>
+    <string name="menu_memory_game_subtitle">Jogue a memoria com temas</string>
+
+    <string name="carousel_title">Carrossel de Cartas</string>
+    <string name="carousel_tap_to_advance">Toque na carta ou aguarde o avanco automatico</string>
+    <string name="carousel_card_content_description">Carta %1$d</string>
+    <string name="close">Fechar</string>
+
+    <string name="toast_sound_on">Som ligado</string>
+    <string name="toast_sound_off">Som desligado</string>
+    <string name="toolbar_theme_animals">Tema: Animais</string>
+    <string name="toolbar_theme_toys">Tema: Brinquedos</string>
+    <string name="toolbar_sound_on">Som ligado</string>
+    <string name="toolbar_sound_off">Som desligado</string>
+    <string name="restart">Reiniciar</string>
+
+    <string name="win_congrats">Parabens!</string>
+    <string name="win_prepare_next_round">Voce venceu! Preparando nova rodada...</string>
+    <string name="landscape_required">Gire o dispositivo para o modo paisagem</string>
+</resources>

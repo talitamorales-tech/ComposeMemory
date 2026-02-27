@@ -24,7 +24,7 @@
 17-->[androidx.core:core:1.17.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/05bcf9f2c8e26b8c9a4c5baf15550c44/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
 18
 19    <application
-19-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-26:19
+19-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:6:5-29:19
 20        android:allowBackup="true"
 20-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:7:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -32,120 +32,126 @@
 22        android:dataExtractionRules="@xml/data_extraction_rules"
 22-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:8:9-65
 23        android:debuggable="true"
-24        android:extractNativeLibs="false"
-25        android:fullBackupContent="@xml/backup_rules"
-25-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:9:9-54
-26        android:icon="@mipmap/ic_launcher"
-26-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:10:9-43
-27        android:label="@string/app_name"
-27-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:11:9-41
-28        android:roundIcon="@mipmap/ic_launcher_round"
-28-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:12:9-54
-29        android:supportsRtl="true"
-29-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:13:9-35
-30        android:testOnly="true"
-31        android:theme="@style/Theme.ComposeMemory" >
-31-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:14:9-51
-32        <activity
-32-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:16:9-25:20
-33            android:name="com.talitamorales.composememory.MainActivity"
-33-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:17:13-41
-34            android:exported="true"
-34-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:18:13-36
-35            android:theme="@style/Theme.ComposeMemory" >
-35-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:19:13-55
-36            <intent-filter>
-36-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:13-24:29
-37                <action android:name="android.intent.action.MAIN" />
-37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:17-69
-37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:25-66
-38
-39                <category android:name="android.intent.category.LAUNCHER" />
-39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:17-77
-39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:27-74
-40            </intent-filter>
-41        </activity>
-42        <activity
-42-->[androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:23:9-25:39
-43            android:name="androidx.compose.ui.tooling.PreviewActivity"
-43-->[androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:24:13-71
-44            android:exported="true" />
-44-->[androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:25:13-36
-45
-46        <provider
-46-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
-47            android:name="androidx.startup.InitializationProvider"
-47-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
-48            android:authorities="com.talitamorales.composememory.androidx-startup"
-48-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
-49            android:exported="false" >
-49-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
-50            <meta-data
-50-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
-51                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-51-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
-52                android:value="androidx.startup" />
-52-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+24        android:enableOnBackInvokedCallback="true"
+24-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:9:9-51
+25        android:extractNativeLibs="false"
+26        android:fullBackupContent="@xml/backup_rules"
+26-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:10:9-54
+27        android:icon="@mipmap/ic_launcher"
+27-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:11:9-43
+28        android:label="@string/app_name"
+28-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:12:9-41
+29        android:localeConfig="@xml/locales_config"
+29-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:13:9-51
+30        android:resizeableActivity="false"
+30-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:14:9-43
+31        android:roundIcon="@mipmap/ic_launcher_round"
+31-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:15:9-54
+32        android:supportsRtl="true"
+32-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:16:9-35
+33        android:testOnly="true"
+34        android:theme="@style/Theme.ComposeMemory" >
+34-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:17:9-51
+35        <activity
+35-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:19:9-28:20
+36            android:name="com.talitamorales.composememory.MainActivity"
+36-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:20:13-41
+37            android:exported="true"
+37-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:21:13-36
+38            android:theme="@style/Theme.ComposeMemory" >
+38-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:22:13-55
+39            <intent-filter>
+39-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:23:13-27:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:24:17-69
+40-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:24:25-66
+41
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:26:17-77
+42-->/Users/talitamoralessprovieri/AndroidStudioProjects/ComposeMemory/app/src/main/AndroidManifest.xml:26:27-74
+43            </intent-filter>
+44        </activity>
+45        <activity
+45-->[androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:23:9-25:39
+46            android:name="androidx.compose.ui.tooling.PreviewActivity"
+46-->[androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:24:13-71
+47            android:exported="true" />
+47-->[androidx.compose.ui:ui-tooling-android:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/bac00901d04a161107c9a37503c19fb3/transformed/ui-tooling/AndroidManifest.xml:25:13-36
+48
+49        <provider
+49-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
+50            android:name="androidx.startup.InitializationProvider"
+50-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
+51            android:authorities="com.talitamorales.composememory.androidx-startup"
+51-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
+52            android:exported="false" >
+52-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
 53            <meta-data
-53-->[androidx.lifecycle:lifecycle-process:2.9.3] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/cf989371b81e4d2d76998c0f23631250/transformed/lifecycle-process-2.9.3/AndroidManifest.xml:29:13-31:52
-54                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-54-->[androidx.lifecycle:lifecycle-process:2.9.3] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/cf989371b81e4d2d76998c0f23631250/transformed/lifecycle-process-2.9.3/AndroidManifest.xml:30:17-78
+53-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+54                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+54-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
 55                android:value="androidx.startup" />
-55-->[androidx.lifecycle:lifecycle-process:2.9.3] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/cf989371b81e4d2d76998c0f23631250/transformed/lifecycle-process-2.9.3/AndroidManifest.xml:31:17-49
+55-->[androidx.emoji2:emoji2:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c5d988ab71da00f58f12fed5527b869d/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
 56            <meta-data
-56-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
-57                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-57-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+56-->[androidx.lifecycle:lifecycle-process:2.9.3] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/cf989371b81e4d2d76998c0f23631250/transformed/lifecycle-process-2.9.3/AndroidManifest.xml:29:13-31:52
+57                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+57-->[androidx.lifecycle:lifecycle-process:2.9.3] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/cf989371b81e4d2d76998c0f23631250/transformed/lifecycle-process-2.9.3/AndroidManifest.xml:30:17-78
 58                android:value="androidx.startup" />
-58-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
-59        </provider>
-60
-61        <activity
-61-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:23:9-26:79
-62            android:name="androidx.activity.ComponentActivity"
-62-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:24:13-63
-63            android:exported="true"
-63-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:25:13-36
-64            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
-64-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:26:13-76
-65
-66        <receiver
-66-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
-67            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-67-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
-68            android:directBootAware="false"
-68-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
-69            android:enabled="true"
-69-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
-70            android:exported="true"
-70-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
-71            android:permission="android.permission.DUMP" >
-71-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
-72            <intent-filter>
-72-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
-73                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-73-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
-73-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
-74            </intent-filter>
+58-->[androidx.lifecycle:lifecycle-process:2.9.3] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/cf989371b81e4d2d76998c0f23631250/transformed/lifecycle-process-2.9.3/AndroidManifest.xml:31:17-49
+59            <meta-data
+59-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+60                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+60-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+61                android:value="androidx.startup" />
+61-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+62        </provider>
+63
+64        <activity
+64-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:23:9-26:79
+65            android:name="androidx.activity.ComponentActivity"
+65-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:24:13-63
+66            android:exported="true"
+66-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:25:13-36
+67            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+67-->[androidx.compose.ui:ui-test-manifest:1.9.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/3f374635406983943c2d7f661ba62c22/transformed/ui-test-manifest-1.9.0/AndroidManifest.xml:26:13-76
+68
+69        <receiver
+69-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+70            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+70-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+71            android:directBootAware="false"
+71-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+72            android:enabled="true"
+72-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+73            android:exported="true"
+73-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+74            android:permission="android.permission.DUMP" >
+74-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
 75            <intent-filter>
-75-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
-76                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-76-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
-76-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+75-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+76                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
 77            </intent-filter>
 78            <intent-filter>
-78-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
-79                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-79-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
-79-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+78-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+79                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
 80            </intent-filter>
 81            <intent-filter>
-81-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
-82                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-82-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
-82-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+81-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+82                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+82-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+82-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
 83            </intent-filter>
-84        </receiver>
-85    </application>
-86
-87</manifest>
+84            <intent-filter>
+84-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+85                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/c654967d422c655e8559f295fc214aec/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+86            </intent-filter>
+87        </receiver>
+88    </application>
+89
+90</manifest>

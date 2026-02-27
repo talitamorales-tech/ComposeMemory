@@ -80,6 +80,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable abc_vector_test
 drawable ball
 drawable card_back
 drawable cat
@@ -95,6 +96,10 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable ic_refresh_magic
+drawable ic_sound_off_magic
+drawable ic_sound_on_magic
+drawable ic_theme_magic
 drawable ic_toys
 drawable lion
 drawable memory_friends_logo
@@ -161,6 +166,7 @@ id androidx_compose_ui_view_composition_context
 id async
 id blocking
 id chronometer
+id coil_request_manager
 id compose_prefetch_scheduler
 id compose_view_saveable_id_tag
 id consume_window_insets_tag
@@ -240,6 +246,11 @@ string call_notification_hang_up_action
 string call_notification_incoming_text
 string call_notification_ongoing_text
 string call_notification_screening_text
+string carousel_card_content_description
+string carousel_tap_to_advance
+string carousel_title
+string choose_theme_to_play
+string close
 string close_drawer
 string close_sheet
 string default_error_message
@@ -247,6 +258,9 @@ string default_popup_window_title
 string dropdown_menu
 string in_progress
 string indeterminate
+string initial_choose_how_to_play
+string landscape_required
+string logo_content_description
 string m3c_bottom_sheet_collapse_description
 string m3c_bottom_sheet_dismiss_description
 string m3c_bottom_sheet_drag_handle_description
@@ -304,10 +318,15 @@ string m3c_time_picker_period_toggle_description
 string m3c_time_picker_pm
 string m3c_tooltip_long_press_label
 string m3c_tooltip_pane_description
+string menu_cards_carousel_subtitle
+string menu_cards_carousel_title
+string menu_memory_game_subtitle
+string menu_memory_game_title
 string navigation_menu
 string not_selected
 string range_end
 string range_start
+string restart
 string selected
 string snackbar_pane_title
 string state_empty
@@ -317,8 +336,18 @@ string status_bar_notification_info_overflow
 string switch_role
 string tab
 string template_percent
+string theme_animals
+string theme_toys
+string toast_sound_off
+string toast_sound_on
+string toolbar_sound_off
+string toolbar_sound_on
+string toolbar_theme_animals
+string toolbar_theme_toys
 string tooltip_description
 string tooltip_label
+string win_congrats
+string win_prepare_next_round
 style DialogWindowTheme
 style EdgeToEdgeFloatingDialogTheme
 style EdgeToEdgeFloatingDialogWindowTheme
@@ -333,6 +362,9 @@ style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
 style Widget_Theme_ComposeMemory_MyView
 styleable ActivityNavigator android_name action data dataPattern targetPackage
+styleable AnimatedStateListDrawableCompat android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
+styleable AnimatedStateListDrawableItem android_id android_drawable
+styleable AnimatedStateListDrawableTransition android_drawable android_toId android_fromId android_reversible
 styleable Capability queryPatterns shortcutMatchRequired
 styleable ColorStateListItem android_color android_alpha android_lStar alpha lStar
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFallbackQuery fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
@@ -347,5 +379,8 @@ styleable NavGraphNavigator startDestination
 styleable NavHost navGraph
 styleable NavInclude graph
 styleable Navigator android_label android_id route
+styleable StateListDrawable android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
+styleable StateListDrawableItem android_drawable
 xml backup_rules
 xml data_extraction_rules
+xml locales_config

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-38:/values-fa/values-fa.xml",
+            "outputFile": "com.talitamorales.composememory.app-mergeDebugResources-40:/values-fa/values-fa.xml",
             "map": [
                 {
                     "source": "/Users/talitamoralessprovieri/.gradle/caches/8.13/transforms/05bcf9f2c8e26b8c9a4c5baf15550c44/transformed/core-1.17.0/res/values-fa/values-fa.xml",

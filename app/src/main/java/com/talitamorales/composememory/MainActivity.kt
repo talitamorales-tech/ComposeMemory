@@ -2,40 +2,45 @@ package com.talitamorales.composememory
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.talitamorales.composememory.ui.theme.ComposeMemoryTheme
+import com.talitamorales.composememory.ui.views.CardsCarouselScreen
+import com.talitamorales.composememory.ui.views.InitialMenuScreen
 import com.talitamorales.composememory.ui.views.MemoryGameScreen
 import com.talitamorales.composememory.ui.views.OnboardScreen
+import com.talitamorales.composememory.ui.views.ThemeSelectionScreen
 import com.talitamorales.composememory.viewmodel.FakeGameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModelFactory
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        private const val ORIENTATION_TAG = "CM-Orientation"
+    }
+
+    private var currentRouteOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         enableEdgeToEdge()
         setContent {
@@ -43,22 +48,58 @@ class MainActivity : ComponentActivity() {
 
 
                 val navController = rememberNavController()
+                val currentRoute = navController.currentBackStackEntryAsState().value
+                    ?.destination
+                    ?.route
 
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        WindowInsets.navigationBars
-                            .only(WindowInsetsSides.Bottom)
-                            .asPaddingValues()
-                    )) {
+                LaunchedEffect(currentRoute) {
+                    if (currentRoute == null) {
+                        Log.d(
+                            ORIENTATION_TAG,
+                            "Route changed route=null -> keeping last orientation " +
+                                orientationName(currentRouteOrientation)
+                        )
+                        return@LaunchedEffect
+                    }
+                    Log.d(
+                        ORIENTATION_TAG,
+                        "Route changed route=$currentRoute requested=${orientationName(requestedOrientation)} " +
+                            "config=${configOrientationName(resources.configuration.orientation)}"
+                    )
+                    applyOrientationForRoute(currentRoute)
+                }
+
+                Scaffold(modifier = Modifier.fillMaxSize()) {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "onboard"
+                        startDestination = "splash"
                     ) {
 
-                        composable("onboard") {
+                        composable("splash") {
                             OnboardScreen(navController)
+                        }
+
+                        composable("initialMenu") {
+                            InitialMenuScreen(navController)
+                        }
+
+                        composable("themeSelection") {
+                            ThemeSelectionScreen(navController)
+                        }
+
+                        composable("cardsCarousel") {
+                            CardsCarouselScreen(
+                                onClose = {
+                                    val backToMenu = navController.popBackStack(
+                                        route = "initialMenu",
+                                        inclusive = false
+                                    )
+                                    if (!backToMenu) {
+                                        navController.navigate("initialMenu")
+                                    }
+                                }
+                            )
                         }
 
                         composable(
@@ -67,7 +108,6 @@ class MainActivity : ComponentActivity() {
                                 navArgument("id") { type = NavType.IntType }
                             )
                         ) { backStackEntry ->
-
                             val id = backStackEntry.arguments?.getInt("id")!!
 
                             val viewModel: GameViewModel = viewModel(
@@ -82,6 +122,65 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+    }
+
+    private fun applyOrientationForRoute(route: String?) {
+        if (route == null) {
+            Log.d(
+                ORIENTATION_TAG,
+                "applyOrientationForRoute route=null ignored; keeping " +
+                    orientationName(currentRouteOrientation)
+            )
+            return
+        }
+
+        val desiredOrientation = when {
+            route?.startsWith("memoryGame") == true ->
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            route == "cardsCarousel" ->
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            route == "initialMenu" || route == "themeSelection" || route == "splash" ->
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            else ->
+                if (currentRouteOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+                    currentRouteOrientation
+                } else {
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                }
+        }
+
+        Log.d(
+            ORIENTATION_TAG,
+            "applyOrientationForRoute route=$route desired=${orientationName(desiredOrientation)} " +
+                "currentRequested=${orientationName(requestedOrientation)} " +
+                "lastApplied=${orientationName(currentRouteOrientation)} " +
+                "config=${configOrientationName(resources.configuration.orientation)}"
+        )
+
+        if (currentRouteOrientation != desiredOrientation || requestedOrientation != desiredOrientation) {
+            currentRouteOrientation = desiredOrientation
+            requestedOrientation = desiredOrientation
+            Log.d(
+                ORIENTATION_TAG,
+                "Orientation applied route=$route -> ${orientationName(desiredOrientation)}"
+            )
+        }
+    }
+
+    private fun orientationName(value: Int): String = when (value) {
+        ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED -> "UNSPECIFIED"
+        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT -> "PORTRAIT"
+        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE -> "LANDSCAPE"
+        ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE -> "SENSOR_LANDSCAPE"
+        ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE -> "USER_LANDSCAPE"
+        else -> value.toString()
+    }
+
+    private fun configOrientationName(value: Int): String = when (value) {
+        Configuration.ORIENTATION_LANDSCAPE -> "LANDSCAPE"
+        Configuration.ORIENTATION_PORTRAIT -> "PORTRAIT"
+        Configuration.ORIENTATION_UNDEFINED -> "UNDEFINED"
+        else -> value.toString()
     }
 }
 

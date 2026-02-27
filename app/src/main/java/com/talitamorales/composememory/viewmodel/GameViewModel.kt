@@ -1,5 +1,6 @@
 package com.talitamorales.composememory.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +14,7 @@ import com.talitamorales.composememory.gamelogic.createCards
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+private const val VIEWMODEL_DEBUG_TAG = "CM-GameViewModel"
 
 class GameViewModel( private val themeId: Int) : ViewModel(), GameViewModelContract {
     final override var cards = mutableStateListOf<Card>()
@@ -37,6 +39,7 @@ class GameViewModel( private val themeId: Int) : ViewModel(), GameViewModelContr
     }
 
     override fun resetGame() {
+        Log.d(VIEWMODEL_DEBUG_TAG, "resetGame theme=$currentTheme")
         cards.clear()
         cards.addAll(
             when (currentTheme) {
@@ -60,6 +63,7 @@ class GameViewModel( private val themeId: Int) : ViewModel(), GameViewModelContr
     override fun onCardClicked(card: Card) {
         if (card.isFaceUp || card.isMatched || selectedCards.size >= 2) return
 
+        Log.d(VIEWMODEL_DEBUG_TAG, "onCardClicked id=${card.id} image=${card.imageRes}")
         card.isFaceUp = true
         selectedCards.add(card)
 

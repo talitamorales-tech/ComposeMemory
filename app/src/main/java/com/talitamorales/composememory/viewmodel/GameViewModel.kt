@@ -9,14 +9,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.talitamorales.composememory.GameViewModelContract
 import com.talitamorales.composememory.gamelogic.Card
+import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
-import com.talitamorales.composememory.gamelogic.createCards
+import com.talitamorales.composememory.gamelogic.createCardsForTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private const val VIEWMODEL_DEBUG_TAG = "CM-GameViewModel"
 
-class GameViewModel( private val themeId: Int) : ViewModel(), GameViewModelContract {
+class GameViewModel(
+    private val themeId: Int,
+    private val difficultyId: Int
+) : ViewModel(), GameViewModelContract {
     final override var cards = mutableStateListOf<Card>()
         private set
 
@@ -26,35 +30,33 @@ class GameViewModel( private val themeId: Int) : ViewModel(), GameViewModelContr
 
     override var gameWon  by mutableStateOf(false)
 
-    override var currentTheme by mutableStateOf(
-        when (themeId) {
-            1 -> GameTheme.Animals
-            2 -> GameTheme.Toys
-            else -> GameTheme.Animals
-        }
-    )
+    override var currentTheme by mutableStateOf(GameTheme.fromId(themeId))
+    override var currentDifficulty by mutableStateOf(GameDifficulty.fromId(difficultyId))
 
     init {
         resetGame()
     }
 
     override fun resetGame() {
-        Log.d(VIEWMODEL_DEBUG_TAG, "resetGame theme=$currentTheme")
-        cards.clear()
-        cards.addAll(
-            when (currentTheme) {
-                GameTheme.Animals -> createCards(Card.animalsAssets)
-                GameTheme.Toys -> createCards(Card.toysAssets)
-            }
+        Log.d(
+            VIEWMODEL_DEBUG_TAG,
+            "resetGame theme=$currentTheme difficulty=$currentDifficulty pairs=${currentDifficulty.pairCount}"
         )
+        cards.clear()
+        cards.addAll(createCardsForTheme(currentTheme, currentDifficulty))
 
         selectedCards.clear()
         gameWon = false
 
         cards.forEach{it.isFaceUp = true}
         isMemorizing = true
+        val memorizeDelayMs = when (currentDifficulty) {
+            GameDifficulty.Easy -> 4000L
+            GameDifficulty.Medium -> 6000L
+            GameDifficulty.Hard -> 8000L
+        }
         viewModelScope.launch {
-            delay(5000)
+            delay(memorizeDelayMs)
             cards.forEach{it.isFaceUp = false}
             isMemorizing = false
         }

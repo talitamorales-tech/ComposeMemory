@@ -11,14 +11,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.talitamorales.composememory.ui.theme.ComposeMemoryTheme
@@ -48,25 +48,21 @@ class MainActivity : ComponentActivity() {
 
 
                 val navController = rememberNavController()
-                val currentRoute = navController.currentBackStackEntryAsState().value
-                    ?.destination
-                    ?.route
-
-                LaunchedEffect(currentRoute) {
-                    if (currentRoute == null) {
+                DisposableEffect(navController) {
+                    val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
+                        val route = destination.route
                         Log.d(
                             ORIENTATION_TAG,
-                            "Route changed route=null -> keeping last orientation " +
-                                orientationName(currentRouteOrientation)
+                            "Route changed route=$route requested=${orientationName(requestedOrientation)} " +
+                                "config=${configOrientationName(resources.configuration.orientation)}"
                         )
-                        return@LaunchedEffect
+                        applyOrientationForRoute(route)
                     }
-                    Log.d(
-                        ORIENTATION_TAG,
-                        "Route changed route=$currentRoute requested=${orientationName(requestedOrientation)} " +
-                            "config=${configOrientationName(resources.configuration.orientation)}"
-                    )
-                    applyOrientationForRoute(currentRoute)
+
+                    navController.addOnDestinationChangedListener(listener)
+                    onDispose {
+                        navController.removeOnDestinationChangedListener(listener)
+                    }
                 }
 
                 Scaffold(modifier = Modifier.fillMaxSize()) {
@@ -103,15 +99,20 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(
-                            route = "memoryGame/{id}",
+                            route = "memoryGame/{themeId}/{difficultyId}",
                             arguments = listOf(
-                                navArgument("id") { type = NavType.IntType }
+                                navArgument("themeId") { type = NavType.IntType },
+                                navArgument("difficultyId") { type = NavType.IntType }
                             )
                         ) { backStackEntry ->
-                            val id = backStackEntry.arguments?.getInt("id")!!
+                            val themeId = backStackEntry.arguments?.getInt("themeId") ?: 1
+                            val difficultyId = backStackEntry.arguments?.getInt("difficultyId") ?: 1
 
                             val viewModel: GameViewModel = viewModel(
-                                factory = GameViewModelFactory(id),
+                                factory = GameViewModelFactory(
+                                    themeId = themeId,
+                                    difficultyId = difficultyId
+                                ),
                                 viewModelStoreOwner = backStackEntry
                             )
 

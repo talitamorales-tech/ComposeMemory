@@ -53,6 +53,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -84,9 +85,17 @@ private const val GAME_DEBUG_TAG = "CM-MemoryGame"
 private val ToolbarContainerShape = RoundedCornerShape(22.dp)
 private val ToolbarButtonShape = RoundedCornerShape(16.dp)
 
+private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
+    if (this == null) return null
+    runCatching { stop() }
+    runCatching { release() }
+    return null
+}
+
 @Composable
 fun MemoryGameScreen(viewModel: GameViewModelContract) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     val scope = rememberCoroutineScope()
     var isSoundEnabled by remember { mutableStateOf(true) }
@@ -102,8 +111,9 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 GAME_DEBUG_TAG,
                 "MemoryGameScreen recompositions=${recompositions.intValue} " +
                     "cards=${viewModel.cards.size} memorizing=${viewModel.isMemorizing} " +
-                    "won=${viewModel.gameWon} celebration=$showWinCelebration " +
-                    "configOrientation=${context.resources.configuration.orientation}"
+                    "won=${viewModel.gameWon} difficulty=${viewModel.currentDifficulty} " +
+                    "celebration=$showWinCelebration " +
+                    "configOrientation=${configuration.orientation}"
             )
         }
     }
@@ -119,6 +129,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
             GAME_DEBUG_TAG,
             "State changed cards=${viewModel.cards.size} memorizing=${viewModel.isMemorizing} " +
                 "won=${viewModel.gameWon} theme=${viewModel.currentTheme} " +
+                "difficulty=${viewModel.currentDifficulty} " +
                 "celebration=$showWinCelebration"
         )
     }
@@ -127,9 +138,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
         if (viewModel.gameWon && !showWinCelebration) {
             showWinCelebration = true
             delay(WinCelebrationDurationMs.toLong())
-            mediaPlayer?.stop()
-            mediaPlayer?.release()
-            mediaPlayer = null
+            mediaPlayer = mediaPlayer.safeStopAndRelease()
             viewModel.resetGame()
             showWinCelebration = false
         }
@@ -165,9 +174,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 onToggleSound = {
                     if (isSoundEnabled) {
                         isSoundEnabled = false
-                        mediaPlayer?.stop()
-                        mediaPlayer?.release()
-                        mediaPlayer = null
+                        mediaPlayer = mediaPlayer.safeStopAndRelease()
                     } else {
                         isSoundEnabled = true
                     }
@@ -178,9 +185,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                     ).show()
                 },
                 onRestart = {
-                    mediaPlayer?.stop()
-                    mediaPlayer?.release()
-                    mediaPlayer = null
+                    mediaPlayer = mediaPlayer.safeStopAndRelease()
                     viewModel.resetGame()
                 },
                 enabled = !showWinCelebration,
@@ -198,8 +203,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                     .fillMaxWidth()
                     .weight(1f)
             ) { card ->
-                mediaPlayer?.release()
-                mediaPlayer = null
+                mediaPlayer = mediaPlayer.safeStopAndRelease()
                 if (isSoundEnabled && card.soundRes != null) {
                     mediaPlayer = MediaPlayer.create(context, card.soundRes)
                     mediaPlayer?.start()
@@ -210,9 +214,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 scope.launch {
                     delay(900)
                     if (isSoundEnabled && viewModel.gameWon) {
-                        mediaPlayer?.stop()
-                        mediaPlayer?.release()
-                        mediaPlayer = null
+                        mediaPlayer = mediaPlayer.safeStopAndRelease()
                         mediaPlayer = MediaPlayer.create(context, R.raw.victory)
                         mediaPlayer?.start()
                     }
@@ -356,9 +358,13 @@ fun ThemeButton(
     buttonHeight: Dp = 44.dp,
     enabled: Boolean = true
 ) {
-    val (btnThemeTitle, accentColor) = when (viewModel.currentTheme) {
-        GameTheme.Animals -> Pair(stringResource(id = R.string.toolbar_theme_animals), Color(0xFF5AC88A))
-        GameTheme.Toys -> Pair(stringResource(id = R.string.toolbar_theme_toys), Color(0xFF69B6FF))
+    val btnThemeTitle = stringResource(id = viewModel.currentTheme.toolbarTitleRes)
+    val accentColor = when (viewModel.currentTheme) {
+        GameTheme.Animals -> Color(0xFF5AC88A)
+        GameTheme.Toys -> Color(0xFF69B6FF)
+        GameTheme.Dinosaurs -> Color(0xFF8BC34A)
+        GameTheme.FarmTractors -> Color(0xFFFFB74D)
+        GameTheme.Dogs -> Color(0xFFFFB37A)
     }
 
     ToolbarButton(
@@ -369,8 +375,13 @@ fun ThemeButton(
         buttonHeight = buttonHeight,
         enabled = enabled
     ) {
-        viewModel.currentTheme =
-            if (viewModel.currentTheme == GameTheme.Animals) GameTheme.Toys else GameTheme.Animals
+        viewModel.currentTheme = when (viewModel.currentTheme) {
+            GameTheme.Animals -> GameTheme.Toys
+            GameTheme.Toys -> GameTheme.Animals
+            GameTheme.Dinosaurs -> GameTheme.Animals
+            GameTheme.FarmTractors -> GameTheme.Animals
+            GameTheme.Dogs -> GameTheme.Animals
+        }
         viewModel.resetGame()
     }
 }

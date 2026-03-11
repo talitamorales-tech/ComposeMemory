@@ -62,7 +62,7 @@ private val CarouselFrameShape = RoundedCornerShape(28.dp)
 @Composable
 fun CardsCarouselScreen(onClose: () -> Unit) {
     val cardImages = remember {
-        (Card.animalsAssets.map { it.first } + Card.toysAssets.map { it.first }).distinct()
+        Card.allThemeImageResources()
     }
     var currentIndex by rememberSaveable { mutableIntStateOf(0) }
 
@@ -219,7 +219,7 @@ fun CardsCarouselScreen(onClose: () -> Unit) {
             contentColor = Color.White
         ) {
             Icon(
-                painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel),
+                painter = painterResource(id = R.drawable.ic_close_magic),
                 contentDescription = stringResource(id = R.string.close),
                 modifier = Modifier.size(18.dp)
             )

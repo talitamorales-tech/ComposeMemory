@@ -2,8 +2,21 @@
     <string name="app_name">ComposeMemory</string>
     <string name="logo_content_description">Logo Memory Friends</string>
     <string name="choose_theme_to_play">Escolha um tema para jogar</string>
-    <string name="theme_animals">Animais</string>
+    <string name="theme_animals">Gato</string>
     <string name="theme_toys">Brinquedos</string>
+    <string name="theme_dinosaurs">Dinossauros</string>
+    <string name="theme_farm_tractors">Fazendinha e Tratores</string>
+    <string name="theme_dogs">Cachorros</string>
+    <string name="choose_difficulty">Escolha a dificuldade</string>
+    <string name="difficulty_easy">Facil</string>
+    <string name="difficulty_medium">Medio</string>
+    <string name="difficulty_hard">Dificil</string>
+    <string name="premium_theme_title">Tema Premium</string>
+    <string name="premium_theme_message">Desbloqueie %1$s para jogar este tema.</string>
+    <string name="buy_theme">Comprar Tema</string>
+    <string name="cancel">Cancelar</string>
+    <string name="free_label">GRATIS</string>
+    <string name="premium_label">PREMIUM</string>
 
     <string name="initial_choose_how_to_play">Escolha como brincar</string>
     <string name="menu_cards_carousel_title">Carrossel de Cartas</string>
@@ -18,8 +31,11 @@
 
     <string name="toast_sound_on">Som ligado</string>
     <string name="toast_sound_off">Som desligado</string>
-    <string name="toolbar_theme_animals">Tema: Animais</string>
+    <string name="toolbar_theme_animals">Tema: Gato</string>
     <string name="toolbar_theme_toys">Tema: Brinquedos</string>
+    <string name="toolbar_theme_dinosaurs">Tema: Dinossauros</string>
+    <string name="toolbar_theme_farm_tractors">Tema: Fazendinha e Tratores</string>
+    <string name="toolbar_theme_dogs">Tema: Cachorros</string>
     <string name="toolbar_sound_on">Som ligado</string>
     <string name="toolbar_sound_off">Som desligado</string>
     <string name="restart">Reiniciar</string>

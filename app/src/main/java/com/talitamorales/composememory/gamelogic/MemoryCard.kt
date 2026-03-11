@@ -1,7 +1,8 @@
 package com.talitamorales.composememory.gamelogic
 
 
-import androidx.compose.foundation.Image
+import android.util.Log
+import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,17 +15,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.talitamorales.composememory.R
 import com.talitamorales.composememory.ui.theme.PinkCardFaceUp
 
+private const val MEMORY_CARD_TAG = "CM-MemoryCard"
 
 @Composable
 fun MemoryCard(
@@ -33,6 +36,7 @@ fun MemoryCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
 
     Card(
         modifier = modifier
@@ -59,24 +63,53 @@ fun MemoryCard(
         ) {
 
             if (card.isFaceUp || card.isMatched) {
-                val isToyImage = card.imageRes == R.drawable.ball ||
-                    card.imageRes == R.drawable.doll ||
-                    card.imageRes == R.drawable.toy_car ||
-                    card.imageRes == R.drawable.plane
-                val imageModifier = if (isToyImage) Modifier.fillMaxSize(0.90f) else Modifier.fillMaxSize(0.72f)
-                val imageScale = if (isToyImage) ContentScale.Crop else ContentScale.Fit
+                val isAnimalThemeImage = card.soundRes != null
+                val imageModifier = if (isAnimalThemeImage) {
+                    Modifier.fillMaxSize(0.72f)
+                } else {
+                    Modifier.fillMaxSize(0.88f)
+                }
+                val imageResToRender = remember(card.imageRes) {
+                    if (isDrawableLoadable(context, card.imageRes)) {
+                        card.imageRes
+                    } else {
+                        Log.e(
+                            MEMORY_CARD_TAG,
+                            "Unsupported drawable for card imageRes=${card.imageRes}; using fallback"
+                        )
+                        R.drawable.memory_friends_logo
+                    }
+                }
 
-                Image(
-                    painter = painterResource(id = card.imageRes),
-                    contentDescription = null,
-                    modifier = imageModifier,
-                    contentScale = imageScale
+                AndroidView(
+                    factory = { viewContext ->
+                        ImageView(viewContext).apply {
+                            scaleType = ImageView.ScaleType.FIT_CENTER
+                            adjustViewBounds = true
+                        }
+                    },
+                    modifier = if (imageResToRender == R.drawable.memory_friends_logo) {
+                        Modifier.fillMaxSize(0.8f)
+                    } else {
+                        imageModifier
+                    },
+                    update = { imageView ->
+                        imageView.setImageResource(imageResToRender)
+                    }
                 )
             } else {
                 FantasyCardBack(modifier = Modifier.fillMaxSize())
             }
         }
     }
+}
+
+private fun isDrawableLoadable(
+    context: android.content.Context,
+    drawableRes: Int
+): Boolean {
+    return runCatching { context.resources.getDrawable(drawableRes, context.theme) != null }
+        .getOrDefault(false)
 }
 
 @Composable

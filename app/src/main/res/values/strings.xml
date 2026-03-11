@@ -2,8 +2,21 @@
     <string name="app_name">ComposeMemory</string>
     <string name="logo_content_description">Memory Friends logo</string>
     <string name="choose_theme_to_play">Choose a theme to play</string>
-    <string name="theme_animals">Animals</string>
+    <string name="theme_animals">Cat</string>
     <string name="theme_toys">Toys</string>
+    <string name="theme_dinosaurs">Dinosaurs</string>
+    <string name="theme_farm_tractors">Farm &amp; Tractors</string>
+    <string name="theme_dogs">Dogs</string>
+    <string name="choose_difficulty">Choose difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="premium_theme_title">Premium Theme</string>
+    <string name="premium_theme_message">Unlock %1$s to play this theme.</string>
+    <string name="buy_theme">Buy Theme</string>
+    <string name="cancel">Cancel</string>
+    <string name="free_label">FREE</string>
+    <string name="premium_label">PREMIUM</string>
 
     <string name="initial_choose_how_to_play">Choose how to play</string>
     <string name="menu_cards_carousel_title">Cards Carousel</string>
@@ -18,8 +31,11 @@
 
     <string name="toast_sound_on">Sound on</string>
     <string name="toast_sound_off">Sound off</string>
-    <string name="toolbar_theme_animals">Theme: Animals</string>
+    <string name="toolbar_theme_animals">Theme: Cat</string>
     <string name="toolbar_theme_toys">Theme: Toys</string>
+    <string name="toolbar_theme_dinosaurs">Theme: Dinosaurs</string>
+    <string name="toolbar_theme_farm_tractors">Theme: Farm &amp; Tractors</string>
+    <string name="toolbar_theme_dogs">Theme: Dogs</string>
     <string name="toolbar_sound_on">Sound on</string>
     <string name="toolbar_sound_off">Sound off</string>
     <string name="restart">Restart</string>

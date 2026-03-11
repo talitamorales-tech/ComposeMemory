@@ -1,0 +1,15 @@
+# Gradle and build outputs
+.gradle/
+.gradle-user/
+**/build/
+
+# Android Studio / IntelliJ
+.idea/caches/
+.idea/deploymentTargetSelector.xml
+.idea/deviceStreaming.xml
+.idea/workspace.xml
+*.iml
+
+# Local machine config
+local.properties
+.DS_Store

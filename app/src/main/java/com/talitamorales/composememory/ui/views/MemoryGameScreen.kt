@@ -2,7 +2,13 @@ package com.talitamorales.composememory.ui.views
 
 import android.media.MediaPlayer
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -26,6 +32,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -35,14 +42,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -68,22 +76,35 @@ import com.talitamorales.composememory.gamelogic.Card as GameCardModel
 import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.MemoryCard
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.math.PI
 import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.sin
 import kotlin.random.Random
 
-private val GridHorizontalSpacing = 12.dp
-private val GridVerticalSpacing = 12.dp
-private val GridTopPadding = 12.dp
-private val GridBottomPadding = 16.dp
+private val GridHorizontalSpacingClosed = 8.dp
+private val GridHorizontalSpacingOpen = 9.dp
+private val GridVerticalSpacingClosed = 8.dp
+private val GridVerticalSpacingOpen = 9.dp
+private val GridTopPaddingClosed = 4.dp
+private val GridTopPaddingOpen = 8.dp
+private val GridBottomPaddingClosed = 8.dp
+private val GridBottomPaddingOpen = 10.dp
 private const val WinCelebrationDurationMs = 3200
 private const val GAME_DEBUG_TAG = "CM-MemoryGame"
+private val GAMEPLAY_MUSIC_RES = R.raw.gameplay_music
+private val VICTORY_MUSIC_RES = R.raw.victory
+private const val GAMEPLAY_MUSIC_VOLUME = 0.35f
+private const val VICTORY_MUSIC_VOLUME = 0.9f
 
 private val ToolbarContainerShape = RoundedCornerShape(22.dp)
 private val ToolbarButtonShape = RoundedCornerShape(16.dp)
+private val ToolbarDrawerTabShape = RoundedCornerShape(
+    topStart = 10.dp,
+    topEnd = 10.dp,
+    bottomStart = 16.dp,
+    bottomEnd = 16.dp
+)
 
 private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
     if (this == null) return null
@@ -96,13 +117,21 @@ private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
 fun MemoryGameScreen(viewModel: GameViewModelContract) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
-    var mediaPlayer: MediaPlayer? by remember { mutableStateOf(null) }
-    val scope = rememberCoroutineScope()
+    var backgroundMusicPlayer: MediaPlayer? by remember { mutableStateOf(null) }
+    var victoryPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     var isSoundEnabled by remember { mutableStateOf(true) }
+    var isToolbarExpanded by rememberSaveable { mutableStateOf(false) }
     var showWinCelebration by remember { mutableStateOf(false) }
     val recompositions = remember { mutableIntStateOf(0) }
     val soundOnToast = stringResource(id = R.string.toast_sound_on)
     val soundOffToast = stringResource(id = R.string.toast_sound_off)
+
+    DisposableEffect(Unit) {
+        onDispose {
+            backgroundMusicPlayer.safeStopAndRelease()
+            victoryPlayer.safeStopAndRelease()
+        }
+    }
 
     SideEffect {
         recompositions.intValue += 1
@@ -134,11 +163,50 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
         )
     }
 
+    LaunchedEffect(isSoundEnabled, viewModel.gameWon, showWinCelebration) {
+        val shouldPlayMusic = isSoundEnabled && !viewModel.gameWon && !showWinCelebration
+        if (!shouldPlayMusic) {
+            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+            return@LaunchedEffect
+        }
+
+        if (backgroundMusicPlayer == null) {
+            backgroundMusicPlayer = MediaPlayer.create(context, GAMEPLAY_MUSIC_RES)?.apply {
+                isLooping = true
+                setVolume(GAMEPLAY_MUSIC_VOLUME, GAMEPLAY_MUSIC_VOLUME)
+            }
+        }
+
+        runCatching {
+            if (backgroundMusicPlayer?.isPlaying == false) {
+                backgroundMusicPlayer?.start()
+            }
+        }.onFailure {
+            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+        }
+    }
+
     LaunchedEffect(viewModel.gameWon) {
         if (viewModel.gameWon && !showWinCelebration) {
             showWinCelebration = true
+            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+            if (isSoundEnabled) {
+                victoryPlayer = victoryPlayer.safeStopAndRelease()
+                victoryPlayer = MediaPlayer.create(context, VICTORY_MUSIC_RES)?.apply {
+                    isLooping = false
+                    setVolume(VICTORY_MUSIC_VOLUME, VICTORY_MUSIC_VOLUME)
+                    setOnCompletionListener { completedPlayer ->
+                        runCatching { completedPlayer.release() }
+                        if (victoryPlayer === completedPlayer) {
+                            victoryPlayer = null
+                        }
+                    }
+                    start()
+                }
+            }
             delay(WinCelebrationDurationMs.toLong())
-            mediaPlayer = mediaPlayer.safeStopAndRelease()
+            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+            victoryPlayer = victoryPlayer.safeStopAndRelease()
             viewModel.resetGame()
             showWinCelebration = false
         }
@@ -157,73 +225,147 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 )
             )
             .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(horizontal = 10.dp, vertical = 6.dp)
+            .padding(horizontal = 8.dp, vertical = 0.dp)
     ) {
         val compactToolbar = maxWidth < 700.dp
-        val toolbarButtonHeight = if (compactToolbar) 42.dp else 48.dp
-        val restartButtonSize = if (compactToolbar) 50.dp else 58.dp
+        val toolbarButtonHeight = if (compactToolbar) 40.dp else 46.dp
+        val restartButtonSize = if (compactToolbar) 48.dp else 54.dp
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             modifier = Modifier.fillMaxSize()
         ) {
-            GameToolbar(
-                viewModel = viewModel,
-                isSoundEnabled = isSoundEnabled,
-                onToggleSound = {
-                    if (isSoundEnabled) {
-                        isSoundEnabled = false
-                        mediaPlayer = mediaPlayer.safeStopAndRelease()
-                    } else {
-                        isSoundEnabled = true
-                    }
-                    Toast.makeText(
-                        context,
-                        if (isSoundEnabled) soundOnToast else soundOffToast,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                },
-                onRestart = {
-                    mediaPlayer = mediaPlayer.safeStopAndRelease()
-                    viewModel.resetGame()
-                },
+            ToolbarTopDrawer(
+                isOpen = isToolbarExpanded,
                 enabled = !showWinCelebration,
+                onToggle = { isToolbarExpanded = !isToolbarExpanded },
                 modifier = Modifier.fillMaxWidth(),
-                buttonHeight = toolbarButtonHeight,
-                restartButtonSize = restartButtonSize
+                content = {
+                    GameToolbar(
+                        viewModel = viewModel,
+                        isSoundEnabled = isSoundEnabled,
+                        onToggleSound = {
+                            if (isSoundEnabled) {
+                                isSoundEnabled = false
+                                backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+                                victoryPlayer = victoryPlayer.safeStopAndRelease()
+                            } else {
+                                isSoundEnabled = true
+                            }
+                            Toast.makeText(
+                                context,
+                                if (isSoundEnabled) soundOnToast else soundOffToast,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        onRestart = {
+                            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+                            victoryPlayer = victoryPlayer.safeStopAndRelease()
+                            isToolbarExpanded = false
+                            viewModel.resetGame()
+                        },
+                        enabled = !showWinCelebration,
+                        modifier = Modifier.fillMaxWidth(),
+                        buttonHeight = toolbarButtonHeight,
+                        restartButtonSize = restartButtonSize
+                    )
+                }
             )
-
-            Spacer(modifier = Modifier.size(8.dp))
 
             ResponsiveGameGrid(
                 cards = viewModel.cards,
                 isMemorizing = viewModel.isMemorizing || showWinCelebration,
+                menuExpanded = isToolbarExpanded,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .padding(top = 2.dp)
             ) { card ->
-                mediaPlayer = mediaPlayer.safeStopAndRelease()
-                if (isSoundEnabled && card.soundRes != null) {
-                    mediaPlayer = MediaPlayer.create(context, card.soundRes)
-                    mediaPlayer?.start()
-                }
-
                 viewModel.onCardClicked(card)
-
-                scope.launch {
-                    delay(900)
-                    if (isSoundEnabled && viewModel.gameWon) {
-                        mediaPlayer = mediaPlayer.safeStopAndRelease()
-                        mediaPlayer = MediaPlayer.create(context, R.raw.victory)
-                        mediaPlayer?.start()
-                    }
-                }
             }
         }
 
         if (showWinCelebration) {
             WinCelebrationOverlay()
+        }
+    }
+}
+
+@Composable
+private fun ToolbarTopDrawer(
+    isOpen: Boolean,
+    enabled: Boolean,
+    onToggle: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AnimatedVisibility(
+            visible = isOpen,
+            enter = expandVertically(
+                expandFrom = Alignment.Top,
+                animationSpec = tween(durationMillis = 260, easing = FastOutSlowInEasing)
+            ) + fadeIn(animationSpec = tween(durationMillis = 180)),
+            exit = shrinkVertically(
+                shrinkTowards = Alignment.Top,
+                animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)
+            ) + fadeOut(animationSpec = tween(durationMillis = 140))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 2.dp)
+            ) {
+                content()
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .padding(top = if (isOpen) 2.dp else 0.dp)
+                .width(if (isOpen) 94.dp else 78.dp)
+                .height(if (isOpen) 30.dp else 26.dp)
+                .alpha(if (enabled) 1f else 0.68f)
+                .shadow(6.dp, ToolbarDrawerTabShape, clip = false)
+                .clip(ToolbarDrawerTabShape)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF2B1148),
+                            Color(0xFF4A2280),
+                            Color(0xFF2A0F44)
+                        )
+                    )
+                )
+                .border(1.2.dp, Color(0xFFFFDFA0), ToolbarDrawerTabShape)
+                .clickable(enabled = enabled) { onToggle() },
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(26.dp)
+                        .height(3.dp)
+                        .clip(CircleShape)
+                        .background(Color(0x80FFF4D2))
+                )
+
+                Icon(
+                    painter = painterResource(
+                        id = if (isOpen) android.R.drawable.arrow_up_float else android.R.drawable.arrow_down_float
+                    ),
+                    contentDescription = if (isOpen) "Close menu" else "Open menu",
+                    tint = Color(0xFFFFF2CF),
+                    modifier = Modifier.size(16.dp)
+                )
+            }
         }
     }
 }
@@ -254,8 +396,8 @@ private fun GameToolbar(
                 )
             )
             .border(1.6.dp, Color(0xFFF2CF85), ToolbarContainerShape)
-            .padding(horizontal = 10.dp, vertical = 9.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+            .padding(horizontal = 8.dp, vertical = 7.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         ThemeButton(
@@ -285,10 +427,15 @@ private fun GameToolbar(
 private fun ResponsiveGameGrid(
     cards: List<GameCardModel>,
     isMemorizing: Boolean,
+    menuExpanded: Boolean,
     modifier: Modifier = Modifier,
     onCardClick: (GameCardModel) -> Unit
 ) {
     BoxWithConstraints(modifier = modifier) {
+        val horizontalSpacing = if (menuExpanded) GridHorizontalSpacingOpen else GridHorizontalSpacingClosed
+        val verticalSpacing = if (menuExpanded) GridVerticalSpacingOpen else GridVerticalSpacingClosed
+        val topPadding = if (menuExpanded) GridTopPaddingOpen else GridTopPaddingClosed
+        val bottomPadding = if (menuExpanded) GridBottomPaddingOpen else GridBottomPaddingClosed
         val cardCount = cards.size.coerceAtLeast(1)
         val minColumns = if (cardCount == 1) 1 else 2
         val maxColumns = min(cardCount, 6)
@@ -299,13 +446,13 @@ private fun ResponsiveGameGrid(
         for (columns in minColumns..maxColumns) {
             val rows = ceil(cardCount / columns.toDouble()).toInt()
             val widthPerCard = (
-                maxWidth - GridHorizontalSpacing * (columns - 1).toFloat()
+                maxWidth - horizontalSpacing * (columns - 1).toFloat()
             ).coerceAtLeast(0.dp) / columns.toFloat()
             val heightPerCard = (
                 maxHeight
-                    - GridTopPadding
-                    - GridBottomPadding
-                    - GridVerticalSpacing * (rows - 1).toFloat()
+                    - topPadding
+                    - bottomPadding
+                    - verticalSpacing * (rows - 1).toFloat()
             ).coerceAtLeast(0.dp) / rows.toFloat()
 
             val candidate = minOf(widthPerCard, heightPerCard)
@@ -315,8 +462,9 @@ private fun ResponsiveGameGrid(
             }
         }
 
-        val minimumCardSize = if (maxWidth < 500.dp) 72.dp else 88.dp
-        val cardSize = bestCardSize.coerceAtLeast(minimumCardSize)
+        val minimumCardSize = if (maxWidth < 500.dp) 70.dp else 82.dp
+        val cardScale = if (menuExpanded) 0.95f else 1f
+        val cardSize = (bestCardSize * cardScale).coerceAtLeast(minimumCardSize)
 
         LaunchedEffect(maxWidth, maxHeight, bestColumns, cardSize, cardCount) {
             Log.d(
@@ -329,10 +477,18 @@ private fun ResponsiveGameGrid(
         LazyVerticalGrid(
             columns = GridCells.Fixed(bestColumns),
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(GridHorizontalSpacing),
-            verticalArrangement = Arrangement.spacedBy(GridVerticalSpacing),
-            contentPadding = PaddingValues(top = GridTopPadding, bottom = GridBottomPadding),
-            userScrollEnabled = false
+            horizontalArrangement = Arrangement.spacedBy(
+                horizontalSpacing,
+                alignment = Alignment.CenterHorizontally
+            ),
+            verticalArrangement = Arrangement.spacedBy(verticalSpacing),
+            contentPadding = PaddingValues(
+                start = 4.dp,
+                end = 4.dp,
+                top = topPadding,
+                bottom = bottomPadding
+            ),
+            userScrollEnabled = true
         ) {
             items(cards, key = { it.id }) { card ->
                 Box(
@@ -362,26 +518,34 @@ fun ThemeButton(
     val accentColor = when (viewModel.currentTheme) {
         GameTheme.Animals -> Color(0xFF5AC88A)
         GameTheme.Toys -> Color(0xFF69B6FF)
+        GameTheme.Cars -> Color(0xFF6EA7FF)
+        GameTheme.Dolls -> Color(0xFFF58CB3)
+        GameTheme.Music -> Color(0xFFB08CFF)
         GameTheme.Dinosaurs -> Color(0xFF8BC34A)
-        GameTheme.FarmTractors -> Color(0xFFFFB74D)
         GameTheme.Dogs -> Color(0xFFFFB37A)
+        GameTheme.JungleAnimals -> Color(0xFFFFA552)
     }
 
     ToolbarButton(
         btnTitle = btnThemeTitle,
-        btnImage = R.drawable.ic_theme_magic,
+        btnImage = R.drawable.ic_memorygame,
         accentColor = accentColor,
         modifier = modifier,
         buttonHeight = buttonHeight,
         enabled = enabled
     ) {
-        viewModel.currentTheme = when (viewModel.currentTheme) {
-            GameTheme.Animals -> GameTheme.Toys
-            GameTheme.Toys -> GameTheme.Animals
-            GameTheme.Dinosaurs -> GameTheme.Animals
-            GameTheme.FarmTractors -> GameTheme.Animals
-            GameTheme.Dogs -> GameTheme.Animals
-        }
+        val themeCycle = listOf(
+            GameTheme.Animals,
+            GameTheme.Toys,
+            GameTheme.Cars,
+            GameTheme.Dolls,
+            GameTheme.Music,
+            GameTheme.Dinosaurs,
+            GameTheme.Dogs,
+            GameTheme.JungleAnimals
+        )
+        val currentIndex = themeCycle.indexOf(viewModel.currentTheme).takeIf { it >= 0 } ?: 0
+        viewModel.currentTheme = themeCycle[(currentIndex + 1) % themeCycle.size]
         viewModel.resetGame()
     }
 }
@@ -400,7 +564,7 @@ fun SoundButton(
         } else {
             stringResource(id = R.string.toolbar_sound_off)
         },
-        btnImage = if (isSoundEnabled) R.drawable.ic_sound_on_magic else R.drawable.ic_sound_off_magic,
+        btnImage = if (isSoundEnabled) R.drawable.sound_on else R.drawable.sound_off,
         accentColor = if (isSoundEnabled) Color(0xFF4AB8FF) else Color(0xFFE87484),
         modifier = modifier,
         buttonHeight = buttonHeight,
@@ -448,7 +612,7 @@ fun RestartButton(
         )
 
         Icon(
-            painter = painterResource(id = R.drawable.ic_refresh_magic),
+            painter = painterResource(id = R.drawable.restart),
             contentDescription = stringResource(id = R.string.restart),
             tint = Color(0xFFFFF1D0),
             modifier = Modifier.fillMaxSize(0.46f)

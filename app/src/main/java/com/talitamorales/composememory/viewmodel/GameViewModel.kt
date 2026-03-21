@@ -12,6 +12,7 @@ import com.talitamorales.composememory.gamelogic.Card
 import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.createCardsForTheme
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -26,7 +27,10 @@ class GameViewModel(
 
     override var isMemorizing by mutableStateOf(true)
 
-    private var selectedCards = mutableListOf<Card>()
+    private val selectedCards = mutableListOf<Card>()
+    private var memorizationJob: Job? = null
+    private var matchResolutionJob: Job? = null
+    private var gameGeneration: Long = 0L
 
     override var gameWon  by mutableStateOf(false)
 
@@ -38,6 +42,11 @@ class GameViewModel(
     }
 
     override fun resetGame() {
+        gameGeneration += 1
+        val generation = gameGeneration
+        memorizationJob?.cancel()
+        matchResolutionJob?.cancel()
+
         Log.d(
             VIEWMODEL_DEBUG_TAG,
             "resetGame theme=$currentTheme difficulty=$currentDifficulty pairs=${currentDifficulty.pairCount}"
@@ -55,15 +64,22 @@ class GameViewModel(
             GameDifficulty.Medium -> 6000L
             GameDifficulty.Hard -> 8000L
         }
-        viewModelScope.launch {
+        val job = viewModelScope.launch {
             delay(memorizeDelayMs)
+            if (generation != gameGeneration) return@launch
             cards.forEach{it.isFaceUp = false}
             isMemorizing = false
+        }
+        memorizationJob = job
+        job.invokeOnCompletion {
+            if (memorizationJob === job) {
+                memorizationJob = null
+            }
         }
     }
 
     override fun onCardClicked(card: Card) {
-        if (card.isFaceUp || card.isMatched || selectedCards.size >= 2) return
+        if (isMemorizing || card.isFaceUp || card.isMatched || selectedCards.size >= 2) return
 
         Log.d(VIEWMODEL_DEBUG_TAG, "onCardClicked id=${card.id} image=${card.imageRes}")
         card.isFaceUp = true
@@ -72,10 +88,12 @@ class GameViewModel(
         if (selectedCards.size == 2) {
             val first = selectedCards[0]
             val second = selectedCards[1]
+            val generation = gameGeneration
 
             // Codigo Assincrono
-            viewModelScope.launch {
+            val job = viewModelScope.launch {
                 delay(800)
+                if (generation != gameGeneration) return@launch
                 if (first.imageRes == second.imageRes) {
                     first.isMatched = true
                     second.isMatched = true
@@ -87,6 +105,12 @@ class GameViewModel(
                 }
                 selectedCards.clear()
                 if (cards.all { it.isMatched }) gameWon = true
+            }
+            matchResolutionJob = job
+            job.invokeOnCompletion {
+                if (matchResolutionJob === job) {
+                    matchResolutionJob = null
+                }
             }
         }
     }

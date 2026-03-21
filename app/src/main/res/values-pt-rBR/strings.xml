@@ -4,9 +4,13 @@
     <string name="choose_theme_to_play">Escolha um tema para jogar</string>
     <string name="theme_animals">Gato</string>
     <string name="theme_toys">Brinquedos</string>
+    <string name="theme_cars">Carros</string>
+    <string name="theme_dolls">Bonecas</string>
+    <string name="theme_music">Musica</string>
     <string name="theme_dinosaurs">Dinossauros</string>
     <string name="theme_farm_tractors">Fazendinha e Tratores</string>
     <string name="theme_dogs">Cachorros</string>
+    <string name="theme_jungle_animals">Animais da Selva</string>
     <string name="choose_difficulty">Escolha a dificuldade</string>
     <string name="difficulty_easy">Facil</string>
     <string name="difficulty_medium">Medio</string>
@@ -33,9 +37,13 @@
     <string name="toast_sound_off">Som desligado</string>
     <string name="toolbar_theme_animals">Tema: Gato</string>
     <string name="toolbar_theme_toys">Tema: Brinquedos</string>
+    <string name="toolbar_theme_cars">Tema: Carros</string>
+    <string name="toolbar_theme_dolls">Tema: Bonecas</string>
+    <string name="toolbar_theme_music">Tema: Musica</string>
     <string name="toolbar_theme_dinosaurs">Tema: Dinossauros</string>
     <string name="toolbar_theme_farm_tractors">Tema: Fazendinha e Tratores</string>
     <string name="toolbar_theme_dogs">Tema: Cachorros</string>
+    <string name="toolbar_theme_jungle_animals">Tema: Animais da Selva</string>
     <string name="toolbar_sound_on">Som ligado</string>
     <string name="toolbar_sound_off">Som desligado</string>
     <string name="restart">Reiniciar</string>

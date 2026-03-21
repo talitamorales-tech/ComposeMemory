@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -49,8 +47,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.talitamorales.composememory.R
 
-private val MenuCardShape = RoundedCornerShape(30.dp)
 private val MenuButtonShape = RoundedCornerShape(24.dp)
+private val MenuHeroShape = RoundedCornerShape(
+    bottomStart = 34.dp,
+    bottomEnd = 34.dp
+)
+private val MenuBottomShape = RoundedCornerShape(
+    topStart = 34.dp,
+    topEnd = 34.dp
+)
 
 @Composable
 fun InitialMenuScreen(navController: NavController) {
@@ -71,46 +76,58 @@ fun InitialMenuScreen(navController: NavController) {
             .menuSparkles()
     ) {
         val compactLayout = maxWidth < 720.dp
-        val menuScrollState = rememberScrollState()
+        val tabletLayout = maxWidth >= 900.dp
+        val shortLayout = maxHeight < 500.dp
+        val useSideBySideButtons = tabletLayout || shortLayout
 
         MenuBackgroundDecor()
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(menuScrollState)
-                .padding(horizontal = if (compactLayout) 20.dp else 36.dp, vertical = 16.dp),
+                .padding(
+                    horizontal = if (compactLayout) 14.dp else 28.dp,
+                    vertical = if (shortLayout) 6.dp else 8.dp
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Spacer(modifier = Modifier.height(if (compactLayout) 8.dp else 18.dp))
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .shadow(14.dp, MenuCardShape, clip = false)
-                    .clip(MenuCardShape)
+                    .weight(if (shortLayout) 0.42f else 1f)
+                    .shadow(16.dp, MenuHeroShape, clip = false)
+                    .clip(MenuHeroShape)
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xCB3A1A6E),
-                                Color(0xB32A1456),
-                                Color(0xCC1B0D3B)
+                                Color(0xE23C1A6F),
+                                Color(0xC62D145A),
+                                Color(0xD81A0A3A),
+                                Color(0xEE15072E)
                             )
                         )
                     )
-                    .border(1.7.dp, Color(0xFFF7D389), MenuCardShape)
-                    .padding(horizontal = 16.dp, vertical = 16.dp)
+                    .border(1.8.dp, Color(0xFFF7D389), MenuHeroShape)
+                    .padding(
+                        horizontal = if (tabletLayout) 34.dp else if (shortLayout) 14.dp else 18.dp,
+                        vertical = if (shortLayout) 10.dp else if (compactLayout) 18.dp else 24.dp
+                    )
                     .drawBehind {
                         drawCircle(
                             color = Color(0x4E8A5CFF),
-                            radius = size.minDimension * 0.22f,
-                            center = Offset(size.width * 0.16f, size.height * 0.14f)
+                            radius = size.minDimension * 0.28f,
+                            center = Offset(size.width * 0.15f, size.height * 0.16f)
                         )
                         drawCircle(
                             color = Color(0x36FFD47E),
-                            radius = size.minDimension * 0.16f,
-                            center = Offset(size.width * 0.84f, size.height * 0.18f)
+                            radius = size.minDimension * 0.2f,
+                            center = Offset(size.width * 0.84f, size.height * 0.2f)
+                        )
+                        drawCircle(
+                            color = Color(0x2D6AB8FF),
+                            radius = size.minDimension * 0.24f,
+                            center = Offset(size.width * 0.82f, size.height * 0.84f)
                         )
                     },
                 contentAlignment = Alignment.Center
@@ -119,81 +136,119 @@ fun InitialMenuScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.memory_friends_logo),
                     contentDescription = stringResource(id = R.string.logo_content_description),
                     modifier = Modifier
-                        .fillMaxWidth(if (compactLayout) 0.56f else 0.42f)
-                        .heightIn(max = if (compactLayout) 215.dp else 240.dp),
+                        .fillMaxWidth()
+                        .fillMaxSize(),
                     contentScale = ContentScale.Fit
                 )
             }
 
-            Spacer(modifier = Modifier.height(if (compactLayout) 20.dp else 28.dp))
-
-            Text(
-                text = stringResource(id = R.string.initial_choose_how_to_play),
-                color = Color(0xFFFFF6DE),
-                fontSize = if (compactLayout) 30.sp else 36.sp,
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center,
-                style = TextStyle(
-                    shadow = Shadow(
-                        color = Color(0xB52A0D4A),
-                        offset = Offset(0f, 3f),
-                        blurRadius = 8f
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(if (shortLayout) 0.58f else 1f)
+                    .padding(top = if (shortLayout) 6.dp else 8.dp)
+                    .shadow(16.dp, MenuBottomShape, clip = false)
+                    .clip(MenuBottomShape)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color(0xF12B0F4E),
+                                Color(0xF01F0B3A),
+                                Color(0xF0140728)
+                            )
+                        )
                     )
-                ),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(if (compactLayout) 20.dp else 26.dp))
-
-            if (compactLayout) {
+                    .border(1.4.dp, Color(0xA3FFDFA0), MenuBottomShape)
+                    .padding(
+                        horizontal = if (shortLayout) 12.dp else if (compactLayout) 14.dp else 24.dp,
+                        vertical = if (shortLayout) 10.dp else if (compactLayout) 14.dp else 20.dp
+                    )
+            ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .widthIn(max = 520.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
                 ) {
-                    MenuActionButton(
-                        title = stringResource(id = R.string.menu_cards_carousel_title),
-                        subtitle = stringResource(id = R.string.menu_cards_carousel_subtitle),
-                        iconRes = R.drawable.cat_persa,
-                        iconFill = 0.9f,
-                        accentColor = Color(0xFF5AC88A),
-                        onClick = { navController.navigate("cardsCarousel") }
+                    Text(
+                        text = stringResource(id = R.string.initial_choose_how_to_play),
+                        color = Color(0xFFFFF6DE),
+                        fontSize = if (tabletLayout) 36.sp else if (shortLayout) 22.sp else 30.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color(0xB52A0D4A),
+                                offset = Offset(0f, 3f),
+                                blurRadius = 8f
+                            )
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = if (shortLayout) 2.dp else if (compactLayout) 8.dp else 12.dp,
+                                bottom = if (shortLayout) 8.dp else 14.dp
+                            )
                     )
-                    MenuActionButton(
-                        title = stringResource(id = R.string.menu_memory_game_title),
-                        subtitle = stringResource(id = R.string.menu_memory_game_subtitle),
-                        iconRes = R.drawable.memory_game_plane_icon,
-                        iconFill = 0.92f,
-                        accentColor = Color(0xFF61B6FF),
-                        onClick = { navController.navigate("themeSelection") }
-                    )
-                }
-            } else {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .widthIn(max = 900.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    MenuActionButton(
-                        title = stringResource(id = R.string.menu_cards_carousel_title),
-                        subtitle = stringResource(id = R.string.menu_cards_carousel_subtitle),
-                        iconRes = R.drawable.cat_persa,
-                        iconFill = 0.9f,
-                        accentColor = Color(0xFF5AC88A),
-                        modifier = Modifier.weight(1f),
-                        onClick = { navController.navigate("cardsCarousel") }
-                    )
-                    MenuActionButton(
-                        title = stringResource(id = R.string.menu_memory_game_title),
-                        subtitle = stringResource(id = R.string.menu_memory_game_subtitle),
-                        iconRes = R.drawable.memory_game_plane_icon,
-                        iconFill = 0.92f,
-                        accentColor = Color(0xFF61B6FF),
-                        modifier = Modifier.weight(1f),
-                        onClick = { navController.navigate("themeSelection") }
-                    )
+
+                    if (!useSideBySideButtons) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .widthIn(max = 560.dp)
+                                .weight(1f),
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            MenuActionButton(
+                                title = stringResource(id = R.string.menu_cards_carousel_title),
+                                subtitle = stringResource(id = R.string.menu_cards_carousel_subtitle),
+                                iconRes = R.drawable.cat_persa,
+                                iconFill = 0.92f,
+                                accentColor = Color(0xFF5AC88A),
+                                compact = false,
+                                onClick = { navController.navigate("cardsCarousel") }
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+                            MenuActionButton(
+                                title = stringResource(id = R.string.menu_memory_game_title),
+                                subtitle = stringResource(id = R.string.menu_memory_game_subtitle),
+                                iconRes = R.drawable.memory_game_plane_icon,
+                                iconFill = 0.94f,
+                                accentColor = Color(0xFF61B6FF),
+                                compact = false,
+                                onClick = { navController.navigate("themeSelection") }
+                            )
+                        }
+                    } else {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .widthIn(max = if (tabletLayout) 1100.dp else 760.dp)
+                                .weight(1f),
+                            horizontalArrangement = Arrangement.spacedBy(if (shortLayout) 10.dp else 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            MenuActionButton(
+                                title = stringResource(id = R.string.menu_cards_carousel_title),
+                                subtitle = stringResource(id = R.string.menu_cards_carousel_subtitle),
+                                iconRes = R.drawable.cat_persa,
+                                iconFill = 0.92f,
+                                accentColor = Color(0xFF5AC88A),
+                                modifier = Modifier.weight(1f),
+                                compact = shortLayout,
+                                onClick = { navController.navigate("cardsCarousel") }
+                            )
+                            MenuActionButton(
+                                title = stringResource(id = R.string.menu_memory_game_title),
+                                subtitle = stringResource(id = R.string.menu_memory_game_subtitle),
+                                iconRes = R.drawable.memory_game_plane_icon,
+                                iconFill = 0.94f,
+                                accentColor = Color(0xFF61B6FF),
+                                modifier = Modifier.weight(1f),
+                                compact = shortLayout,
+                                onClick = { navController.navigate("themeSelection") }
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -207,13 +262,14 @@ private fun MenuActionButton(
     iconRes: Int,
     iconFill: Float = 0.84f,
     accentColor: Color,
+    compact: Boolean = false,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 102.dp)
+            .heightIn(min = if (compact) 84.dp else 98.dp)
             .shadow(11.dp, MenuButtonShape, clip = false)
             .clip(MenuButtonShape)
             .background(
@@ -227,11 +283,14 @@ private fun MenuActionButton(
             )
             .border(1.5.dp, Color(0xD7FFE2AE), MenuButtonShape)
             .clickable { onClick() }
-            .padding(horizontal = 14.dp, vertical = 12.dp)
+            .padding(
+                horizontal = if (compact) 10.dp else 14.dp,
+                vertical = if (compact) 8.dp else 10.dp
+            )
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .matchParentSize()
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
@@ -242,12 +301,13 @@ private fun MenuActionButton(
                 )
         )
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .size(74.dp)
+                    .size(if (compact) 56.dp else 74.dp)
                     .clip(CircleShape)
                     .background(Color(0x37FFFFFF))
                     .border(1.2.dp, Color(0xBBFFE9BB), CircleShape),
@@ -268,7 +328,7 @@ private fun MenuActionButton(
                 Text(
                     text = title,
                     color = Color(0xFFFFF7E4),
-                    fontSize = 19.sp,
+                    fontSize = if (compact) 16.sp else 19.sp,
                     fontWeight = FontWeight.ExtraBold,
                     style = TextStyle(
                         shadow = Shadow(
@@ -282,14 +342,14 @@ private fun MenuActionButton(
                 Text(
                     text = subtitle,
                     color = Color(0xFFFFE6B8),
-                    fontSize = 14.sp,
+                    fontSize = if (compact) 12.sp else 14.sp,
                     fontWeight = FontWeight.Medium
                 )
             }
 
             Box(
                 modifier = Modifier
-                    .size(34.dp)
+                    .size(if (compact) 28.dp else 34.dp)
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.14f))
                     .border(1.dp, Color(0x8EFFE8BB), CircleShape),

@@ -175,11 +175,9 @@ fun ThemeSelectionScreen(navController: NavController) {
     val themeDisplayOrder = listOf(
         GameTheme.Dogs,
         GameTheme.Animals,
+        GameTheme.Dance,
         GameTheme.Dinosaurs,
         GameTheme.JungleAnimals,
-        GameTheme.Toys,
-        GameTheme.Dolls,
-        GameTheme.Cars,
         GameTheme.Music
     )
 
@@ -553,13 +551,29 @@ private fun ThemePreviewImage(
     title: String,
     modifier: Modifier = Modifier
 ) {
-    val needsCutout = theme == GameTheme.Cars || theme == GameTheme.Dolls
+    val needsCutout = theme == GameTheme.Dance
+    val previewModifier = when (theme) {
+        GameTheme.Dance -> modifier
+            .fillMaxSize(0.96f)
+            .scale(1.10f)
+
+        else -> modifier
+            .fillMaxSize(0.97f)
+            .scale(1.16f)
+    }
+    val previewContentScale = if (theme == GameTheme.Dance) {
+        ContentScale.Fit
+    } else {
+        ContentScale.Fit
+    }
+    val previewAlignment = Alignment.Center
     if (!needsCutout) {
         Image(
             painter = painterResource(id = imageRes),
             contentDescription = title,
-            modifier = modifier,
-            contentScale = ContentScale.Fit
+            modifier = previewModifier,
+            contentScale = previewContentScale,
+            alignment = previewAlignment
         )
         return
     }
@@ -578,15 +592,17 @@ private fun ThemePreviewImage(
         Image(
             bitmap = imageBitmap,
             contentDescription = title,
-            modifier = modifier,
-            contentScale = ContentScale.Fit
+            modifier = previewModifier,
+            contentScale = previewContentScale,
+            alignment = previewAlignment
         )
     } else {
         Image(
             painter = painterResource(id = imageRes),
             contentDescription = title,
-            modifier = modifier,
-            contentScale = ContentScale.Fit
+            modifier = previewModifier,
+            contentScale = previewContentScale,
+            alignment = previewAlignment
         )
     }
 }
@@ -851,21 +867,7 @@ private fun themePalette(theme: GameTheme): ThemeCardPalette {
             badge = Color(0xFF2E9A45)
         )
 
-        GameTheme.Toys -> ThemeCardPalette(
-            frame = listOf(Color(0xFF7AD7FF), Color(0xFF48A7FF)),
-            fill = listOf(Color(0xFFCFF3FF), Color(0xFF97DEFF)),
-            title = Color(0xFF1C4E7A),
-            badge = Color(0xFF2E9A45)
-        )
-
-        GameTheme.Dolls -> ThemeCardPalette(
-            frame = listOf(Color(0xFFFFB2E5), Color(0xFFE77AD4)),
-            fill = listOf(Color(0xFFFFE4F6), Color(0xFFFFC4EC)),
-            title = Color(0xFF7F2A65),
-            badge = Color(0xFF2E9A45)
-        )
-
-        GameTheme.Cars -> ThemeCardPalette(
+        GameTheme.Dance -> ThemeCardPalette(
             frame = listOf(Color(0xFF7CB7FF), Color(0xFF3768D9)),
             fill = listOf(Color(0xFFDCEBFF), Color(0xFFAACBFF)),
             title = Color(0xFF1A3F83),

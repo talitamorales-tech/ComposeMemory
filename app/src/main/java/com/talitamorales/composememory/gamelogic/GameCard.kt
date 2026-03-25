@@ -21,36 +21,15 @@ data class Card(
             Pair(R.drawable.cat_fofinho, null),
             Pair(R.drawable.cat_white, null)
         )
-        val toysAssets: List<Pair<Int, Int?>> = listOf(
-            Pair(R.drawable.toy_balloon, null),
-            Pair(R.drawable.toy_car, null),
-            Pair(R.drawable.toy_puzzle, null),
-            Pair(R.drawable.toy_yoyo, null),
-            Pair(R.drawable.toy_train, null),
-            Pair(R.drawable.toy_plane_cartoon, null),
-            Pair(R.drawable.toy_bear, null),
-            Pair(R.drawable.toy_rocking_horse, null)
-        )
-        val carsAssets: List<Pair<Int, Int?>> = listOf(
-            Pair(R.drawable.car_mustang, null),
-            Pair(R.drawable.car_audi, null),
-            Pair(R.drawable.car_ferrari, null),
-            Pair(R.drawable.car_porsche, null),
-            Pair(R.drawable.car_lamborghini, null),
-            Pair(R.drawable.car_bmw, null),
-            Pair(R.drawable.car_mercedes, null),
-            Pair(R.drawable.car_golf, null),
-
-        )
-        val dollsAssets: List<Pair<Int, Int?>> = listOf(
-            Pair(R.drawable.doll_princess, null),
-            Pair(R.drawable.doll_mermaid, null),
-            Pair(R.drawable.doll_baby, null),
-            Pair(R.drawable.doll_ballerina, null),
-            Pair(R.drawable.doll_barbie, null),
-            Pair(R.drawable.doll_japanese, null),
-            Pair(R.drawable.doll_rag, null),
-            Pair(R.drawable.doll_fashion,null)
+        val danceAssets: List<Pair<Int, Int?>> = listOf(
+            Pair(R.drawable.dance_boy, null),
+            Pair(R.drawable.dance_girl, null),
+            Pair(R.drawable.dance_couple, null),
+            Pair(R.drawable.dance_elegant, null),
+            Pair(R.drawable.dance_hiphop, null),
+            Pair(R.drawable.dance_teather, null),
+            Pair(R.drawable.dance_junina, null),
+            Pair(R.drawable.dance_bailairine, null)
 
         )
         val musicAssets: List<Pair<Int, Int?>> = listOf(
@@ -96,9 +75,7 @@ data class Card(
 
         fun assetsForTheme(theme: GameTheme): List<Pair<Int, Int?>> = when (theme) {
             GameTheme.Animals -> animalsAssets
-            GameTheme.Toys -> toysAssets
-            GameTheme.Cars -> carsAssets
-            GameTheme.Dolls -> dollsAssets
+            GameTheme.Dance -> danceAssets
             GameTheme.Music -> musicAssets
             GameTheme.Dinosaurs -> dinosaursAssets
             GameTheme.Dogs -> dogsAssets
@@ -109,9 +86,7 @@ data class Card(
             return (
                 dinosaursAssets +
                     animalsAssets +
-                    toysAssets +
-                    carsAssets +
-                    dollsAssets +
+                    danceAssets +
                     musicAssets +
                     dogsAssets +
                     jungleAnimalsAssets

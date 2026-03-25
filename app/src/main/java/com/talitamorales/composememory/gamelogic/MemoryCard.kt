@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -72,12 +73,19 @@ fun MemoryCard(
                 .padding(2.dp)
         ) {
             if (card.isFaceUp || card.isMatched) {
-                val isAnimalThemeImage = card.soundRes != null
-                val imageModifier = if (isAnimalThemeImage) {
-                    Modifier.fillMaxSize(0.74f)
-                } else {
-                    Modifier.fillMaxSize(0.9f)
+                val isDanceThemeImage = remember(card.imageRes) {
+                    Card.danceAssets.any { asset -> asset.first == card.imageRes }
                 }
+                val imageModifier = if (isDanceThemeImage) {
+                    Modifier
+                        .fillMaxSize(0.98f)
+                        .scale(1.18f)
+                } else {
+                    Modifier
+                        .fillMaxSize(0.94f)
+                        .scale(1.04f)
+                }
+
                 val imageResToRender = remember(card.imageRes) {
                     if (isDrawableLoadable(context, card.imageRes)) {
                         card.imageRes
@@ -155,7 +163,7 @@ private fun PremiumCardFront(
                     }
                 },
                 modifier = if (imageResToRender == R.drawable.memory_friends_logo_banner) {
-                    Modifier.fillMaxSize(0.82f)
+                    Modifier.fillMaxSize(0.96f).scale(1.2f)
                 } else {
                     imageModifier
                 },

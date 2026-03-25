@@ -16,25 +16,11 @@ enum class GameTheme(
         previewRes = R.drawable.cat_persa,
         isFree = true
     ),
-    Toys(
-        id = 2,
-        titleRes = R.string.theme_toys,
-        toolbarTitleRes = R.string.toolbar_theme_toys,
-        previewRes = R.drawable.toy_train,
-        isFree = true
-    ),
-    Cars(
+    Dance(
         id = 4,
-        titleRes = R.string.theme_cars,
-        toolbarTitleRes = R.string.toolbar_theme_cars,
-        previewRes = R.drawable.car_mustang_preview,
-        isFree = true
-    ),
-    Dolls(
-        id = 7,
-        titleRes = R.string.theme_dolls,
-        toolbarTitleRes = R.string.toolbar_theme_dolls,
-        previewRes = R.drawable.doll_princess_preview,
+        titleRes = R.string.theme_dance,
+        toolbarTitleRes = R.string.toolbar_theme_dance,
+        previewRes = R.drawable.dance_couple,
         isFree = true
     ),
     Music(

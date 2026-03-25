@@ -5,6 +5,7 @@
     <string name="theme_animals">Cat</string>
     <string name="theme_toys">Toys</string>
     <string name="theme_cars">Cars</string>
+    <string name="theme_dance">Dance</string>
     <string name="theme_dolls">Dolls</string>
     <string name="theme_music">Music</string>
     <string name="theme_dinosaurs">Dinosaurs</string>
@@ -38,6 +39,7 @@
     <string name="toolbar_theme_animals">Theme: Cat</string>
     <string name="toolbar_theme_toys">Theme: Toys</string>
     <string name="toolbar_theme_cars">Theme: Cars</string>
+    <string name="toolbar_theme_dance">Theme: Dance</string>
     <string name="toolbar_theme_dolls">Theme: Dolls</string>
     <string name="toolbar_theme_music">Theme: Music</string>
     <string name="toolbar_theme_dinosaurs">Theme: Dinosaurs</string>

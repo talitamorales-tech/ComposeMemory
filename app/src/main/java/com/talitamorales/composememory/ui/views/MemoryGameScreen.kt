@@ -92,11 +92,10 @@ private val GridBottomPaddingClosed = 8.dp
 private val GridBottomPaddingOpen = 10.dp
 private const val WinCelebrationDurationMs = 3200
 private const val GAME_DEBUG_TAG = "CM-MemoryGame"
-private val GAMEPLAY_MUSIC_RES = R.raw.gameplay_music
+private val GAMEPLAY_MUSIC_RES = R.raw.flip_it_match_it
 private val VICTORY_MUSIC_RES = R.raw.victory
 private const val GAMEPLAY_MUSIC_VOLUME = 0.35f
 private const val VICTORY_MUSIC_VOLUME = 0.9f
-
 private val ToolbarContainerShape = RoundedCornerShape(22.dp)
 private val ToolbarButtonShape = RoundedCornerShape(16.dp)
 private val ToolbarDrawerTabShape = RoundedCornerShape(
@@ -122,6 +121,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
     var isSoundEnabled by remember { mutableStateOf(true) }
     var isToolbarExpanded by rememberSaveable { mutableStateOf(false) }
     var showWinCelebration by remember { mutableStateOf(false) }
+    var gameplayMusicRestartToken by remember { mutableIntStateOf(0) }
     val recompositions = remember { mutableIntStateOf(0) }
     val soundOnToast = stringResource(id = R.string.toast_sound_on)
     val soundOffToast = stringResource(id = R.string.toast_sound_off)
@@ -163,7 +163,12 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
         )
     }
 
-    LaunchedEffect(isSoundEnabled, viewModel.gameWon, showWinCelebration) {
+    LaunchedEffect(
+        isSoundEnabled,
+        viewModel.gameWon,
+        showWinCelebration,
+        gameplayMusicRestartToken
+    ) {
         val shouldPlayMusic = isSoundEnabled && !viewModel.gameWon && !showWinCelebration
         if (!shouldPlayMusic) {
             backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
@@ -264,6 +269,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                             victoryPlayer = victoryPlayer.safeStopAndRelease()
                             isToolbarExpanded = false
                             viewModel.resetGame()
+                            gameplayMusicRestartToken += 1
                         },
                         enabled = !showWinCelebration,
                         modifier = Modifier.fillMaxWidth(),
@@ -517,9 +523,7 @@ fun ThemeButton(
     val btnThemeTitle = stringResource(id = viewModel.currentTheme.toolbarTitleRes)
     val accentColor = when (viewModel.currentTheme) {
         GameTheme.Animals -> Color(0xFF5AC88A)
-        GameTheme.Toys -> Color(0xFF69B6FF)
-        GameTheme.Cars -> Color(0xFF6EA7FF)
-        GameTheme.Dolls -> Color(0xFFF58CB3)
+        GameTheme.Dance -> Color(0xFF6EA7FF)
         GameTheme.Music -> Color(0xFFB08CFF)
         GameTheme.Dinosaurs -> Color(0xFF8BC34A)
         GameTheme.Dogs -> Color(0xFFFFB37A)
@@ -536,9 +540,7 @@ fun ThemeButton(
     ) {
         val themeCycle = listOf(
             GameTheme.Animals,
-            GameTheme.Toys,
-            GameTheme.Cars,
-            GameTheme.Dolls,
+            GameTheme.Dance,
             GameTheme.Music,
             GameTheme.Dinosaurs,
             GameTheme.Dogs,

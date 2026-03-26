@@ -31,6 +31,7 @@ class GameViewModel(
     private var memorizationJob: Job? = null
     private var matchResolutionJob: Job? = null
     private var gameGeneration: Long = 0L
+    private var boardPairCount: Int? = null
 
     override var gameWon  by mutableStateOf(false)
 
@@ -41,28 +42,37 @@ class GameViewModel(
         resetGame()
     }
 
+    override fun updateBoardPairCount(pairCount: Int) {
+        val sanitizedPairCount = pairCount.coerceAtLeast(1)
+        if (boardPairCount == sanitizedPairCount) return
+        boardPairCount = sanitizedPairCount
+        resetGame()
+    }
+
     override fun resetGame() {
         gameGeneration += 1
         val generation = gameGeneration
         memorizationJob?.cancel()
         matchResolutionJob?.cancel()
+        val effectivePairCount = boardPairCount ?: currentDifficulty.pairCount
 
         Log.d(
             VIEWMODEL_DEBUG_TAG,
-            "resetGame theme=$currentTheme difficulty=$currentDifficulty pairs=${currentDifficulty.pairCount}"
+            "resetGame theme=$currentTheme difficulty=$currentDifficulty pairs=$effectivePairCount"
         )
         cards.clear()
-        cards.addAll(createCardsForTheme(currentTheme, currentDifficulty))
+        cards.addAll(createCardsForTheme(currentTheme, effectivePairCount))
 
         selectedCards.clear()
         gameWon = false
 
         cards.forEach{it.isFaceUp = true}
         isMemorizing = true
+        val extraPairs = (effectivePairCount - currentDifficulty.pairCount).coerceAtLeast(0)
         val memorizeDelayMs = when (currentDifficulty) {
-            GameDifficulty.Easy -> 4000L
-            GameDifficulty.Medium -> 6000L
-            GameDifficulty.Hard -> 8000L
+            GameDifficulty.Easy -> 4000L + extraPairs * 250L
+            GameDifficulty.Medium -> 6000L + extraPairs * 220L
+            GameDifficulty.Hard -> 8000L + extraPairs * 180L
         }
         val job = viewModelScope.launch {
             delay(memorizeDelayMs)

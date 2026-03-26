@@ -34,10 +34,10 @@ data class Card(
         )
         val musicAssets: List<Pair<Int, Int?>> = listOf(
             Pair(R.drawable.music_piano, null),
-            Pair(R.drawable.music_saxophone, null),
+            Pair(R.drawable.music_saxfone, null),
             Pair(R.drawable.music_violin, null),
             Pair(R.drawable.music_guitar, null),
-            Pair(R.drawable.music_accordion, null),
+            Pair(R.drawable.music_acordion, null),
             Pair(R.drawable.music_pandero, null),
             Pair(R.drawable.music_bateria, null),
             Pair(R.drawable.music_baixo, null)
@@ -70,7 +70,7 @@ data class Card(
             Pair(R.drawable.jungle_gorilla, null),
             Pair(R.drawable.jungle_tiger, null),
             Pair(R.drawable.jungle_giraffe, null),
-            Pair(R.drawable.jungle_hipopotamo, null)
+            Pair(R.drawable.jungle_hipopotomo, null)
         )
 
         fun assetsForTheme(theme: GameTheme): List<Pair<Int, Int?>> = when (theme) {
@@ -104,12 +104,12 @@ fun createCards(cards: List<Pair<Int, Int?>>): List<Card> {
     return cards.shuffled().mapIndexed {index, pair -> Card(id = ids[index], imageRes = pair.first, soundRes = pair.second)}
 }
 
-fun createCardsForTheme(theme: GameTheme, difficulty: GameDifficulty): List<Card> {
+fun createCardsForTheme(theme: GameTheme, pairCount: Int): List<Card> {
     val baseAssets = Card.assetsForTheme(theme)
         .distinctBy { it.first to it.second }
     if (baseAssets.isEmpty()) return emptyList()
 
-    val targetPairCount = difficulty.pairCount
+    val targetPairCount = pairCount.coerceAtLeast(1)
     val uniquePairs = if (targetPairCount <= baseAssets.size) {
         baseAssets.shuffled().take(targetPairCount)
     } else {
@@ -118,4 +118,8 @@ fun createCardsForTheme(theme: GameTheme, difficulty: GameDifficulty): List<Card
     }
     val doubled = uniquePairs.flatMap { listOf(it, it) }
     return createCards(doubled)
+}
+
+fun createCardsForTheme(theme: GameTheme, difficulty: GameDifficulty): List<Card> {
+    return createCardsForTheme(theme, difficulty.pairCount)
 }

@@ -12,6 +12,7 @@ interface GameViewModelContract {
     var currentTheme: GameTheme
     var currentDifficulty: GameDifficulty
 
+    fun updateBoardPairCount(pairCount: Int)
     fun resetGame()
     fun onCardClicked(card: Card)
 }

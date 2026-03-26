@@ -73,12 +73,11 @@ import androidx.compose.ui.unit.sp
 import com.talitamorales.composememory.GameViewModelContract
 import com.talitamorales.composememory.R
 import com.talitamorales.composememory.gamelogic.Card as GameCardModel
+import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.gamelogic.MemoryCard
 import kotlinx.coroutines.delay
 import kotlin.math.PI
-import kotlin.math.ceil
-import kotlin.math.min
 import kotlin.math.sin
 import kotlin.random.Random
 
@@ -105,11 +104,175 @@ private val ToolbarDrawerTabShape = RoundedCornerShape(
     bottomEnd = 16.dp
 )
 
+private data class GameBoardPlan(
+    val columns: Int,
+    val rows: Int
+) {
+    val totalCards: Int = columns * rows
+    val pairCount: Int = totalCards / 2
+}
+
 private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
     if (this == null) return null
     runCatching { stop() }
     runCatching { release() }
     return null
+}
+
+private fun GameDifficulty.minimumBoardCardSize(isLargeScreen: Boolean): Dp = when (this) {
+    GameDifficulty.Easy -> if (isLargeScreen) 100.dp else 90.dp
+    GameDifficulty.Medium -> if (isLargeScreen) 88.dp else 76.dp
+    GameDifficulty.Hard -> if (isLargeScreen) 76.dp else 66.dp
+}
+
+private fun GameDifficulty.horizontalGridSpacing(
+    isCompactWidth: Boolean,
+    menuExpanded: Boolean
+): Dp = when {
+    this == GameDifficulty.Hard && isCompactWidth -> if (menuExpanded) 6.dp else 5.dp
+    menuExpanded -> GridHorizontalSpacingOpen
+    else -> GridHorizontalSpacingClosed
+}
+
+private fun GameDifficulty.horizontalGridPaddingPerSide(isCompactWidth: Boolean): Dp =
+    if (this == GameDifficulty.Hard && isCompactWidth) 2.dp else 4.dp
+
+private fun GameDifficulty.mobileBoardPairCount(): Int = when (this) {
+    GameDifficulty.Easy -> 4
+    GameDifficulty.Medium -> 5
+    GameDifficulty.Hard -> 9
+}
+
+private fun GameDifficulty.minimumRequiredBoardPairs(isLargeScreen: Boolean): Int =
+    if (isLargeScreen) pairCount else mobileBoardPairCount()
+
+private fun GameDifficulty.preferredBoardPlans(isLargeScreen: Boolean): List<GameBoardPlan> = when (this) {
+    GameDifficulty.Easy -> if (isLargeScreen) {
+        listOf(
+            GameBoardPlan(columns = 4, rows = 3),
+            GameBoardPlan(columns = 4, rows = 4),
+            GameBoardPlan(columns = 5, rows = 4)
+        )
+    } else {
+        listOf(
+            GameBoardPlan(columns = 4, rows = 2),
+            GameBoardPlan(columns = 4, rows = 3),
+            GameBoardPlan(columns = 4, rows = 4),
+            GameBoardPlan(columns = 5, rows = 4)
+        )
+    }
+
+    GameDifficulty.Medium -> if (isLargeScreen) {
+        listOf(
+            GameBoardPlan(columns = 5, rows = 4),
+            GameBoardPlan(columns = 4, rows = 4),
+            GameBoardPlan(columns = 6, rows = 4)
+        )
+    } else {
+        listOf(
+            GameBoardPlan(columns = 5, rows = 2),
+            GameBoardPlan(columns = 4, rows = 3),
+            GameBoardPlan(columns = 4, rows = 4),
+            GameBoardPlan(columns = 5, rows = 4)
+        )
+    }
+
+    GameDifficulty.Hard -> if (isLargeScreen) {
+        listOf(
+            GameBoardPlan(columns = 6, rows = 4),
+            GameBoardPlan(columns = 5, rows = 4),
+            GameBoardPlan(columns = 6, rows = 5)
+        )
+    } else {
+        listOf(
+            GameBoardPlan(columns = 6, rows = 3),
+            GameBoardPlan(columns = 4, rows = 4),
+            GameBoardPlan(columns = 5, rows = 4),
+            GameBoardPlan(columns = 6, rows = 4)
+        )
+    }
+}
+
+private fun estimateBoardCardSize(
+    availableWidth: Dp,
+    availableHeight: Dp,
+    plan: GameBoardPlan,
+    horizontalSpacing: Dp,
+    horizontalContentPadding: Dp,
+    verticalSpacing: Dp,
+    topPadding: Dp,
+    bottomPadding: Dp
+): Dp {
+    val usableWidth = (availableWidth - horizontalContentPadding).coerceAtLeast(0.dp)
+    val usableHeight = (availableHeight - topPadding - bottomPadding).coerceAtLeast(0.dp)
+    val widthPerCard = (
+        usableWidth - horizontalSpacing * (plan.columns - 1).toFloat()
+    ).coerceAtLeast(0.dp) / plan.columns.toFloat()
+    val heightPerCard = (
+        usableHeight - verticalSpacing * (plan.rows - 1).toFloat()
+    ).coerceAtLeast(0.dp) / plan.rows.toFloat()
+    return minOf(widthPerCard, heightPerCard)
+}
+
+private fun calculateBoardPlan(
+    availableWidth: Dp,
+    availableHeight: Dp,
+    difficulty: GameDifficulty
+): GameBoardPlan {
+    val isCompactWidth = availableWidth < 700.dp
+    val isLargeScreen = !isCompactWidth && (availableWidth >= 900.dp || availableHeight >= 600.dp)
+    val minCardSize = difficulty.minimumBoardCardSize(isLargeScreen)
+    val minimumRequiredPairs = difficulty.minimumRequiredBoardPairs(isLargeScreen)
+    val horizontalSpacing = difficulty.horizontalGridSpacing(
+        isCompactWidth = isCompactWidth,
+        menuExpanded = false
+    )
+    val horizontalContentPadding = difficulty.horizontalGridPaddingPerSide(isCompactWidth) * 2
+    val preferredPlans = difficulty.preferredBoardPlans(isLargeScreen)
+        .filter { it.pairCount >= minimumRequiredPairs }
+
+    preferredPlans.firstOrNull { plan ->
+        estimateBoardCardSize(
+            availableWidth = availableWidth,
+            availableHeight = availableHeight,
+            plan = plan,
+            horizontalSpacing = horizontalSpacing,
+            horizontalContentPadding = horizontalContentPadding,
+            verticalSpacing = GridVerticalSpacingClosed,
+            topPadding = GridTopPaddingClosed,
+            bottomPadding = GridBottomPaddingClosed
+        ) >= minCardSize
+    }?.let { return it }
+
+    val maxColumns = if (isLargeScreen) 8 else 6
+    val maxRows = if (isLargeScreen) 6 else 5
+    val fallbackPlans = buildList {
+        for (rows in 2..maxRows) {
+            for (columns in 2..maxColumns) {
+                val candidatePlan = GameBoardPlan(columns = columns, rows = rows)
+                if (candidatePlan.totalCards % 2 != 0) continue
+                if (candidatePlan.pairCount < minimumRequiredPairs) continue
+                add(candidatePlan)
+            }
+        }
+    }
+
+    return (preferredPlans + fallbackPlans).distinct().maxByOrNull { plan ->
+        estimateBoardCardSize(
+            availableWidth = availableWidth,
+            availableHeight = availableHeight,
+            plan = plan,
+            horizontalSpacing = horizontalSpacing,
+            horizontalContentPadding = horizontalContentPadding,
+            verticalSpacing = GridVerticalSpacingClosed,
+            topPadding = GridTopPaddingClosed,
+            bottomPadding = GridBottomPaddingClosed
+        ).value
+    } ?: run {
+        val fallbackColumns = if (isLargeScreen) 6 else 6
+        val fallbackRows = ((minimumRequiredPairs * 2) + fallbackColumns - 1) / fallbackColumns
+        GameBoardPlan(columns = fallbackColumns, rows = fallbackRows.coerceAtLeast(2))
+    }
 }
 
 @Composable
@@ -235,6 +398,13 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
         val compactToolbar = maxWidth < 700.dp
         val toolbarButtonHeight = if (compactToolbar) 40.dp else 46.dp
         val restartButtonSize = if (compactToolbar) 48.dp else 54.dp
+        var boardPlan by remember(viewModel.currentDifficulty) { mutableStateOf<GameBoardPlan?>(null) }
+
+        LaunchedEffect(boardPlan?.pairCount, viewModel.currentDifficulty) {
+            boardPlan?.let { resolvedPlan ->
+                viewModel.updateBoardPairCount(resolvedPlan.pairCount)
+            }
+        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -281,12 +451,19 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
 
             ResponsiveGameGrid(
                 cards = viewModel.cards,
+                currentDifficulty = viewModel.currentDifficulty,
                 isMemorizing = viewModel.isMemorizing || showWinCelebration,
                 menuExpanded = isToolbarExpanded,
+                boardPlan = boardPlan,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .padding(top = 2.dp)
+                    .padding(top = 2.dp),
+                onBoardPlanResolved = { resolvedPlan ->
+                    if (boardPlan != resolvedPlan) {
+                        boardPlan = resolvedPlan
+                    }
+                }
             ) { card ->
                 viewModel.onCardClicked(card)
             }
@@ -432,56 +609,66 @@ private fun GameToolbar(
 @Composable
 private fun ResponsiveGameGrid(
     cards: List<GameCardModel>,
+    currentDifficulty: GameDifficulty,
     isMemorizing: Boolean,
     menuExpanded: Boolean,
+    boardPlan: GameBoardPlan?,
     modifier: Modifier = Modifier,
+    onBoardPlanResolved: (GameBoardPlan) -> Unit,
     onCardClick: (GameCardModel) -> Unit
 ) {
     BoxWithConstraints(modifier = modifier) {
-        val horizontalSpacing = if (menuExpanded) GridHorizontalSpacingOpen else GridHorizontalSpacingClosed
+        val isCompactWidth = maxWidth < 700.dp
+        val horizontalSpacing = currentDifficulty.horizontalGridSpacing(
+            isCompactWidth = isCompactWidth,
+            menuExpanded = menuExpanded
+        )
+        val horizontalContentPadding = currentDifficulty.horizontalGridPaddingPerSide(isCompactWidth)
         val verticalSpacing = if (menuExpanded) GridVerticalSpacingOpen else GridVerticalSpacingClosed
         val topPadding = if (menuExpanded) GridTopPaddingOpen else GridTopPaddingClosed
         val bottomPadding = if (menuExpanded) GridBottomPaddingOpen else GridBottomPaddingClosed
-        val cardCount = cards.size.coerceAtLeast(1)
-        val minColumns = if (cardCount == 1) 1 else 2
-        val maxColumns = min(cardCount, 6)
+        val measuredBoardPlan = remember(maxWidth, maxHeight, currentDifficulty) {
+            calculateBoardPlan(
+                availableWidth = maxWidth,
+                availableHeight = maxHeight,
+                difficulty = currentDifficulty
+            )
+        }
+        val activeBoardPlan = boardPlan ?: measuredBoardPlan
 
-        var bestColumns = minColumns
-        var bestCardSize = 0.dp
-
-        for (columns in minColumns..maxColumns) {
-            val rows = ceil(cardCount / columns.toDouble()).toInt()
-            val widthPerCard = (
-                maxWidth - horizontalSpacing * (columns - 1).toFloat()
-            ).coerceAtLeast(0.dp) / columns.toFloat()
-            val heightPerCard = (
-                maxHeight
-                    - topPadding
-                    - bottomPadding
-                    - verticalSpacing * (rows - 1).toFloat()
-            ).coerceAtLeast(0.dp) / rows.toFloat()
-
-            val candidate = minOf(widthPerCard, heightPerCard)
-            if (candidate > bestCardSize) {
-                bestCardSize = candidate
-                bestColumns = columns
+        LaunchedEffect(measuredBoardPlan, menuExpanded) {
+            if (!menuExpanded) {
+                onBoardPlanResolved(measuredBoardPlan)
             }
         }
 
-        val minimumCardSize = if (maxWidth < 500.dp) 70.dp else 82.dp
-        val cardScale = if (menuExpanded) 0.95f else 1f
-        val cardSize = (bestCardSize * cardScale).coerceAtLeast(minimumCardSize)
+        if (boardPlan != null && cards.size != activeBoardPlan.totalCards) {
+            return@BoxWithConstraints
+        }
 
-        LaunchedEffect(maxWidth, maxHeight, bestColumns, cardSize, cardCount) {
+        val cardScale = if (menuExpanded) 0.95f else 1f
+        val bestCardSize = estimateBoardCardSize(
+            availableWidth = maxWidth,
+            availableHeight = maxHeight,
+            plan = activeBoardPlan,
+            horizontalSpacing = horizontalSpacing,
+            horizontalContentPadding = horizontalContentPadding * 2,
+            verticalSpacing = verticalSpacing,
+            topPadding = topPadding,
+            bottomPadding = bottomPadding
+        )
+        val cardSize = bestCardSize * cardScale
+
+        LaunchedEffect(maxWidth, maxHeight, activeBoardPlan, cardSize) {
             Log.d(
                 GAME_DEBUG_TAG,
-                "Grid metrics width=$maxWidth height=$maxHeight cards=$cardCount " +
-                    "columns=$bestColumns cardSize=$cardSize"
+                "Grid metrics width=$maxWidth height=$maxHeight cards=${activeBoardPlan.totalCards} " +
+                    "columns=${activeBoardPlan.columns} rows=${activeBoardPlan.rows} cardSize=$cardSize"
             )
         }
 
         LazyVerticalGrid(
-            columns = GridCells.Fixed(bestColumns),
+            columns = GridCells.Fixed(activeBoardPlan.columns),
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.spacedBy(
                 horizontalSpacing,
@@ -489,12 +676,12 @@ private fun ResponsiveGameGrid(
             ),
             verticalArrangement = Arrangement.spacedBy(verticalSpacing),
             contentPadding = PaddingValues(
-                start = 4.dp,
-                end = 4.dp,
+                start = horizontalContentPadding,
+                end = horizontalContentPadding,
                 top = topPadding,
                 bottom = bottomPadding
             ),
-            userScrollEnabled = true
+            userScrollEnabled = false
         ) {
             items(cards, key = { it.id }) { card ->
                 Box(

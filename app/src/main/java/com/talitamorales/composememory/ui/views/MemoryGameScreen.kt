@@ -2,6 +2,7 @@ package com.talitamorales.composememory.ui.views
 
 import android.media.MediaPlayer
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -12,7 +13,6 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -61,6 +61,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -72,6 +73,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.talitamorales.composememory.GameViewModelContract
 import com.talitamorales.composememory.R
+import com.talitamorales.composememory.ads.rememberRoundInterstitialAdController
 import com.talitamorales.composememory.gamelogic.Card as GameCardModel
 import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
@@ -279,6 +281,9 @@ private fun calculateBoardPlan(
 fun MemoryGameScreen(viewModel: GameViewModelContract) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
+    val roundInterstitialController = rememberRoundInterstitialAdController(
+        adUnitId = stringResource(id = R.string.admob_interstitial_round_end)
+    )
     var backgroundMusicPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     var victoryPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     var isSoundEnabled by remember { mutableStateOf(true) }
@@ -375,8 +380,10 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
             delay(WinCelebrationDurationMs.toLong())
             backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
             victoryPlayer = victoryPlayer.safeStopAndRelease()
-            viewModel.resetGame()
-            showWinCelebration = false
+            roundInterstitialController.showAfterRoundIfAllowed(context) {
+                viewModel.resetGame()
+                showWinCelebration = false
+            }
         }
     }
 
@@ -812,7 +819,8 @@ fun RestartButton(
 @Composable
 fun ToolbarButton(
     btnTitle: String,
-    btnImage: Int,
+    btnImage: Int? = null,
+    imageVector: ImageVector? = null,
     accentColor: Color,
     modifier: Modifier = Modifier,
     buttonHeight: Dp = 44.dp,
@@ -852,12 +860,25 @@ fun ToolbarButton(
                     .border(1.dp, Color(0x66FFECC2), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = btnImage),
-                    contentDescription = btnTitle,
-                    tint = Color.White,
-                    modifier = Modifier.fillMaxSize(0.58f)
-                )
+                when {
+                    imageVector != null -> {
+                        Icon(
+                            imageVector = imageVector,
+                            contentDescription = btnTitle,
+                            tint = Color.White,
+                            modifier = Modifier.fillMaxSize(0.58f)
+                        )
+                    }
+
+                    btnImage != null -> {
+                        Icon(
+                            painter = painterResource(id = btnImage),
+                            contentDescription = btnTitle,
+                            tint = Color.White,
+                            modifier = Modifier.fillMaxSize(0.58f)
+                        )
+                    }
+                }
             }
 
             Text(

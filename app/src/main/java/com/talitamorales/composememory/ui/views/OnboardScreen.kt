@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -39,6 +40,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
@@ -61,6 +63,8 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.NavController
 import com.talitamorales.composememory.R
+import com.talitamorales.composememory.ads.AdaptiveBanner
+import com.talitamorales.composememory.ads.BannerLoadState
 import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
 import kotlinx.coroutines.Dispatchers
@@ -217,103 +221,172 @@ fun ThemeSelectionScreen(navController: NavController) {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(selectionScrollState)
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(30.dp))
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                Color(0xD9FFFFFF),
-                                Color(0xCCF0F8FF),
-                                Color(0xB8DCEFFF)
+                    .weight(1f)
+                    .verticalScroll(selectionScrollState)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(30.dp))
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xD9FFFFFF),
+                                    Color(0xCCF0F8FF),
+                                    Color(0xB8DCEFFF)
+                                )
                             )
                         )
-                    )
-                    .border(1.5.dp, Color.White.copy(alpha = 0.92f), RoundedCornerShape(30.dp))
-                    .padding(horizontal = 12.dp, vertical = 12.dp)
-                    .magicSparkles(alpha = 0.2f)
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = stringResource(id = R.string.choose_theme_to_play),
-                        color = Color(0xFF0A5AAE),
-                        fontSize = 44.sp,
-                        lineHeight = 45.sp,
-                        fontWeight = FontWeight.Black,
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            shadow = Shadow(
-                                color = Color.White.copy(alpha = 0.9f),
-                                offset = Offset(0f, 4f),
-                                blurRadius = 12f
-                            )
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 4.dp)
-                    )
+                        .border(1.5.dp, Color.White.copy(alpha = 0.92f), RoundedCornerShape(30.dp))
+                        .padding(horizontal = 12.dp, vertical = 12.dp)
+                        .magicSparkles(alpha = 0.2f)
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(id = R.string.choose_theme_to_play),
+                            color = Color(0xFF0A5AAE),
+                            fontSize = 44.sp,
+                            lineHeight = 45.sp,
+                            fontWeight = FontWeight.Black,
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(
+                                shadow = Shadow(
+                                    color = Color.White.copy(alpha = 0.9f),
+                                    offset = Offset(0f, 4f),
+                                    blurRadius = 12f
+                                )
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                        )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    Text(
-                        text = stringResource(id = R.string.choose_difficulty),
-                        color = Color(0xFF27476B),
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
+                        Text(
+                            text = stringResource(id = R.string.choose_difficulty),
+                            color = Color(0xFF27476B),
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
 
-                    Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(9.dp)
-                    ) {
-                        GameDifficulty.entries.forEach { difficulty ->
-                            DifficultyCard(
-                                title = stringResource(id = difficulty.titleRes),
-                                difficulty = difficulty,
-                                selected = selectedDifficultyId == difficulty.id,
-                                modifier = Modifier.weight(1f),
-                                onClick = { selectedDifficultyId = difficulty.id }
-                            )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(9.dp)
+                        ) {
+                            GameDifficulty.entries.forEach { difficulty ->
+                                DifficultyCard(
+                                    title = stringResource(id = difficulty.titleRes),
+                                    difficulty = difficulty,
+                                    selected = selectedDifficultyId == difficulty.id,
+                                    modifier = Modifier.weight(1f),
+                                    onClick = { selectedDifficultyId = difficulty.id }
+                                )
+                            }
                         }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                themeDisplayOrder.chunked(2).forEach { rowThemes ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        rowThemes.forEach { theme ->
+                            ThemeCard(
+                                theme = theme,
+                                title = stringResource(id = theme.titleRes),
+                                imageRes = theme.previewRes,
+                                isPremium = !theme.isFree,
+                                isLocked = false,
+                                modifier = Modifier.weight(1f),
+                                onClick = { navigateToGame(theme) }
+                            )
+                        }
+                        if (rowThemes.size < 2) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
+                }
             }
 
-            Spacer(modifier = Modifier.height(18.dp))
+            ThemeSelectionAdFooter(modifier = Modifier.fillMaxWidth())
+        }
+    }
+}
 
-            themeDisplayOrder.chunked(2).forEach { rowThemes ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    rowThemes.forEach { theme ->
-                        ThemeCard(
-                            theme = theme,
-                            title = stringResource(id = theme.titleRes),
-                            imageRes = theme.previewRes,
-                            isPremium = !theme.isFree,
-                            isLocked = false,
-                            modifier = Modifier.weight(1f),
-                            onClick = { navigateToGame(theme) }
+@Composable
+private fun ThemeSelectionAdFooter(modifier: Modifier = Modifier) {
+    var shouldHideFooter by remember { mutableStateOf(false) }
+
+    if (shouldHideFooter) return
+
+    Column(
+        modifier = modifier
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xB5FFFFFF),
+                        Color(0xE0EEF8FF)
+                    )
+                )
+            )
+            .border(
+                width = 1.dp,
+                color = Color.White.copy(alpha = 0.75f)
+            )
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = stringResource(id = R.string.ad_banner_label),
+            color = Color(0xFF446786),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 62.dp)
+                .clip(RoundedCornerShape(22.dp))
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.White.copy(alpha = 0.94f),
+                            Color(0xFFF2F8FF)
                         )
-                    }
-                    if (rowThemes.size < 2) {
-                        Spacer(modifier = Modifier.weight(1f))
+                    )
+                )
+                .border(1.dp, Color.White.copy(alpha = 0.96f), RoundedCornerShape(22.dp))
+                .padding(horizontal = 4.dp, vertical = 6.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            AdaptiveBanner(
+                adUnitId = stringResource(id = R.string.admob_banner_theme_selection),
+                onLoadStateChanged = { loadState ->
+                    if (loadState == BannerLoadState.Failed) {
+                        shouldHideFooter = true
                     }
                 }
-
-                Spacer(modifier = Modifier.height(14.dp))
-            }
+            )
         }
     }
 }

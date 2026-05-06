@@ -22,6 +22,11 @@
     <string name="cancel">Cancel</string>
     <string name="free_label">FREE</string>
     <string name="premium_label">PREMIUM</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_theme_selection">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_interstitial_round_end">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_app_open">ca-app-pub-3940256099942544/9257395921</string>
+    <string name="ad_banner_label">Sponsored</string>
 
     <string name="initial_choose_how_to_play">Choose how to play</string>
     <string name="menu_cards_carousel_title">Cards Carousel</string>

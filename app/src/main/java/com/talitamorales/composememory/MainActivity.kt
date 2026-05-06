@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -21,6 +22,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.android.gms.ads.MobileAds
+import com.talitamorales.composememory.ads.AppOpenAdController
 import com.talitamorales.composememory.ui.theme.ComposeMemoryTheme
 import com.talitamorales.composememory.ui.views.CardsCarouselScreen
 import com.talitamorales.composememory.ui.views.InitialMenuScreen
@@ -30,6 +33,8 @@ import com.talitamorales.composememory.ui.views.ThemeSelectionScreen
 import com.talitamorales.composememory.viewmodel.FakeGameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModel
 import com.talitamorales.composememory.viewmodel.GameViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -37,12 +42,24 @@ class MainActivity : ComponentActivity() {
     }
 
     private var currentRouteOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    private lateinit var appOpenAdController: AppOpenAdController
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+        appOpenAdController = AppOpenAdController(
+            appContext = applicationContext,
+            adUnitId = getString(R.string.admob_app_open)
+        )
+        lifecycleScope.launch(Dispatchers.IO) {
+            MobileAds.initialize(this@MainActivity) {
+                runOnUiThread {
+                    appOpenAdController.preload()
+                }
+            }
+        }
         setContent {
             ComposeMemoryTheme {
 
@@ -123,6 +140,27 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::appOpenAdController.isInitialized) {
+            appOpenAdController.showOnReturnIfAvailable(this)
+        }
+    }
+
+    override fun onStop() {
+        if (::appOpenAdController.isInitialized) {
+            appOpenAdController.markAppBackgrounded()
+        }
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        if (::appOpenAdController.isInitialized) {
+            appOpenAdController.clear()
+        }
+        super.onDestroy()
     }
 
     private fun applyOrientationForRoute(route: String?) {

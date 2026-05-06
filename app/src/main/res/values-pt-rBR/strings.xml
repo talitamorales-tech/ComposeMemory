@@ -22,6 +22,11 @@
     <string name="cancel">Cancelar</string>
     <string name="free_label">GRATIS</string>
     <string name="premium_label">PREMIUM</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_theme_selection">ca-app-pub-3940256099942544/9214589741</string>
+    <string name="admob_interstitial_round_end">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_app_open">ca-app-pub-3940256099942544/9257395921</string>
+    <string name="ad_banner_label">Publicidade</string>
 
     <string name="initial_choose_how_to_play">Escolha como brincar</string>
     <string name="menu_cards_carousel_title">Carrossel de Cartas</string>

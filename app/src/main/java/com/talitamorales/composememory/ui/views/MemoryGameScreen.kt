@@ -278,11 +278,16 @@ private fun calculateBoardPlan(
 }
 
 @Composable
-fun MemoryGameScreen(viewModel: GameViewModelContract) {
+fun MemoryGameScreen(
+    viewModel: GameViewModelContract,
+    playableThemes: List<GameTheme> = GameTheme.playableThemes(hasPremiumAccess = false),
+    shouldShowAds: Boolean = true
+) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val roundInterstitialController = rememberRoundInterstitialAdController(
-        adUnitId = stringResource(id = R.string.admob_interstitial_round_end)
+        adUnitId = stringResource(id = R.string.admob_interstitial_round_end),
+        adsEnabled = shouldShowAds
     )
     var backgroundMusicPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     var victoryPlayer: MediaPlayer? by remember { mutableStateOf(null) }
@@ -426,6 +431,7 @@ fun MemoryGameScreen(viewModel: GameViewModelContract) {
                 content = {
                     GameToolbar(
                         viewModel = viewModel,
+                        playableThemes = playableThemes,
                         isSoundEnabled = isSoundEnabled,
                         onToggleSound = {
                             if (isSoundEnabled) {
@@ -563,6 +569,7 @@ private fun ToolbarTopDrawer(
 @Composable
 private fun GameToolbar(
     viewModel: GameViewModelContract,
+    playableThemes: List<GameTheme>,
     isSoundEnabled: Boolean,
     onToggleSound: () -> Unit,
     onRestart: () -> Unit,
@@ -592,6 +599,7 @@ private fun GameToolbar(
     ) {
         ThemeButton(
             viewModel = viewModel,
+            playableThemes = playableThemes,
             modifier = Modifier.weight(1f),
             buttonHeight = buttonHeight,
             enabled = enabled
@@ -710,6 +718,7 @@ private fun ResponsiveGameGrid(
 @Composable
 fun ThemeButton(
     viewModel: GameViewModelContract,
+    playableThemes: List<GameTheme>,
     modifier: Modifier = Modifier,
     buttonHeight: Dp = 44.dp,
     enabled: Boolean = true
@@ -732,14 +741,7 @@ fun ThemeButton(
         buttonHeight = buttonHeight,
         enabled = enabled
     ) {
-        val themeCycle = listOf(
-            GameTheme.Animals,
-            GameTheme.Dance,
-            GameTheme.Music,
-            GameTheme.Dinosaurs,
-            GameTheme.Dogs,
-            GameTheme.JungleAnimals
-        )
+        val themeCycle = playableThemes.ifEmpty { listOf(viewModel.currentTheme) }
         val currentIndex = themeCycle.indexOf(viewModel.currentTheme).takeIf { it >= 0 } ?: 0
         viewModel.currentTheme = themeCycle[(currentIndex + 1) % themeCycle.size]
         viewModel.resetGame()

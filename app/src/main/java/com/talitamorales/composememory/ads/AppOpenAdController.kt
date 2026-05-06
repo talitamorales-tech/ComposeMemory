@@ -25,9 +25,21 @@ class AppOpenAdController(
     private var wasBackgrounded = false
     private var backgroundedAtMillis = 0L
     private var loadedAtMillis = 0L
+    private var adsEnabled = true
+
+    fun setAdsEnabled(enabled: Boolean) {
+        if (adsEnabled == enabled) return
+
+        adsEnabled = enabled
+        if (enabled) {
+            preload()
+        } else {
+            clear()
+        }
+    }
 
     fun preload() {
-        if (isLoading || isAdReady()) return
+        if (!adsEnabled || isLoading || isAdReady()) return
 
         isLoading = true
         AppOpenAd.load(
@@ -53,6 +65,7 @@ class AppOpenAdController(
     }
 
     fun markAppBackgrounded() {
+        if (!adsEnabled) return
         if (isShowing) return
 
         wasBackgrounded = true
@@ -60,6 +73,8 @@ class AppOpenAdController(
     }
 
     fun showOnReturnIfAvailable(activity: Activity) {
+        if (!adsEnabled) return
+
         val now = SystemClock.elapsedRealtime()
         val backgroundDuration = now - backgroundedAtMillis
         val canShowAfterReturn = wasBackgrounded &&

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color as AndroidColor
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,10 +27,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -67,6 +71,7 @@ import com.talitamorales.composememory.ads.AdaptiveBanner
 import com.talitamorales.composememory.ads.BannerLoadState
 import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
+import com.talitamorales.composememory.premium.PremiumAccessState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -173,9 +178,19 @@ fun SplashScreen() {
 }
 
 @Composable
-fun ThemeSelectionScreen(navController: NavController) {
+fun ThemeSelectionScreen(
+    navController: NavController,
+    premiumAccessState: PremiumAccessState = PremiumAccessState(),
+    onBuyPremium: () -> Unit = {},
+    onRestorePremium: () -> Unit = {}
+) {
+    val context = LocalContext.current
+    val hasPremiumAccess = premiumAccessState.hasPremiumAccess
     var selectedDifficultyId by rememberSaveable { mutableIntStateOf(GameDifficulty.Easy.id) }
+    var selectedPremiumTheme by remember { mutableStateOf<GameTheme?>(null) }
     val selectionScrollState = rememberScrollState()
+    val premiumUnlockedToast = stringResource(id = R.string.toast_premium_unlocked)
+    val premiumRestoreCheckedToast = stringResource(id = R.string.toast_premium_restore_checked)
     val themeDisplayOrder = listOf(
         GameTheme.Dogs,
         GameTheme.Animals,
@@ -186,6 +201,11 @@ fun ThemeSelectionScreen(navController: NavController) {
     )
 
     fun navigateToGame(theme: GameTheme) {
+        if (!theme.canPlay(hasPremiumAccess)) {
+            selectedPremiumTheme = theme
+            return
+        }
+
         Log.d(
             THEME_SELECTION_TAG,
             "navigateToGame theme=${theme.name} id=${theme.id} difficultyId=$selectedDifficultyId"
@@ -199,8 +219,15 @@ fun ThemeSelectionScreen(navController: NavController) {
             "ThemeSelectionScreen opened freeThemes=" +
                 GameTheme.entries.filter { it.isFree }.joinToString { it.name } +
                 " premiumThemes=" +
-                GameTheme.entries.filter { !it.isFree }.joinToString { it.name }
+                GameTheme.entries.filter { !it.isFree }.joinToString { it.name } +
+                " hasPremiumAccess=$hasPremiumAccess"
         )
+    }
+
+    LaunchedEffect(hasPremiumAccess) {
+        if (hasPremiumAccess) {
+            selectedPremiumTheme = null
+        }
     }
 
     Box(
@@ -311,7 +338,7 @@ fun ThemeSelectionScreen(navController: NavController) {
                                 title = stringResource(id = theme.titleRes),
                                 imageRes = theme.previewRes,
                                 isPremium = !theme.isFree,
-                                isLocked = false,
+                                isLocked = !theme.canPlay(hasPremiumAccess),
                                 modifier = Modifier.weight(1f),
                                 onClick = { navigateToGame(theme) }
                             )
@@ -325,9 +352,76 @@ fun ThemeSelectionScreen(navController: NavController) {
                 }
             }
 
-            ThemeSelectionAdFooter(modifier = Modifier.fillMaxWidth())
+            if (premiumAccessState.shouldShowAds) {
+                ThemeSelectionAdFooter(modifier = Modifier.fillMaxWidth())
+            }
         }
     }
+
+    selectedPremiumTheme?.let { theme ->
+        PremiumUnlockDialog(
+            themeTitle = stringResource(id = theme.titleRes),
+            onBuyPremium = {
+                onBuyPremium()
+                Toast.makeText(
+                    context,
+                    premiumUnlockedToast,
+                    Toast.LENGTH_SHORT
+                ).show()
+                selectedPremiumTheme = null
+            },
+            onRestorePremium = {
+                onRestorePremium()
+                Toast.makeText(
+                    context,
+                    premiumRestoreCheckedToast,
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            onDismiss = {
+                selectedPremiumTheme = null
+            }
+        )
+    }
+}
+
+@Composable
+private fun PremiumUnlockDialog(
+    themeTitle: String,
+    onBuyPremium: () -> Unit,
+    onRestorePremium: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(id = R.string.premium_bundle_title),
+                fontWeight = FontWeight.ExtraBold
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(id = R.string.premium_bundle_message, themeTitle),
+                lineHeight = 20.sp
+            )
+        },
+        confirmButton = {
+            Button(onClick = onBuyPremium) {
+                Text(text = stringResource(id = R.string.unlock_all_themes_no_ads))
+            }
+        },
+        dismissButton = {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                TextButton(onClick = onRestorePremium) {
+                    Text(text = stringResource(id = R.string.restore_purchase))
+                }
+                TextButton(onClick = onDismiss) {
+                    Text(text = stringResource(id = R.string.cancel))
+                }
+            }
+        }
+    )
 }
 
 @Composable

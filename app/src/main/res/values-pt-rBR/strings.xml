@@ -19,6 +19,10 @@
     <string name="premium_theme_title">Tema Premium</string>
     <string name="premium_theme_message">Desbloqueie %1$s para jogar este tema.</string>
     <string name="buy_theme">Comprar Tema</string>
+    <string name="premium_bundle_title">Desbloquear Premium</string>
+    <string name="premium_bundle_message">Desbloqueie %1$s, todos os temas premium e remova anuncios.</string>
+    <string name="unlock_all_themes_no_ads">Desbloquear tudo</string>
+    <string name="restore_purchase">Restaurar</string>
     <string name="cancel">Cancelar</string>
     <string name="free_label">GRATIS</string>
     <string name="premium_label">PREMIUM</string>
@@ -41,6 +45,8 @@
 
     <string name="toast_sound_on">Som ligado</string>
     <string name="toast_sound_off">Som desligado</string>
+    <string name="toast_premium_unlocked">Premium desbloqueado</string>
+    <string name="toast_premium_restore_checked">Compras verificadas</string>
     <string name="toolbar_theme_animals">Tema: Gato</string>
     <string name="toolbar_theme_toys">Tema: Brinquedos</string>
     <string name="toolbar_theme_cars">Tema: Carros</string>

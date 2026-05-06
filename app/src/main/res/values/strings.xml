@@ -19,6 +19,10 @@
     <string name="premium_theme_title">Premium Theme</string>
     <string name="premium_theme_message">Unlock %1$s to play this theme.</string>
     <string name="buy_theme">Buy Theme</string>
+    <string name="premium_bundle_title">Unlock Premium</string>
+    <string name="premium_bundle_message">Unlock %1$s, every premium theme, and remove ads.</string>
+    <string name="unlock_all_themes_no_ads">Unlock all</string>
+    <string name="restore_purchase">Restore</string>
     <string name="cancel">Cancel</string>
     <string name="free_label">FREE</string>
     <string name="premium_label">PREMIUM</string>
@@ -41,6 +45,8 @@
 
     <string name="toast_sound_on">Sound on</string>
     <string name="toast_sound_off">Sound off</string>
+    <string name="toast_premium_unlocked">Premium unlocked</string>
+    <string name="toast_premium_restore_checked">Purchases checked</string>
     <string name="toolbar_theme_animals">Theme: Cat</string>
     <string name="toolbar_theme_toys">Theme: Toys</string>
     <string name="toolbar_theme_cars">Theme: Cars</string>

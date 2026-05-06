@@ -21,21 +21,21 @@ enum class GameTheme(
         titleRes = R.string.theme_dance,
         toolbarTitleRes = R.string.toolbar_theme_dance,
         previewRes = R.drawable.dance_couple,
-        isFree = true
+        isFree = false
     ),
     Music(
         id = 8,
         titleRes = R.string.theme_music,
         toolbarTitleRes = R.string.toolbar_theme_music,
         previewRes = R.drawable.music_piano,
-        isFree = true
+        isFree = false
     ),
     Dinosaurs(
         id = 3,
         titleRes = R.string.theme_dinosaurs,
         toolbarTitleRes = R.string.toolbar_theme_dinosaurs,
         previewRes = R.drawable.dino_velociraptor,
-        isFree = true
+        isFree = false
     ),
     Dogs(
         id = 5,
@@ -49,10 +49,18 @@ enum class GameTheme(
         titleRes = R.string.theme_jungle_animals,
         toolbarTitleRes = R.string.toolbar_theme_jungle_animals,
         previewRes = R.drawable.jungle_lion,
-        isFree = true
+        isFree = false
     );
+
+    fun canPlay(hasPremiumAccess: Boolean): Boolean {
+        return isFree || hasPremiumAccess
+    }
 
     companion object {
         fun fromId(id: Int): GameTheme = entries.firstOrNull { it.id == id } ?: Animals
+
+        fun playableThemes(hasPremiumAccess: Boolean): List<GameTheme> {
+            return entries.filter { it.canPlay(hasPremiumAccess) }
+        }
     }
 }

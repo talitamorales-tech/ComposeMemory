@@ -28,9 +28,21 @@ class RoundInterstitialAdController(
     private var isShowing = false
     private var completedRoundsSinceLastShow = 0
     private var loadedAtMillis = 0L
+    private var adsEnabled = true
+
+    fun setAdsEnabled(enabled: Boolean) {
+        if (adsEnabled == enabled) return
+
+        adsEnabled = enabled
+        if (enabled) {
+            preload()
+        } else {
+            clear()
+        }
+    }
 
     fun preload() {
-        if (isLoading || isAdReady()) return
+        if (!adsEnabled || isLoading || isAdReady()) return
 
         isLoading = true
         InterstitialAd.load(
@@ -62,6 +74,11 @@ class RoundInterstitialAdController(
         context: Context,
         onContinue: () -> Unit
     ) {
+        if (!adsEnabled) {
+            onContinue()
+            return
+        }
+
         completedRoundsSinceLastShow += 1
 
         if (completedRoundsSinceLastShow < ROUND_INTERSTITIAL_INTERVAL || isShowing) {
@@ -122,6 +139,17 @@ class RoundInterstitialAdController(
 
 @Composable
 fun rememberRoundInterstitialAdController(adUnitId: String): RoundInterstitialAdController {
+    return rememberRoundInterstitialAdController(
+        adUnitId = adUnitId,
+        adsEnabled = true
+    )
+}
+
+@Composable
+fun rememberRoundInterstitialAdController(
+    adUnitId: String,
+    adsEnabled: Boolean
+): RoundInterstitialAdController {
     val appContext = LocalContext.current.applicationContext
     val controller = remember(appContext, adUnitId) {
         RoundInterstitialAdController(
@@ -130,8 +158,11 @@ fun rememberRoundInterstitialAdController(adUnitId: String): RoundInterstitialAd
         )
     }
 
-    LaunchedEffect(controller) {
-        controller.preload()
+    LaunchedEffect(controller, adsEnabled) {
+        controller.setAdsEnabled(adsEnabled)
+        if (adsEnabled) {
+            controller.preload()
+        }
     }
 
     DisposableEffect(controller) {

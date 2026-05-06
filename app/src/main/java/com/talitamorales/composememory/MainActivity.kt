@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +27,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.android.gms.ads.MobileAds
 import com.talitamorales.composememory.ads.AppOpenAdController
+import com.talitamorales.composememory.gamelogic.GameTheme
+import com.talitamorales.composememory.premium.PremiumAccessRepository
 import com.talitamorales.composememory.ui.theme.ComposeMemoryTheme
 import com.talitamorales.composememory.ui.views.CardsCarouselScreen
 import com.talitamorales.composememory.ui.views.InitialMenuScreen
@@ -43,28 +48,32 @@ class MainActivity : ComponentActivity() {
 
     private var currentRouteOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     private lateinit var appOpenAdController: AppOpenAdController
+    private lateinit var premiumAccessRepository: PremiumAccessRepository
+    private var adsInitialized = false
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+        premiumAccessRepository = PremiumAccessRepository(applicationContext)
         appOpenAdController = AppOpenAdController(
             appContext = applicationContext,
             adUnitId = getString(R.string.admob_app_open)
         )
-        lifecycleScope.launch(Dispatchers.IO) {
-            MobileAds.initialize(this@MainActivity) {
-                runOnUiThread {
-                    appOpenAdController.preload()
-                }
-            }
-        }
+        updateAdsAvailability(premiumAccessRepository.currentState.shouldShowAds)
         setContent {
             ComposeMemoryTheme {
-
+                val premiumAccessState by premiumAccessRepository.state.collectAsState()
+                val hasPremiumAccess = premiumAccessState.hasPremiumAccess
+                val shouldShowAds = premiumAccessState.shouldShowAds
+                val playableThemes = GameTheme.playableThemes(hasPremiumAccess)
 
                 val navController = rememberNavController()
+                LaunchedEffect(shouldShowAds) {
+                    updateAdsAvailability(shouldShowAds)
+                }
+
                 DisposableEffect(navController) {
                     val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
                         val route = destination.route
@@ -98,7 +107,16 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("themeSelection") {
-                            ThemeSelectionScreen(navController)
+                            ThemeSelectionScreen(
+                                navController = navController,
+                                premiumAccessState = premiumAccessState,
+                                onBuyPremium = {
+                                    premiumAccessRepository.buyUnlockAllThemesNoAds()
+                                },
+                                onRestorePremium = {
+                                    premiumAccessRepository.restorePurchases()
+                                }
+                            )
                         }
 
                         composable("cardsCarousel") {
@@ -124,6 +142,18 @@ class MainActivity : ComponentActivity() {
                         ) { backStackEntry ->
                             val themeId = backStackEntry.arguments?.getInt("themeId") ?: 1
                             val difficultyId = backStackEntry.arguments?.getInt("difficultyId") ?: 1
+                            val requestedTheme = GameTheme.fromId(themeId)
+
+                            if (!requestedTheme.canPlay(hasPremiumAccess)) {
+                                LaunchedEffect(requestedTheme, hasPremiumAccess) {
+                                    navController.navigate("themeSelection") {
+                                        popUpTo("themeSelection") {
+                                            inclusive = false
+                                        }
+                                    }
+                                }
+                                return@composable
+                            }
 
                             val viewModel: GameViewModel = viewModel(
                                 factory = GameViewModelFactory(
@@ -133,7 +163,11 @@ class MainActivity : ComponentActivity() {
                                 viewModelStoreOwner = backStackEntry
                             )
 
-                            MemoryGameScreen(viewModel)
+                            MemoryGameScreen(
+                                viewModel = viewModel,
+                                playableThemes = playableThemes,
+                                shouldShowAds = shouldShowAds
+                            )
                         }
                     }
                 }
@@ -161,6 +195,31 @@ class MainActivity : ComponentActivity() {
             appOpenAdController.clear()
         }
         super.onDestroy()
+    }
+
+    private fun updateAdsAvailability(shouldShowAds: Boolean) {
+        if (!::appOpenAdController.isInitialized) return
+
+        appOpenAdController.setAdsEnabled(shouldShowAds)
+        if (shouldShowAds) {
+            initializeAdsIfNeeded()
+        }
+    }
+
+    private fun initializeAdsIfNeeded() {
+        if (adsInitialized) {
+            appOpenAdController.preload()
+            return
+        }
+
+        adsInitialized = true
+        lifecycleScope.launch(Dispatchers.IO) {
+            MobileAds.initialize(this@MainActivity) {
+                runOnUiThread {
+                    appOpenAdController.preload()
+                }
+            }
+        }
     }
 
     private fun applyOrientationForRoute(route: String?) {

@@ -63,16 +63,7 @@ fun InitialMenuScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing)
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF21043F),
-                        Color(0xFF2E0E5A),
-                        Color(0xFF140429),
-                        Color(0xFF0A0318)
-                    )
-                )
-            )
+            .playgroundSkyBackground()
             .menuSparkles()
     ) {
         val compactLayout = maxWidth < 720.dp
@@ -101,31 +92,30 @@ fun InitialMenuScreen(navController: NavController) {
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xE23C1A6F),
-                                Color(0xC62D145A),
-                                Color(0xD81A0A3A),
-                                Color(0xEE15072E)
+                                Color(0xEFFFFFFF),
+                                Color(0xDFF2FCFF),
+                                Color(0xD6DFF7FF)
                             )
                         )
                     )
-                    .border(1.8.dp, Color(0xFFF7D389), MenuHeroShape)
+                    .border(1.8.dp, Color.White.copy(alpha = 0.92f), MenuHeroShape)
                     .padding(
                         horizontal = if (tabletLayout) 34.dp else if (shortLayout) 14.dp else 18.dp,
                         vertical = if (shortLayout) 10.dp else if (compactLayout) 18.dp else 24.dp
                     )
                     .drawBehind {
                         drawCircle(
-                            color = Color(0x4E8A5CFF),
+                            color = Color(0x3A5AC8FF),
                             radius = size.minDimension * 0.28f,
                             center = Offset(size.width * 0.15f, size.height * 0.16f)
                         )
                         drawCircle(
-                            color = Color(0x36FFD47E),
+                            color = Color(0x36FFE57E),
                             radius = size.minDimension * 0.2f,
                             center = Offset(size.width * 0.84f, size.height * 0.2f)
                         )
                         drawCircle(
-                            color = Color(0x2D6AB8FF),
+                            color = Color(0x306FD6FF),
                             radius = size.minDimension * 0.24f,
                             center = Offset(size.width * 0.82f, size.height * 0.84f)
                         )
@@ -152,13 +142,13 @@ fun InitialMenuScreen(navController: NavController) {
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xF12B0F4E),
-                                Color(0xF01F0B3A),
-                                Color(0xF0140728)
+                                Color(0xF7FFFFFF),
+                                Color(0xEEF0FBFF),
+                                Color(0xEADDF5D6)
                             )
                         )
                     )
-                    .border(1.4.dp, Color(0xA3FFDFA0), MenuBottomShape)
+                    .border(1.4.dp, Color.White.copy(alpha = 0.9f), MenuBottomShape)
                     .padding(
                         horizontal = if (shortLayout) 12.dp else if (compactLayout) 14.dp else 24.dp,
                         vertical = if (shortLayout) 10.dp else if (compactLayout) 14.dp else 20.dp
@@ -171,15 +161,15 @@ fun InitialMenuScreen(navController: NavController) {
                 ) {
                     Text(
                         text = stringResource(id = R.string.initial_choose_how_to_play),
-                        color = Color(0xFFFFF6DE),
+                        color = Color(0xFF165D96),
                         fontSize = if (tabletLayout) 36.sp else if (shortLayout) 22.sp else 30.sp,
                         fontWeight = FontWeight.ExtraBold,
                         textAlign = TextAlign.Center,
                         style = TextStyle(
                             shadow = Shadow(
-                                color = Color(0xB52A0D4A),
+                                color = Color.White.copy(alpha = 0.95f),
                                 offset = Offset(0f, 3f),
-                                blurRadius = 8f
+                                blurRadius = 10f
                             )
                         ),
                         modifier = Modifier
@@ -275,13 +265,13 @@ private fun MenuActionButton(
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF311456),
-                        accentColor.copy(alpha = 0.5f),
-                        Color(0xFF261045)
+                        Color(0xFFFFFEF2),
+                        accentColor.copy(alpha = 0.32f),
+                        Color(0xFFE7F8FF)
                     )
                 )
             )
-            .border(1.5.dp, Color(0xD7FFE2AE), MenuButtonShape)
+            .border(1.5.dp, Color.White.copy(alpha = 0.9f), MenuButtonShape)
             .clickable { onClick() }
             .padding(
                 horizontal = if (compact) 10.dp else 14.dp,
@@ -327,21 +317,21 @@ private fun MenuActionButton(
             ) {
                 Text(
                     text = title,
-                    color = Color(0xFFFFF7E4),
+                    color = Color(0xFF1E4F75),
                     fontSize = if (compact) 16.sp else 19.sp,
                     fontWeight = FontWeight.ExtraBold,
                     style = TextStyle(
                         shadow = Shadow(
                             color = Color.Black.copy(alpha = 0.22f),
-                            offset = Offset(0f, 2f),
-                            blurRadius = 4f
+                            offset = Offset(0f, 1f),
+                            blurRadius = 2f
                         )
                     )
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = subtitle,
-                    color = Color(0xFFFFE6B8),
+                    color = Color(0xFF436983),
                     fontSize = if (compact) 12.sp else 14.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -351,14 +341,14 @@ private fun MenuActionButton(
                 modifier = Modifier
                     .size(if (compact) 28.dp else 34.dp)
                     .clip(CircleShape)
-                    .background(Color.White.copy(alpha = 0.14f))
-                    .border(1.dp, Color(0x8EFFE8BB), CircleShape),
+                    .background(Color.White.copy(alpha = 0.68f))
+                    .border(1.dp, Color.White.copy(alpha = 0.88f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = null,
-                    tint = Color(0xFFFFEDC9)
+                    tint = Color(0xFF2C6C96)
                 )
             }
         }
@@ -377,28 +367,28 @@ private fun MenuBackgroundDecor() {
                 .align(Alignment.TopStart)
                 .size(94.dp)
                 .clip(CircleShape)
-                .background(Color(0x3267C0FF))
+                .background(Color(0x38FFFFFF))
         )
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .size(72.dp)
                 .clip(CircleShape)
-                .background(Color(0x2EFFD56A))
+                .background(Color(0x3CFFF2A8))
         )
         Box(
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .size(86.dp)
                 .clip(CircleShape)
-                .background(Color(0x30C894FF))
+                .background(Color(0x3E9EF7C4))
         )
         Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .size(124.dp)
                 .clip(CircleShape)
-                .background(Color(0x2869B8FF))
+                .background(Color(0x36FFFFFF))
         )
     }
 }

@@ -2,7 +2,6 @@ package com.talitamorales.composememory.ads
 
 import android.content.Context
 import android.os.SystemClock
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -15,7 +14,6 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
-private const val ROUND_INTERSTITIAL_LOG_TAG = "CM-RoundInterstitial"
 private const val ROUND_INTERSTITIAL_INTERVAL = 3
 private const val INTERSTITIAL_MAX_CACHE_AGE_MS = 60 * 60 * 1000L
 
@@ -43,6 +41,7 @@ class RoundInterstitialAdController(
 
     fun preload() {
         if (!adsEnabled || isLoading || isAdReady()) return
+        if (!appContext.hasValidatedInternetConnection()) return
 
         isLoading = true
         InterstitialAd.load(
@@ -54,17 +53,12 @@ class RoundInterstitialAdController(
                     interstitialAd = ad
                     loadedAtMillis = SystemClock.elapsedRealtime()
                     isLoading = false
-                    Log.d(ROUND_INTERSTITIAL_LOG_TAG, "Round interstitial loaded")
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     interstitialAd = null
                     loadedAtMillis = 0L
                     isLoading = false
-                    Log.w(
-                        ROUND_INTERSTITIAL_LOG_TAG,
-                        "Round interstitial failed to load code=${loadAdError.code}"
-                    )
                 }
             }
         )
@@ -108,10 +102,6 @@ class RoundInterstitialAdController(
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                 isShowing = false
-                Log.w(
-                    ROUND_INTERSTITIAL_LOG_TAG,
-                    "Round interstitial failed to show code=${adError.code}"
-                )
                 preload()
                 onContinue()
             }

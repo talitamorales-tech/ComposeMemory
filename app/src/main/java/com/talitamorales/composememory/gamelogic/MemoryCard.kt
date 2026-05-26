@@ -24,10 +24,14 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.talitamorales.composememory.R
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 private const val MEMORY_CARD_TAG = "CM-MemoryCard"
 
@@ -63,13 +67,13 @@ fun MemoryCard(
                 .background(
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            Color(0xFFFFF2B8),
-                            Color(0xFFD888FF),
-                            Color(0xFF74BFFF)
+                            Color(0xFFFFF5C8),
+                            Color(0xFFFFD56C),
+                            Color(0xFF15B8B0)
                         )
                     )
                 )
-                .border(1.3.dp, Color.White.copy(alpha = 0.8f), MemoryCardShape)
+                .border(1.3.dp, Color(0xFFFFF8DE), MemoryCardShape)
                 .padding(2.dp)
         ) {
             if (card.isFaceUp || card.isMatched) {
@@ -191,14 +195,14 @@ private fun PremiumCardBack(modifier: Modifier = Modifier) {
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(
-                        Color(0xFF170821),
-                        Color(0xFF6A2AB4),
-                        Color(0xFF2D0E48)
+                        Color(0xFF0C6AA0),
+                        Color(0xFF19BFD0),
+                        Color(0xFF078B94)
                     )
                 )
             )
-            .border(1.3.dp, Color(0xFFF3CF83), MemoryCardInnerShape)
-            .cardDust(alpha = 0.2f)
+            .border(1.3.dp, Color(0xFFFFE6A6), MemoryCardInnerShape)
+            .cardDust(alpha = 0.18f)
             .padding(6.dp)
     ) {
         Box(
@@ -208,13 +212,13 @@ private fun PremiumCardBack(modifier: Modifier = Modifier) {
                 .background(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            Color(0x8A64B9FF),
-                            Color(0x55321860),
-                            Color(0x00250F45)
+                            Color(0x88FFFFFF),
+                            Color(0x5534D7E3),
+                            Color(0x001A739C)
                         )
                     )
                 )
-                .border(1.dp, Color(0x88FFE7B8), RoundedCornerShape(9.dp))
+                .border(1.dp, Color(0x99FFF2C4), RoundedCornerShape(9.dp))
         )
 
         listOf(
@@ -229,35 +233,69 @@ private fun PremiumCardBack(modifier: Modifier = Modifier) {
                     .padding(5.dp)
                     .size(12.dp)
                     .clip(CircleShape)
-                    .background(Color(0x44FFE5AA))
-                    .border(0.8.dp, Color(0x99FFDFA2), CircleShape)
+                    .background(Color(0x55FFF2B8))
+                    .border(0.8.dp, Color(0xCCFFF2B8), CircleShape)
             )
         }
 
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
-                .size(44.dp)
-                .clip(CircleShape)
-                .background(
-                    brush = Brush.radialGradient(
-                        colors = listOf(
-                            Color(0xFFFFF4CF),
-                            Color(0xFF63B9FF),
-                            Color(0xFF5C209F)
+                .size(56.dp)
+                .drawBehind {
+                    val center = Offset(size.width / 2f, size.height / 2f)
+                    val innerRadius = size.minDimension * 0.28f
+                    val outerRadius = size.minDimension * 0.48f
+                    repeat(8) { index ->
+                        val angle = 2.0 * PI * index / 8.0
+                        val start = Offset(
+                            x = center.x + (cos(angle) * innerRadius).toFloat(),
+                            y = center.y + (sin(angle) * innerRadius).toFloat()
+                        )
+                        val end = Offset(
+                            x = center.x + (cos(angle) * outerRadius).toFloat(),
+                            y = center.y + (sin(angle) * outerRadius).toFloat()
+                        )
+                        drawLine(
+                            color = Color(0xFFFFD95A).copy(alpha = 0.78f),
+                            start = start,
+                            end = end,
+                            strokeWidth = 2.dp.toPx(),
+                            cap = StrokeCap.Round
+                        )
+                    }
+
+                    drawCircle(
+                        color = Color(0x33FFF6C4),
+                        radius = size.minDimension * 0.34f,
+                        center = center
+                    )
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(CircleShape)
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                Color(0xFFFFFAD1),
+                                Color(0xFFFFD95A),
+                                Color(0xFFE7A919)
+                            )
                         )
                     )
-                )
-                .border(1.dp, Color(0xFFFFE8B4), CircleShape)
-        )
+                    .border(1.1.dp, Color(0xFFFFF5CF), CircleShape)
+            )
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(16.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFFFE0A1))
-        )
+            Box(
+                modifier = Modifier
+                    .size(17.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFFFF1A8))
+            )
+        }
     }
 }
 

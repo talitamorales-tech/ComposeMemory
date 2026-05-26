@@ -3,7 +3,6 @@ package com.talitamorales.composememory.ads
 import android.app.Activity
 import android.content.Context
 import android.os.SystemClock
-import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -11,7 +10,6 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback
 
-private const val APP_OPEN_LOG_TAG = "CM-AppOpenAd"
 private const val APP_OPEN_MAX_CACHE_AGE_MS = 4 * 60 * 60 * 1000L
 private const val MIN_BACKGROUND_TIME_BEFORE_APP_OPEN_MS = 30 * 1000L
 
@@ -40,6 +38,7 @@ class AppOpenAdController(
 
     fun preload() {
         if (!adsEnabled || isLoading || isAdReady()) return
+        if (!appContext.hasValidatedInternetConnection()) return
 
         isLoading = true
         AppOpenAd.load(
@@ -51,14 +50,12 @@ class AppOpenAdController(
                     appOpenAd = ad
                     loadedAtMillis = SystemClock.elapsedRealtime()
                     isLoading = false
-                    Log.d(APP_OPEN_LOG_TAG, "App open ad loaded")
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     appOpenAd = null
                     loadedAtMillis = 0L
                     isLoading = false
-                    Log.w(APP_OPEN_LOG_TAG, "App open ad failed to load code=${loadAdError.code}")
                 }
             }
         )
@@ -103,7 +100,6 @@ class AppOpenAdController(
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                 isShowing = false
-                Log.w(APP_OPEN_LOG_TAG, "App open ad failed to show code=${adError.code}")
                 preload()
             }
         }

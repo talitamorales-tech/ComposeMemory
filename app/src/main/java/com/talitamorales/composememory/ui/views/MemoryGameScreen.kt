@@ -395,15 +395,7 @@ fun MemoryGameScreen(
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF12061F),
-                        Color(0xFF2B1248),
-                        Color(0xFF0B0416)
-                    )
-                )
-            )
+            .playgroundSkyBackground()
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(horizontal = 8.dp, vertical = 0.dp)
     ) {
@@ -531,13 +523,13 @@ private fun ToolbarTopDrawer(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color(0xFF2B1148),
-                            Color(0xFF4A2280),
-                            Color(0xFF2A0F44)
+                            Color(0xFF0D78A8),
+                            Color(0xFF17B8BA),
+                            Color(0xFF0A6D86)
                         )
                     )
                 )
-                .border(1.2.dp, Color(0xFFFFDFA0), ToolbarDrawerTabShape)
+                .border(1.2.dp, Color(0xFFFFE6A6), ToolbarDrawerTabShape)
                 .clickable(enabled = enabled) { onToggle() },
             contentAlignment = Alignment.Center
         ) {
@@ -550,7 +542,7 @@ private fun ToolbarTopDrawer(
                         .width(26.dp)
                         .height(3.dp)
                         .clip(CircleShape)
-                        .background(Color(0x80FFF4D2))
+                        .background(Color(0xCCFFF2C4))
                 )
 
                 Icon(
@@ -558,7 +550,7 @@ private fun ToolbarTopDrawer(
                         id = if (isOpen) android.R.drawable.arrow_up_float else android.R.drawable.arrow_down_float
                     ),
                     contentDescription = if (isOpen) "Close menu" else "Open menu",
-                    tint = Color(0xFFFFF2CF),
+                    tint = Color(0xFFFFF8DE),
                     modifier = Modifier.size(16.dp)
                 )
             }
@@ -586,13 +578,13 @@ private fun GameToolbar(
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF1B0A2B),
-                        Color(0xFF35155B),
-                        Color(0xFF13071F)
+                        Color(0xFF0A6F9C),
+                        Color(0xFF16B8B8),
+                        Color(0xFF087E8C)
                     )
                 )
             )
-            .border(1.6.dp, Color(0xFFF2CF85), ToolbarContainerShape)
+            .border(1.6.dp, Color(0xFFFFE6A6), ToolbarContainerShape)
             .padding(horizontal = 8.dp, vertical = 7.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -785,12 +777,13 @@ fun RestartButton(
             .background(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFF7B35D3),
-                        Color(0xFF331157)
+                        Color(0xFFFFD95A),
+                        Color(0xFF16B8B8),
+                        Color(0xFF0A6F9C)
                     )
                 )
             )
-            .border(1.5.dp, Color(0xFFFFE2A8), CircleShape)
+            .border(1.5.dp, Color(0xFFFFF5CF), CircleShape)
             .clickable(enabled = enabled) { onRestart() },
         contentAlignment = Alignment.Center
     ) {
@@ -801,7 +794,7 @@ fun RestartButton(
                 .background(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            Color(0x4467C0FF),
+                            Color(0x55FFF6C4),
                             Color(0x11FFFFFF),
                             Color.Transparent
                         )
@@ -812,7 +805,7 @@ fun RestartButton(
         Icon(
             painter = painterResource(id = R.drawable.restart),
             contentDescription = stringResource(id = R.string.restart),
-            tint = Color(0xFFFFF1D0),
+            tint = Color(0xFFFFF8DE),
             modifier = Modifier.fillMaxSize(0.46f)
         )
     }
@@ -838,13 +831,13 @@ fun ToolbarButton(
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF2D114A),
-                        accentColor.copy(alpha = 0.40f),
-                        Color(0xFF1F0C34)
+                        Color(0xFF0B789E),
+                        accentColor.copy(alpha = 0.34f),
+                        Color(0xFF087E8C)
                     )
                 )
             )
-            .border(1.dp, Color(0x99FFE4B5), ToolbarButtonShape)
+            .border(1.dp, Color(0xAAFFF2C4), ToolbarButtonShape)
             .clickable(enabled = enabled) { btnClick() }
             .padding(horizontal = 10.dp),
         contentAlignment = Alignment.CenterStart
@@ -858,8 +851,8 @@ fun ToolbarButton(
                 modifier = Modifier
                     .size(buttonHeight - 14.dp)
                     .clip(CircleShape)
-                    .background(Color(0x33FFFFFF))
-                    .border(1.dp, Color(0x66FFECC2), CircleShape),
+                    .background(Color(0x44FFFFFF))
+                    .border(1.dp, Color(0x88FFF2C4), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 when {
@@ -885,7 +878,7 @@ fun ToolbarButton(
 
             Text(
                 text = btnTitle,
-                color = Color(0xFFFFF4DD),
+                color = Color(0xFFFFF8DE),
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

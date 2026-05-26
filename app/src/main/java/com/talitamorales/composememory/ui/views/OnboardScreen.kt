@@ -9,6 +9,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +29,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -96,8 +100,7 @@ private data class DifficultyPalette(
 private data class ThemeCardPalette(
     val frame: List<Color>,
     val fill: List<Color>,
-    val title: Color,
-    val badge: Color
+    val title: Color
 )
 
 @Composable
@@ -549,12 +552,33 @@ fun ThemeCard(
     modifier: Modifier = Modifier
 ) {
     val palette = themePalette(theme)
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val badgeBrush = if (isPremium) {
+        Brush.horizontalGradient(
+            listOf(
+                Color(0xFF18C0C4),
+                Color(0xFF0A7F94)
+            )
+        )
+    } else {
+        Brush.horizontalGradient(
+            listOf(
+                Color(0xFF44DB78),
+                Color(0xFF159D52)
+            )
+        )
+    }
 
     Card(
         modifier = modifier
-            .height(252.dp)
-            .shadow(18.dp, ThemeCardShape)
-            .clickable { onClick() },
+            .height(258.dp)
+            .scale(if (isPressed) 0.985f else 1f)
+            .shadow(if (isPressed) 8.dp else 20.dp, ThemeCardShape)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) { onClick() },
         shape = ThemeCardShape,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
@@ -562,28 +586,37 @@ fun ThemeCard(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Brush.linearGradient(palette.frame))
-                .border(1.dp, Color.White.copy(alpha = 0.86f), ThemeCardShape)
-                .padding(3.dp)
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFFFFF9DF),
+                            Color(0xFFFFE488),
+                            palette.frame.last()
+                        )
+                    )
+                )
+                .border(3.dp, Color.White.copy(alpha = 0.96f), ThemeCardShape)
+                .padding(5.dp)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(ThemeCardInnerShape)
                     .background(Brush.verticalGradient(palette.fill))
-                    .border(1.4.dp, Color.White.copy(alpha = 0.62f), ThemeCardInnerShape)
+                    .border(2.dp, Color(0xFFFFF5CF), ThemeCardInnerShape)
                     .magicSparkles(alpha = 0.16f)
             )
             Box(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .fillMaxWidth()
-                    .height(76.dp)
+                    .height(82.dp)
                     .clip(ThemeCardInnerShape)
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(
-                                Color.White.copy(alpha = 0.27f),
+                                Color.White.copy(alpha = 0.48f),
+                                Color.White.copy(alpha = 0.14f),
                                 Color.Transparent
                             )
                         )
@@ -608,32 +641,50 @@ fun ThemeCard(
                             stringResource(id = R.string.free_label)
                         },
                         modifier = Modifier
-                            .shadow(4.dp, RoundedCornerShape(17.dp))
-                            .clip(RoundedCornerShape(17.dp))
-                            .background(palette.badge)
-                            .border(1.dp, Color.White.copy(alpha = 0.75f), RoundedCornerShape(17.dp))
-                            .padding(horizontal = 12.dp, vertical = 4.dp),
+                            .shadow(7.dp, RoundedCornerShape(18.dp))
+                            .clip(RoundedCornerShape(18.dp))
+                            .background(badgeBrush)
+                            .border(2.dp, Color.White.copy(alpha = 0.9f), RoundedCornerShape(18.dp))
+                            .padding(horizontal = 13.dp, vertical = 5.dp),
                         color = Color.White,
                         fontSize = 14.sp,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.Black,
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color.Black.copy(alpha = 0.22f),
+                                offset = Offset(0f, 1.5f),
+                                blurRadius = 3f
+                            )
+                        )
                     )
 
                     if (isLocked) {
                         Box(
                             modifier = Modifier
-                                .size(34.dp)
-                                .background(Color(0xD020102E), CircleShape)
-                                .border(1.dp, Color(0xFFFFDDA0), CircleShape),
+                                .size(38.dp)
+                                .shadow(7.dp, CircleShape)
+                                .clip(CircleShape)
+                                .background(
+                                    Brush.radialGradient(
+                                        colors = listOf(
+                                            Color(0xFFFFF7D2),
+                                            Color(0xFFFFD76B),
+                                            Color(0xFFF0A52C)
+                                        )
+                                    )
+                                )
+                                .border(2.dp, Color.White.copy(alpha = 0.92f), CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(id = android.R.drawable.ic_lock_lock),
+                                imageVector = Icons.Filled.Lock,
                                 contentDescription = null,
-                                tint = Color(0xFFFFDDA0)
+                                tint = Color(0xFF62394A),
+                                modifier = Modifier.fillMaxSize(0.58f)
                             )
                         }
                     } else {
-                        Spacer(modifier = Modifier.size(34.dp))
+                        Spacer(modifier = Modifier.size(38.dp))
                     }
                 }
 
@@ -643,17 +694,18 @@ fun ThemeCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .clip(RoundedCornerShape(16.dp))
+                        .shadow(5.dp, RoundedCornerShape(21.dp))
+                        .clip(RoundedCornerShape(21.dp))
                         .background(
-                            Brush.radialGradient(
+                            Brush.verticalGradient(
                                 colors = listOf(
-                                    Color.White.copy(alpha = 0.58f),
-                                    Color.White.copy(alpha = 0.18f),
-                                    Color.Transparent
+                                    Color.White.copy(alpha = 0.86f),
+                                    Color(0xFFEFFFFF).copy(alpha = 0.58f),
+                                    Color.White.copy(alpha = 0.18f)
                                 )
                             )
                         )
-                        .border(1.dp, Color.White.copy(alpha = 0.6f), RoundedCornerShape(16.dp))
+                        .border(2.dp, Color.White.copy(alpha = 0.86f), RoundedCornerShape(21.dp))
                         .padding(10.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -670,10 +722,18 @@ fun ThemeCard(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(14.dp))
-                        .background(Color.White.copy(alpha = 0.58f))
-                        .border(1.dp, Color.White.copy(alpha = 0.78f), RoundedCornerShape(14.dp))
-                        .padding(horizontal = 8.dp, vertical = 6.dp),
+                        .shadow(4.dp, RoundedCornerShape(18.dp))
+                        .clip(RoundedCornerShape(18.dp))
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.White.copy(alpha = 0.92f),
+                                    Color(0xFFFFF5CF).copy(alpha = 0.72f)
+                                )
+                            )
+                        )
+                        .border(2.dp, Color.White.copy(alpha = 0.92f), RoundedCornerShape(18.dp))
+                        .padding(horizontal = 8.dp, vertical = 7.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -734,23 +794,16 @@ private fun ThemePreviewImage(
         ContentScale.Fit
     }
     val previewAlignment = Alignment.Center
-    if (!needsCutout) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = title,
-            modifier = previewModifier,
-            contentScale = previewContentScale,
-            alignment = previewAlignment
-        )
-        return
-    }
-
     val context = LocalContext.current
-    var processedImage by remember(imageRes) { mutableStateOf<ImageBitmap?>(null) }
+    var processedImage by remember(imageRes, needsCutout) { mutableStateOf<ImageBitmap?>(null) }
 
-    LaunchedEffect(imageRes) {
+    LaunchedEffect(imageRes, needsCutout) {
         processedImage = withContext(Dispatchers.Default) {
-            createThemeForegroundCutoutBitmap(context, imageRes)
+            createThemePreviewBitmap(
+                context = context,
+                imageRes = imageRes,
+                cutOutLightBackground = needsCutout
+            )
         }
     }
 
@@ -764,19 +817,14 @@ private fun ThemePreviewImage(
             alignment = previewAlignment
         )
     } else {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = title,
-            modifier = previewModifier,
-            contentScale = previewContentScale,
-            alignment = previewAlignment
-        )
+        Box(modifier = previewModifier)
     }
 }
 
-private fun createThemeForegroundCutoutBitmap(
+private fun createThemePreviewBitmap(
     context: Context,
-    imageRes: Int
+    imageRes: Int,
+    cutOutLightBackground: Boolean
 ): ImageBitmap? {
     return try {
         val drawable = context.resources.getDrawable(imageRes, context.theme) ?: return null
@@ -788,6 +836,10 @@ private fun createThemeForegroundCutoutBitmap(
             maxDimension = THEME_MAX_CUTOUT_DIM_PX
         )
         val sourceBitmap = drawable.toBitmap(width = width, height = height, config = Bitmap.Config.ARGB_8888)
+        if (!cutOutLightBackground) {
+            return sourceBitmap.asImageBitmap()
+        }
+
         val mutableBitmap = sourceBitmap.copy(Bitmap.Config.ARGB_8888, true)
 
         if (!themeHasMeaningfulTransparency(mutableBitmap)) {
@@ -1009,43 +1061,37 @@ private fun themePalette(theme: GameTheme): ThemeCardPalette {
         GameTheme.Dogs -> ThemeCardPalette(
             frame = listOf(Color(0xFFFFE870), Color(0xFFF9A825)),
             fill = listOf(Color(0xFFFFF8B4), Color(0xFFFFE56A)),
-            title = Color(0xFF7A3A15),
-            badge = Color(0xFF2E9A45)
+            title = Color(0xFF7A3A15)
         )
 
         GameTheme.Animals -> ThemeCardPalette(
             frame = listOf(Color(0xFFFF98DA), Color(0xFFFF60B8)),
             fill = listOf(Color(0xFFFFD8EE), Color(0xFFFFB4DE)),
-            title = Color(0xFF8E2E66),
-            badge = Color(0xFF2E9A45)
+            title = Color(0xFF8E2E66)
         )
 
         GameTheme.Dinosaurs -> ThemeCardPalette(
             frame = listOf(Color(0xFFB8F36D), Color(0xFF5CBF47)),
             fill = listOf(Color(0xFFD7FFB2), Color(0xFFA5E77E)),
-            title = Color(0xFF316A2B),
-            badge = Color(0xFF2E9A45)
+            title = Color(0xFF316A2B)
         )
 
         GameTheme.JungleAnimals -> ThemeCardPalette(
             frame = listOf(Color(0xFFFFE35F), Color(0xFFEFAB22)),
             fill = listOf(Color(0xFFFFF6B7), Color(0xFFFFD86B)),
-            title = Color(0xFF7D4A13),
-            badge = Color(0xFF2E9A45)
+            title = Color(0xFF7D4A13)
         )
 
         GameTheme.Dance -> ThemeCardPalette(
             frame = listOf(Color(0xFF7CB7FF), Color(0xFF3768D9)),
             fill = listOf(Color(0xFFDCEBFF), Color(0xFFAACBFF)),
-            title = Color(0xFF1A3F83),
-            badge = Color(0xFF2E9A45)
+            title = Color(0xFF1A3F83)
         )
 
         GameTheme.Music -> ThemeCardPalette(
             frame = listOf(Color(0xFFBEA5FF), Color(0xFF7F62E3)),
             fill = listOf(Color(0xFFECE4FF), Color(0xFFCDBDFF)),
-            title = Color(0xFF4A2D8E),
-            badge = Color(0xFF2E9A45)
+            title = Color(0xFF4A2D8E)
         )
     }
 }

@@ -1,6 +1,5 @@
 package com.talitamorales.composememory.ads
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,8 +21,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
-
-private const val ADAPTIVE_BANNER_LOG_TAG = "CM-AdaptiveBanner"
 
 enum class BannerLoadState {
     Loading,
@@ -48,10 +45,19 @@ fun AdaptiveBanner(
         }
         val bannerHeight = adSize.height.coerceAtLeast(50).dp
         var loadState by remember(adUnitId, widthDp) { mutableStateOf(BannerLoadState.Loading) }
+        val canRequestAds = remember(context) { context.hasValidatedInternetConnection() }
 
         LaunchedEffect(loadState) {
             onLoadStateChanged(loadState)
         }
+
+        LaunchedEffect(canRequestAds) {
+            if (!canRequestAds) {
+                loadState = BannerLoadState.Failed
+            }
+        }
+
+        if (!canRequestAds) return@BoxWithConstraints
 
         key(adUnitId, widthDp) {
             AndroidView(
@@ -68,20 +74,10 @@ fun AdaptiveBanner(
                         adListener = object : AdListener() {
                             override fun onAdLoaded() {
                                 loadState = BannerLoadState.Loaded
-                                Log.d(
-                                    ADAPTIVE_BANNER_LOG_TAG,
-                                    "Banner loaded unit=$adUnitId size=${adSize.width}x${adSize.height}"
-                                )
                             }
 
                             override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                                 loadState = BannerLoadState.Failed
-                                Log.w(
-                                    ADAPTIVE_BANNER_LOG_TAG,
-                                    "Banner failed unit=$adUnitId code=${loadAdError.code} " +
-                                        "domain=${loadAdError.domain} message=${loadAdError.message} " +
-                                        "response=${loadAdError.responseInfo}"
-                                )
                             }
                         }
                         loadAd(AdRequest.Builder().build())

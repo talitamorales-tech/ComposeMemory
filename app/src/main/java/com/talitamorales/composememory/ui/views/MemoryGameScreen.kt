@@ -537,12 +537,13 @@ private fun ToolbarTopDrawer(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .width(26.dp)
-                        .height(3.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xCCFFF2C4))
+                Text(
+                    text = "menu",
+                    color = Color(0xFFFFF8DE),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Clip
                 )
 
                 Icon(

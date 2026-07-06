@@ -3,6 +3,7 @@ package com.talitamorales.composememory.ui.views
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color as AndroidColor
+import android.media.MediaPlayer
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -39,6 +40,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -87,10 +89,18 @@ private const val THEME_BG_ALPHA_SCAN_MIN = 16
 private const val THEME_BG_LIGHT_LUMA_MIN = 205
 private const val THEME_BG_MAX_SATURATION = 0.35f
 private const val THEME_BG_MIN_BORDER_RATIO = 0.08f
+private const val THEME_SELECTION_MUSIC_VOLUME = 0.35f
 
 private val DifficultyButtonShape = RoundedCornerShape(20.dp)
 private val ThemeCardShape = RoundedCornerShape(28.dp)
 private val ThemeCardInnerShape = RoundedCornerShape(25.dp)
+
+private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
+    if (this == null) return null
+    runCatching { stop() }
+    runCatching { release() }
+    return null
+}
 
 private data class DifficultyPalette(
     val base: List<Color>,
@@ -202,6 +212,18 @@ fun ThemeSelectionScreen(
         GameTheme.JungleAnimals,
         GameTheme.Music
     )
+
+    DisposableEffect(context) {
+        val themeMusicPlayer = MediaPlayer.create(context, R.raw.flip_it_match_it)?.apply {
+            isLooping = true
+            setVolume(THEME_SELECTION_MUSIC_VOLUME, THEME_SELECTION_MUSIC_VOLUME)
+            runCatching { start() }
+        }
+
+        onDispose {
+            themeMusicPlayer.safeStopAndRelease()
+        }
+    }
 
     fun navigateToGame(theme: GameTheme) {
         if (!theme.canPlay(hasPremiumAccess)) {

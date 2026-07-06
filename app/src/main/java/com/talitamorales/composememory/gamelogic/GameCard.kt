@@ -17,7 +17,7 @@ data class Card(
             Pair(R.drawable.cat_persa, null),
             Pair(R.drawable.cat_ragdoll, null),
             Pair(R.drawable.cat_siames, null),
-            Pair(R.drawable.cat_sleep, null),
+            Pair(R.drawable.cat_black, null),
             Pair(R.drawable.cat_fofinho, null),
             Pair(R.drawable.cat_white, null)
         )
@@ -43,14 +43,14 @@ data class Card(
             Pair(R.drawable.music_baixo, null)
         )
         val dinosaursAssets: List<Pair<Int, Int?>> = listOf(
-            Pair(R.drawable.dino_trex, null),
+            Pair(R.drawable.dino_dilophosaurus, null),
             Pair(R.drawable.dino_aerodactil, null),
             Pair(R.drawable.dino_fun, null),
-            Pair(R.drawable.dino_estegossauro, null),
+            Pair(R.drawable.dino_estiracossauro, null),
             Pair(R.drawable.dino_green, null),
-            Pair(R.drawable.dino_triceratops, null),
-            Pair(R.drawable.dino_apatosaurus, null),
-            Pair(R.drawable.dino_velociraptor, null)
+            Pair(R.drawable.dino_parassaurolofo, null),
+            Pair(R.drawable.dino_argentinossauro, null),
+            Pair(R.drawable.dino_t_rex, null)
         )
         val dogsAssets: List<Pair<Int, Int?>> = listOf(
             Pair(R.drawable.dog_dachshund, null),

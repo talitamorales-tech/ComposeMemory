@@ -80,12 +80,40 @@ fun MemoryCard(
                 val isDanceThemeImage = remember(card.imageRes) {
                     Card.danceAssets.any { asset -> asset.first == card.imageRes }
                 }
-                val imageModifier = if (isDanceThemeImage) {
-                    Modifier
+                val isBengalCatImage = remember(card.imageRes) {
+                    card.imageRes == R.drawable.cat_bengal
+                }
+                val isFunDinoImage = remember(card.imageRes) {
+                    card.imageRes == R.drawable.dino_fun
+                }
+                val isAerodactylDinoImage = remember(card.imageRes) {
+                    card.imageRes == R.drawable.dino_aerodactil
+                }
+                val isArgentinosaurusDinoImage = remember(card.imageRes) {
+                    card.imageRes == R.drawable.dino_argentinossauro
+                }
+                val imageModifier = when {
+                    isDanceThemeImage -> Modifier
                         .fillMaxSize(0.98f)
                         .scale(1.18f)
-                } else {
-                    Modifier
+
+                    isBengalCatImage -> Modifier
+                        .fillMaxSize(0.98f)
+                        .scale(scaleX = 1.10f, scaleY = 1f)
+
+                    isFunDinoImage -> Modifier
+                        .fillMaxSize(0.98f)
+                        .scale(1.14f)
+
+                    isAerodactylDinoImage -> Modifier
+                        .fillMaxSize(0.96f)
+                        .scale(1.02f)
+
+                    isArgentinosaurusDinoImage -> Modifier
+                        .fillMaxSize(0.98f)
+                        .scale(scaleX = 1.10f, scaleY = 1f)
+
+                    else -> Modifier
                         .fillMaxSize(0.94f)
                         .scale(1.04f)
                 }

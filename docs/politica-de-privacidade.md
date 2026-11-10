@@ -1,0 +1,71 @@
+# Política de Privacidade — MemoryLandGame
+
+Última atualização: 16 de outubro de 2026.
+
+## 1. Responsável e contato
+
+Esta política explica como o jogo de memória MemoryLandGame, pacote com.talitamorales.composememory, utiliza informações dos jogadores e de seus dispositivos.
+
+Responsável pelo aplicativo: Talita Morales.
+
+Contato de privacidade e suporte: talita.memoryland@gmail.com.
+
+## 2. Público do jogo e informação de idade
+
+O jogo foi pensado para crianças pequenas, inclusive menores de 4 anos, crianças maiores e adultos. Essa descrição do público pretendido é diferente da classificação indicativa apresentada na loja.
+
+Antes de começar, o aplicativo permite informar o ano de nascimento de quem vai jogar ou continuar sem responder. O ano não é salvo, enviado aos serviços de anúncios nem associado a uma conta. O aplicativo calcula somente um grupo de idade, mantido na memória durante a sessão para definir os formatos de anúncio permitidos. Como só é informado o ano, pessoas que ainda possam ter menos de 18 anos recebem o tratamento mais protetivo.
+
+Não informar a idade não impede o acesso ao jogo. Crianças, adolescentes e pessoas de idade desconhecida recebem o mesmo tratamento de proteção nos anúncios. Recomenda-se que responsáveis acompanhem o uso por crianças pequenas.
+
+## 3. Cadastro, permissões e informações locais
+
+O jogo não exige conta, nome, e-mail ou senha para jogar. Não possui recursos que solicitem acesso à câmera, ao microfone, aos contatos ou à localização precisa do dispositivo.
+
+São salvas localmente preferências como som e estado de desbloqueio dos temas, para manter as escolhas entre sessões. Dependendo das configurações do Android, essas informações podem integrar cópias de segurança ou transferências entre dispositivos. O ano de nascimento e o grupo de idade da sessão não são incluídos nessas preferências.
+
+## 4. Anúncios de teste e Google AdMob
+
+Esta versão de testes integra o Google AdMob e exibe anúncios de demonstração, identificados como anúncios de teste. Eles servem para testar a integração de publicidade. A indicação de anúncio de teste não significa ausência de tratamento de dados pelo serviço.
+
+Todas as solicitações de anúncio recebem tratamento infantil e limite de conteúdo adequado a públicos gerais, inclusive quando quem joga é adulto. A configuração desativa a publicidade baseada em interesses e o remarketing. O aplicativo também remove as permissões de acesso ao identificador de publicidade do Android e aos sinais de publicidade do sistema.
+
+As solicitações de anúncios só começam depois que a pessoa informa o ano de nascimento ou escolhe continuar sem responder. Crianças, adolescentes e pessoas de idade desconhecida não recebem anúncios de tela inteira: nessa versão, somente o banner na seleção de temas fica disponível para essas pessoas. Adultos podem receber anúncios de tela inteira durante o uso, sempre com o mesmo tratamento infantil de publicidade. O estado premium, quando ativo, desativa os anúncios.
+
+Conforme o funcionamento do serviço, o Google pode tratar endereço IP, localização aproximada inferida do IP, interações com anúncios, informações de diagnóstico e identificadores técnicos do serviço para apresentar anúncios, medir seu funcionamento e prevenir fraude. O aplicativo não envia o ano de nascimento ao AdMob.
+
+Mais informações estão na [Política de Privacidade do Google](https://policies.google.com/privacy?hl=pt-BR) e na [documentação de dados do Google Mobile Ads](https://developers.google.com/admob/android/privacy/play-data-disclosure).
+
+A troca dos anúncios de demonstração por anúncios comerciais exigirá revisar esta política e as configurações do aplicativo.
+
+## 5. Relatórios de falhas — Firebase Crashlytics
+
+O Firebase Crashlytics está integrado ao projeto, mas o envio automático de relatórios de falhas está desativado nesta versão. Não existe no jogo uma opção que ative esse envio. Relatórios pendentes são descartados no início do aplicativo.
+
+Com o envio desativado, o Crashlytics ainda pode registrar informações de falhas localmente, como erro ocorrido, versão do aplicativo, sistema operacional, modelo do dispositivo e identificadores de instalação. Esses registros podem permanecer no dispositivo até a próxima abertura do aplicativo, quando os relatórios pendentes são descartados, ou até a limpeza dos dados locais.
+
+Desativar o envio não apaga relatórios que versões anteriores já tenham enviado. Segundo a [documentação de privacidade do Firebase](https://firebase.google.com/support/privacy), os registros de falhas e identificadores associados enviados ao Crashlytics são mantidos por 90 dias antes do início de sua remoção dos sistemas ativos e de backup.
+
+## 6. Mensagens de suporte
+
+Se você ou um responsável entrar em contato por e-mail, Talita Morales receberá o endereço do remetente e o conteúdo enviado. Essas informações serão usadas para responder à solicitação, investigar o problema e acompanhar o atendimento. Evite enviar senhas, documentos, o ano de nascimento da criança ou outros dados desnecessários ao suporte.
+
+As conversas são guardadas enquanto necessárias para acompanhar atendimentos e consultar o histórico em solicitações futuras. Podem ser excluídas quando deixarem de ser necessárias, observadas eventuais obrigações legais de conservação.
+
+## 7. Compartilhamento, processamento e segurança
+
+Os serviços do Google descritos nesta política tratam as informações necessárias às respectivas funções. O processamento pode ocorrer fora do país do jogador, conforme a infraestrutura dos fornecedores.
+
+O Google Mobile Ads e o Firebase informam o uso de criptografia na transmissão de dados. Nenhum meio de transmissão ou armazenamento oferece segurança absoluta.
+
+## 8. Exclusão de informações e solicitações
+
+É possível limpar os dados locais do jogo pelas configurações de aplicativos do Android. Essa ação redefine preferências e desbloqueios locais. Cópias de segurança podem ser administradas pelas opções disponíveis no dispositivo e na conta utilizada para backup.
+
+Limpar os dados ou desinstalar o jogo não exclui automaticamente informações que já tenham sido enviadas aos serviços do Google. O prazo de retenção de relatórios antigos do Crashlytics está descrito acima. Aos dados tratados pelo serviço de anúncios aplicam-se os prazos e critérios informados pelo Google em suas políticas.
+
+Jogadores e responsáveis podem encaminhar dúvidas e solicitações de acesso, correção ou exclusão ao contato talita.memoryland@gmail.com. O atendimento depende dos dados disponíveis e da possibilidade de associá-los à solicitação, observadas as regras aplicáveis. Não envie informações pessoais adicionais sem necessidade.
+
+## 9. Alterações desta política
+
+Esta política poderá ser atualizada para refletir mudanças no aplicativo e no tratamento de dados. A versão atualizada estará disponível no aplicativo e na página pública da política, quando publicada, com sua data de atualização.

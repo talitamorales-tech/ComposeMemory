@@ -35,7 +35,7 @@ enum class GameTheme(
         titleRes = R.string.theme_dinosaurs,
         toolbarTitleRes = R.string.toolbar_theme_dinosaurs,
         previewRes = R.drawable.dino_green,
-        isFree = true
+        isFree = false
     ),
     Dogs(
         id = 5,

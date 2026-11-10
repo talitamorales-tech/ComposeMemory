@@ -14,6 +14,8 @@
 
 # Local machine config
 local.properties
+keystore.properties
+keystore/
 .DS_Store
 
 # Kotlin compiler local reports

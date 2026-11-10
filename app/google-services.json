@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "364484432459",
+    "project_id": "memorylandgame-854b3",
+    "storage_bucket": "memorylandgame-854b3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364484432459:android:c46517e45002ab821533ce",
+        "android_client_info": {
+          "package_name": "com.talitamorales.composememory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Lo243jwAQllYHvaLghvvyFl05zc5XU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

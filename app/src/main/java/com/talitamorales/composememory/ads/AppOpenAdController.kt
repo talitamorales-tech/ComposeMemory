@@ -23,7 +23,7 @@ class AppOpenAdController(
     private var wasBackgrounded = false
     private var backgroundedAtMillis = 0L
     private var loadedAtMillis = 0L
-    private var adsEnabled = true
+    private var adsEnabled = false
 
     fun setAdsEnabled(enabled: Boolean) {
         if (adsEnabled == enabled) return
@@ -47,6 +47,10 @@ class AppOpenAdController(
             AdRequest.Builder().build(),
             object : AppOpenAdLoadCallback() {
                 override fun onAdLoaded(ad: AppOpenAd) {
+                    if (!adsEnabled) {
+                        isLoading = false
+                        return
+                    }
                     appOpenAd = ad
                     loadedAtMillis = SystemClock.elapsedRealtime()
                     isLoading = false

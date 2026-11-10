@@ -26,7 +26,7 @@ class RoundInterstitialAdController(
     private var isShowing = false
     private var completedRoundsSinceLastShow = 0
     private var loadedAtMillis = 0L
-    private var adsEnabled = true
+    private var adsEnabled = false
 
     fun setAdsEnabled(enabled: Boolean) {
         if (adsEnabled == enabled) return
@@ -50,6 +50,10 @@ class RoundInterstitialAdController(
             AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
+                    if (!adsEnabled) {
+                        isLoading = false
+                        return
+                    }
                     interstitialAd = ad
                     loadedAtMillis = SystemClock.elapsedRealtime()
                     isLoading = false

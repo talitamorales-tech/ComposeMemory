@@ -3,11 +3,13 @@ package com.talitamorales.composememory
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.media.AudioManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,6 +17,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
@@ -26,11 +32,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.talitamorales.composememory.ads.AppOpenAdController
+import com.talitamorales.composememory.ads.configureChildSafeAds
+import com.talitamorales.composememory.audio.LoopingGameMusicEffect
+import com.talitamorales.composememory.audio.SharedGameMusicPlayer
 import com.talitamorales.composememory.gamelogic.GameTheme
 import com.talitamorales.composememory.premium.PremiumAccessRepository
+import com.talitamorales.composememory.privacy.AudienceSessionViewModel
 import com.talitamorales.composememory.ui.theme.ComposeMemoryTheme
 import com.talitamorales.composememory.ui.views.CardsCarouselScreen
+import com.talitamorales.composememory.ui.views.AudienceSelectionScreen
+import com.talitamorales.composememory.ui.views.PrivacyPolicyScreen
 import com.talitamorales.composememory.ui.views.InitialMenuScreen
 import com.talitamorales.composememory.ui.views.MemoryGameScreen
 import com.talitamorales.composememory.ui.views.OnboardScreen
@@ -44,39 +57,65 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     companion object {
         private const val ORIENTATION_TAG = "CM-Orientation"
+        private const val MAIN_GAME_MUSIC_VOLUME = 0.85f
     }
 
     private var currentRouteOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     private lateinit var appOpenAdController: AppOpenAdController
     private lateinit var premiumAccessRepository: PremiumAccessRepository
     private var adsInitialized = false
+    private var adsReady by mutableStateOf(false)
+    private val audienceSession: AudienceSessionViewModel by viewModels()
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        volumeControlStream = AudioManager.STREAM_MUSIC
         enableEdgeToEdge()
+        configureChildSafeAds()
+        FirebaseCrashlytics.getInstance().apply {
+            setCrashlyticsCollectionEnabled(false)
+            deleteUnsentReports()
+        }
         premiumAccessRepository = PremiumAccessRepository(applicationContext)
         appOpenAdController = AppOpenAdController(
             appContext = applicationContext,
             adUnitId = getString(R.string.admob_app_open)
         )
-        updateAdsAvailability(premiumAccessRepository.currentState.shouldShowAds)
         setContent {
             ComposeMemoryTheme {
                 val premiumAccessState by premiumAccessRepository.state.collectAsState()
+                val audienceGroup = audienceSession.ageGroup
                 val hasPremiumAccess = premiumAccessState.hasPremiumAccess
-                val shouldShowAds = premiumAccessState.shouldShowAds
+                val shouldShowAds = premiumAccessState.shouldShowAds && adsReady && audienceGroup != null
+                val fullScreenAdsAllowed = audienceGroup?.canShowFullScreenAds == true
                 val playableThemes = GameTheme.playableThemes(hasPremiumAccess)
+                var isMainMusicPaused by remember { mutableStateOf(false) }
+                var currentRoute by remember { mutableStateOf("splash") }
+                var showingPrivacy by rememberSaveable { mutableStateOf(false) }
 
                 val navController = rememberNavController()
-                LaunchedEffect(shouldShowAds) {
-                    updateAdsAvailability(shouldShowAds)
+                LaunchedEffect(premiumAccessState.shouldShowAds, audienceGroup, adsReady, showingPrivacy) {
+                    if (audienceGroup != null) {
+                        updateAdsAvailability(
+                            shouldShowAds = premiumAccessState.shouldShowAds,
+                            fullScreenAdsAllowed = fullScreenAdsAllowed && !showingPrivacy
+                        )
+                    }
                 }
+
+                LoopingGameMusicEffect(
+                    musicResId = R.raw.flip_it_match_it,
+                    volume = MAIN_GAME_MUSIC_VOLUME,
+                    paused = isMainMusicPaused || currentRoute == "splash" ||
+                        audienceGroup == null || showingPrivacy
+                )
 
                 DisposableEffect(navController) {
                     val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
                         val route = destination.route
+                        currentRoute = route.orEmpty()
                         Log.d(
                             ORIENTATION_TAG,
                             "Route changed route=$route requested=${orientationName(requestedOrientation)} " +
@@ -93,6 +132,17 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(modifier = Modifier.fillMaxSize()) {
 
+                    if (showingPrivacy) {
+                        PrivacyPolicyScreen(onBack = { showingPrivacy = false })
+                        return@Scaffold
+                    }
+                    if (audienceGroup == null) {
+                        AudienceSelectionScreen(
+                            onContinue = audienceSession::selectBirthYear,
+                            onShowPrivacy = { showingPrivacy = true }
+                        )
+                        return@Scaffold
+                    }
                     NavHost(
                         navController = navController,
                         startDestination = "splash"
@@ -103,13 +153,14 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("initialMenu") {
-                            InitialMenuScreen(navController)
+                            InitialMenuScreen(navController, onShowPrivacy = { showingPrivacy = true })
                         }
 
                         composable("themeSelection") {
                             ThemeSelectionScreen(
                                 navController = navController,
                                 premiumAccessState = premiumAccessState,
+                                adsEnabled = shouldShowAds,
                                 onBuyPremium = {
                                     premiumAccessRepository.buyUnlockAllThemesNoAds()
                                 },
@@ -166,7 +217,10 @@ class MainActivity : ComponentActivity() {
                             MemoryGameScreen(
                                 viewModel = viewModel,
                                 playableThemes = playableThemes,
-                                shouldShowAds = shouldShowAds
+                                shouldShowAds = shouldShowAds && fullScreenAdsAllowed,
+                                onVictoryMusicPlayingChange = { isPlayingVictoryMusic ->
+                                    isMainMusicPaused = isPlayingVictoryMusic
+                                }
                             )
                         }
                     }
@@ -194,13 +248,16 @@ class MainActivity : ComponentActivity() {
         if (::appOpenAdController.isInitialized) {
             appOpenAdController.clear()
         }
+        if (!isChangingConfigurations) {
+            SharedGameMusicPlayer.stop(reason = "activity-destroy")
+        }
         super.onDestroy()
     }
 
-    private fun updateAdsAvailability(shouldShowAds: Boolean) {
+    private fun updateAdsAvailability(shouldShowAds: Boolean, fullScreenAdsAllowed: Boolean) {
         if (!::appOpenAdController.isInitialized) return
 
-        appOpenAdController.setAdsEnabled(shouldShowAds)
+        appOpenAdController.setAdsEnabled(shouldShowAds && adsReady && fullScreenAdsAllowed)
         if (shouldShowAds) {
             initializeAdsIfNeeded()
         }
@@ -208,7 +265,6 @@ class MainActivity : ComponentActivity() {
 
     private fun initializeAdsIfNeeded() {
         if (adsInitialized) {
-            appOpenAdController.preload()
             return
         }
 
@@ -216,7 +272,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             MobileAds.initialize(this@MainActivity) {
                 runOnUiThread {
-                    appOpenAdController.preload()
+                    if (!isDestroyed) adsReady = true
                 }
             }
         }

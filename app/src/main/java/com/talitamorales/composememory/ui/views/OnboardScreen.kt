@@ -3,7 +3,6 @@ package com.talitamorales.composememory.ui.views
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color as AndroidColor
-import android.media.MediaPlayer
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -13,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,7 +40,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -89,18 +88,11 @@ private const val THEME_BG_ALPHA_SCAN_MIN = 16
 private const val THEME_BG_LIGHT_LUMA_MIN = 205
 private const val THEME_BG_MAX_SATURATION = 0.35f
 private const val THEME_BG_MIN_BORDER_RATIO = 0.08f
-private const val THEME_SELECTION_MUSIC_VOLUME = 0.35f
+private const val SplashLogoAspectRatio = 3f / 2f
 
 private val DifficultyButtonShape = RoundedCornerShape(20.dp)
 private val ThemeCardShape = RoundedCornerShape(28.dp)
 private val ThemeCardInnerShape = RoundedCornerShape(25.dp)
-
-private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
-    if (this == null) return null
-    runCatching { stop() }
-    runCatching { release() }
-    return null
-}
 
 private data class DifficultyPalette(
     val base: List<Color>,
@@ -143,33 +135,14 @@ fun SplashScreen() {
             .magicSparkles(alpha = 0.26f),
         contentAlignment = Alignment.Center
     ) {
-        Box(
+        Image(
+            painter = painterResource(id = R.drawable.memory_friends_logo_banner),
+            contentDescription = stringResource(id = R.string.logo_content_description),
             modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .clip(RoundedCornerShape(34.dp))
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xE9FFFFFF),
-                            Color(0xD9F2FAFF)
-                        )
-                    )
-                )
-                .border(1.6.dp, Color.White.copy(alpha = 0.95f), RoundedCornerShape(34.dp))
-                .padding(horizontal = 20.dp, vertical = 24.dp)
-                .magicSparkles(alpha = 0.2f),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.memory_friends_logo_banner),
-                contentDescription = stringResource(id = R.string.logo_content_description),
-                modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .height(148.dp)
-                    .scale(1.12f),
-                contentScale = ContentScale.Fit
-            )
-        }
+                .fillMaxWidth()
+                .aspectRatio(SplashLogoAspectRatio),
+            contentScale = ContentScale.FillWidth
+        )
 
         Text(
             text = stringResource(id = R.string.app_name),
@@ -194,6 +167,7 @@ fun SplashScreen() {
 fun ThemeSelectionScreen(
     navController: NavController,
     premiumAccessState: PremiumAccessState = PremiumAccessState(),
+    adsEnabled: Boolean = true,
     onBuyPremium: () -> Unit = {},
     onRestorePremium: () -> Unit = {}
 ) {
@@ -212,18 +186,6 @@ fun ThemeSelectionScreen(
         GameTheme.JungleAnimals,
         GameTheme.Music
     )
-
-    DisposableEffect(context) {
-        val themeMusicPlayer = MediaPlayer.create(context, R.raw.flip_it_match_it)?.apply {
-            isLooping = true
-            setVolume(THEME_SELECTION_MUSIC_VOLUME, THEME_SELECTION_MUSIC_VOLUME)
-            runCatching { start() }
-        }
-
-        onDispose {
-            themeMusicPlayer.safeStopAndRelease()
-        }
-    }
 
     fun navigateToGame(theme: GameTheme) {
         if (!theme.canPlay(hasPremiumAccess)) {
@@ -377,7 +339,7 @@ fun ThemeSelectionScreen(
                 }
             }
 
-            if (premiumAccessState.shouldShowAds) {
+            if (premiumAccessState.shouldShowAds && adsEnabled) {
                 ThemeSelectionAdFooter(modifier = Modifier.fillMaxWidth())
             }
         }

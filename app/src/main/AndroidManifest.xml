@@ -5,6 +5,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- The child audience must not transmit the advertising ID or ad-services signals. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_TOPICS" tools:node="remove" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeMemory"
         tools:targetApi="tiramisu">
+        <meta-data android:name="firebase_data_collection_default_enabled" android:value="false" />
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />

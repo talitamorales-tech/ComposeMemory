@@ -71,9 +71,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.talitamorales.composememory.GameViewModelContract
 import com.talitamorales.composememory.R
 import com.talitamorales.composememory.ads.rememberRoundInterstitialAdController
+import com.talitamorales.composememory.audio.GameAudioFocusHandle
+import com.talitamorales.composememory.audio.GameSoundPreferences
+import com.talitamorales.composememory.audio.createGameMusicPlayer
+import com.talitamorales.composememory.audio.requestGameAudioFocus
+import com.talitamorales.composememory.audio.safeStopAndRelease
+import com.talitamorales.composememory.audio.startGameAudio
 import com.talitamorales.composememory.gamelogic.Card as GameCardModel
 import com.talitamorales.composememory.gamelogic.GameDifficulty
 import com.talitamorales.composememory.gamelogic.GameTheme
@@ -93,10 +102,8 @@ private val GridBottomPaddingClosed = 8.dp
 private val GridBottomPaddingOpen = 10.dp
 private const val WinCelebrationDurationMs = 3200
 private const val GAME_DEBUG_TAG = "CM-MemoryGame"
-private val GAMEPLAY_MUSIC_RES = R.raw.flip_it_match_it
 private val VICTORY_MUSIC_RES = R.raw.victory
-private const val GAMEPLAY_MUSIC_VOLUME = 0.35f
-private const val VICTORY_MUSIC_VOLUME = 0.9f
+private const val VICTORY_MUSIC_VOLUME = 0.95f
 private val ToolbarContainerShape = RoundedCornerShape(22.dp)
 private val ToolbarButtonShape = RoundedCornerShape(16.dp)
 private val ToolbarDrawerTabShape = RoundedCornerShape(
@@ -112,13 +119,6 @@ private data class GameBoardPlan(
 ) {
     val totalCards: Int = columns * rows
     val pairCount: Int = totalCards / 2
-}
-
-private fun MediaPlayer?.safeStopAndRelease(): MediaPlayer? {
-    if (this == null) return null
-    runCatching { stop() }
-    runCatching { release() }
-    return null
 }
 
 private fun GameDifficulty.minimumBoardCardSize(isLargeScreen: Boolean): Dp = when (this) {
@@ -281,28 +281,47 @@ private fun calculateBoardPlan(
 fun MemoryGameScreen(
     viewModel: GameViewModelContract,
     playableThemes: List<GameTheme> = GameTheme.playableThemes(hasPremiumAccess = false),
-    shouldShowAds: Boolean = true
+    shouldShowAds: Boolean = true,
+    onVictoryMusicPlayingChange: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val configuration = LocalConfiguration.current
     val roundInterstitialController = rememberRoundInterstitialAdController(
         adUnitId = stringResource(id = R.string.admob_interstitial_round_end),
         adsEnabled = shouldShowAds
     )
-    var backgroundMusicPlayer: MediaPlayer? by remember { mutableStateOf(null) }
     var victoryPlayer: MediaPlayer? by remember { mutableStateOf(null) }
-    var isSoundEnabled by remember { mutableStateOf(true) }
+    var victoryMusicFocus: GameAudioFocusHandle? by remember { mutableStateOf(null) }
+    var isSoundEnabled by remember(context) {
+        mutableStateOf(GameSoundPreferences.isSoundEnabled(context))
+    }
     var isToolbarExpanded by rememberSaveable { mutableStateOf(false) }
     var showWinCelebration by remember { mutableStateOf(false) }
-    var gameplayMusicRestartToken by remember { mutableIntStateOf(0) }
     val recompositions = remember { mutableIntStateOf(0) }
     val soundOnToast = stringResource(id = R.string.toast_sound_on)
     val soundOffToast = stringResource(id = R.string.toast_sound_off)
 
     DisposableEffect(Unit) {
         onDispose {
-            backgroundMusicPlayer.safeStopAndRelease()
             victoryPlayer.safeStopAndRelease()
+            victoryMusicFocus?.abandon()
+            onVictoryMusicPlayingChange(false)
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                victoryPlayer = victoryPlayer.safeStopAndRelease()
+                victoryMusicFocus?.abandon()
+                victoryMusicFocus = null
+                onVictoryMusicPlayingChange(false)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
@@ -336,58 +355,39 @@ fun MemoryGameScreen(
         )
     }
 
-    LaunchedEffect(
-        isSoundEnabled,
-        viewModel.gameWon,
-        showWinCelebration,
-        gameplayMusicRestartToken
-    ) {
-        val shouldPlayMusic = isSoundEnabled && !viewModel.gameWon && !showWinCelebration
-        if (!shouldPlayMusic) {
-            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
-            return@LaunchedEffect
-        }
-
-        if (backgroundMusicPlayer == null) {
-            backgroundMusicPlayer = MediaPlayer.create(context, GAMEPLAY_MUSIC_RES)?.apply {
-                isLooping = true
-                setVolume(GAMEPLAY_MUSIC_VOLUME, GAMEPLAY_MUSIC_VOLUME)
-            }
-        }
-
-        runCatching {
-            if (backgroundMusicPlayer?.isPlaying == false) {
-                backgroundMusicPlayer?.start()
-            }
-        }.onFailure {
-            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
-        }
-    }
-
     LaunchedEffect(viewModel.gameWon) {
         if (viewModel.gameWon && !showWinCelebration) {
             showWinCelebration = true
-            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+            onVictoryMusicPlayingChange(true)
             if (isSoundEnabled) {
                 victoryPlayer = victoryPlayer.safeStopAndRelease()
-                victoryPlayer = MediaPlayer.create(context, VICTORY_MUSIC_RES)?.apply {
-                    isLooping = false
-                    setVolume(VICTORY_MUSIC_VOLUME, VICTORY_MUSIC_VOLUME)
+                victoryMusicFocus?.abandon()
+                victoryMusicFocus = requestGameAudioFocus(context)
+                victoryPlayer = createGameMusicPlayer(
+                    context = context,
+                    musicResId = VICTORY_MUSIC_RES,
+                    volume = VICTORY_MUSIC_VOLUME,
+                    looping = false
+                )?.apply {
                     setOnCompletionListener { completedPlayer ->
                         runCatching { completedPlayer.release() }
                         if (victoryPlayer === completedPlayer) {
                             victoryPlayer = null
+                            victoryMusicFocus?.abandon()
+                            victoryMusicFocus = null
                         }
                     }
-                    start()
+                    startGameAudio(VICTORY_MUSIC_RES)
                 }
             }
             delay(WinCelebrationDurationMs.toLong())
-            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
             victoryPlayer = victoryPlayer.safeStopAndRelease()
+            victoryMusicFocus?.abandon()
+            victoryMusicFocus = null
             roundInterstitialController.showAfterRoundIfAllowed(context) {
                 viewModel.resetGame()
                 showWinCelebration = false
+                onVictoryMusicPlayingChange(false)
             }
         }
     }
@@ -396,8 +396,6 @@ fun MemoryGameScreen(
         modifier = Modifier
             .fillMaxSize()
             .playgroundSkyBackground()
-            .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(horizontal = 8.dp, vertical = 0.dp)
     ) {
         val compactToolbar = maxWidth < 700.dp
         val toolbarButtonHeight = if (compactToolbar) 40.dp else 46.dp
@@ -413,7 +411,10 @@ fun MemoryGameScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .padding(horizontal = 8.dp, vertical = 0.dp)
         ) {
             ToolbarTopDrawer(
                 isOpen = isToolbarExpanded,
@@ -426,25 +427,23 @@ fun MemoryGameScreen(
                         playableThemes = playableThemes,
                         isSoundEnabled = isSoundEnabled,
                         onToggleSound = {
-                            if (isSoundEnabled) {
-                                isSoundEnabled = false
-                                backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
+                            val updatedSoundEnabled = !isSoundEnabled
+                            isSoundEnabled = updatedSoundEnabled
+                            GameSoundPreferences.setSoundEnabled(context, updatedSoundEnabled)
+                            if (!updatedSoundEnabled) {
                                 victoryPlayer = victoryPlayer.safeStopAndRelease()
-                            } else {
-                                isSoundEnabled = true
+                                victoryMusicFocus?.abandon()
+                                victoryMusicFocus = null
                             }
                             Toast.makeText(
                                 context,
-                                if (isSoundEnabled) soundOnToast else soundOffToast,
+                                if (updatedSoundEnabled) soundOnToast else soundOffToast,
                                 Toast.LENGTH_SHORT
                             ).show()
                         },
                         onRestart = {
-                            backgroundMusicPlayer = backgroundMusicPlayer.safeStopAndRelease()
-                            victoryPlayer = victoryPlayer.safeStopAndRelease()
                             isToolbarExpanded = false
                             viewModel.resetGame()
-                            gameplayMusicRestartToken += 1
                         },
                         enabled = !showWinCelebration,
                         modifier = Modifier.fillMaxWidth(),
@@ -514,9 +513,10 @@ private fun ToolbarTopDrawer(
 
         Box(
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .padding(top = if (isOpen) 2.dp else 0.dp)
-                .width(if (isOpen) 94.dp else 78.dp)
-                .height(if (isOpen) 30.dp else 26.dp)
+                .width(if (isOpen) 112.dp else 100.dp)
+                .height(if (isOpen) 34.dp else 30.dp)
                 .alpha(if (enabled) 1f else 0.68f)
                 .shadow(6.dp, ToolbarDrawerTabShape, clip = false)
                 .clip(ToolbarDrawerTabShape)
@@ -534,13 +534,16 @@ private fun ToolbarTopDrawer(
             contentAlignment = Alignment.Center
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Spacer(modifier = Modifier.size(16.dp))
+
                 Text(
-                    text = "menu",
+                    text = "Menu",
+                    modifier = Modifier.padding(horizontal = 6.dp),
                     color = Color(0xFFFFF8DE),
-                    fontSize = 13.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Clip
@@ -804,10 +807,10 @@ fun RestartButton(
         )
 
         Icon(
-            painter = painterResource(id = R.drawable.restart),
+            painter = painterResource(id = R.drawable.ic_restart_refresh),
             contentDescription = stringResource(id = R.string.restart),
-            tint = Color(0xFFFFF8DE),
-            modifier = Modifier.fillMaxSize(0.46f)
+            tint = Color.Unspecified,
+            modifier = Modifier.fillMaxSize(0.68f)
         )
     }
 }

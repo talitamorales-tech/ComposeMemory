@@ -1,7 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+}
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        load(keystorePropertiesFile.inputStream())
+    }
 }
 
 android {
@@ -12,14 +23,28 @@ android {
         applicationId = "com.talitamorales.composememory"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
+        versionCode = 4
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -53,6 +78,8 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation(libs.androidx.navigation.compose.android)
     implementation(libs.google.play.services.ads)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
     implementation("io.coil-kt:coil-compose:2.7.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,5 +1,13 @@
 <resources>
-    <string name="app_name">ComposeMemory</string>
+    <string name="audience_title">Who is playing now?</string>
+    <string name="audience_explanation">Enter the birth year of the person playing. You can also continue without answering. The year is not saved or sent to advertising services.</string>
+    <string name="audience_birth_year">Year of birth</string>
+    <string name="audience_invalid_year">Please enter a valid year of birth.</string>
+    <string name="audience_continue">Continue</string>
+    <string name="audience_skip">Prefer not to say</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="privacy_back">Back</string>
+    <string name="app_name">Memory Land</string>
     <string name="logo_content_description">Memory Friends logo</string>
     <string name="choose_theme_to_play">Choose a theme to play</string>
     <string name="theme_animals">Cat</string>
@@ -45,6 +53,7 @@
 
     <string name="toast_sound_on">Sound on</string>
     <string name="toast_sound_off">Sound off</string>
+    <string name="toast_media_volume_muted">Increase the device media volume to hear the game.</string>
     <string name="toast_premium_unlocked">Premium unlocked</string>
     <string name="toast_premium_restore_checked">Purchases checked</string>
     <string name="toolbar_theme_animals">Theme: Cat</string>
